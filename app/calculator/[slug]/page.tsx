@@ -63,16 +63,11 @@ export default function CalculatorPage({ params }: { params: { slug: string } })
     Math: calc.slug==="average-calculator"?["Numbers separated by commas"]:calc.slug==="percentage-calculator"?["Number","Percentage"]:calc.slug==="ratio-calculator"||calc.slug==="lcm-hcf-calculator"||calc.slug==="probability-calculator"?["First / favorable","Second / total"]:["Value","Second value"],
     Health: calc.slug==="bmi-calculator"?["Weight","Height"]:calc.slug==="bmr-calculator"?["Weight","Height","Sex (1 male / 2 female)","Age"]:calc.slug==="calorie-calculator"?["BMR","Activity factor"]:["Height"],
   } as Record<string,string[]>;
-  const labels = isConv?["Value","From unit","To unit"]:{calc.slug==="age-calculator"?
-  <label className="field">
-    <span>Date of birth</span>
-    <input
-      type="date"
-      value={a}
-      onChange={e => setA(e.target.value)}
-    />
-  </label>
-
+  const labels = isConv
+  ? ["Value", "From unit", "To unit"]
+  : calc.slug === "age-calculator"
+  ? ["Date of birth"]
+  : fields[calc.category] || ["Value", "Second value"];
   return <main>
     <header className="nav"><div className="brand"><span>✦</span> Calc<span>Hub</span></div><div className="nav-links"><a href="/">Home</a><a href="/#calculators">All calculators</a></div></header>
     <section className="calculator-page">
@@ -81,7 +76,15 @@ export default function CalculatorPage({ params }: { params: { slug: string } })
       <div className="ad-slot">ADVERTISEMENT</div>
       <div className="calculator-box">
         <div className="form-area">
-          {calc.slug==="age-calculator"?<Field label={labels[0]} value={a} setValue={setA}/>:
+   {calc.slug==="age-calculator" ?
+  <label className="field">
+    <span>Date of birth</span>
+    <input
+      type="date"
+      value={a}
+      onChange={e => setA(e.target.value)}
+    />
+  </label>  :
            isConv?<><Field label="Value" value={a} setValue={setA}/><div className="grid2"><label className="field"><span>From</span><select value={unit} onChange={e=>setUnit(e.target.value)}><option value="km">Kilometres</option><option value="mi">Miles</option><option value="kg">Kilograms</option><option value="lb">Pounds</option><option value="c">°C</option><option value="f">°F</option></select></label><label className="field"><span>To</span><select value={to} onChange={e=>setTo(e.target.value)}><option value="mi">Miles</option><option value="km">Kilometres</option><option value="lb">Pounds</option><option value="kg">Kilograms</option><option value="f">°F</option><option value="c">°C</option></select></label></div></>:
            calc.slug==="average-calculator"?<Field label={labels[0]} value={a} setValue={setA}/>:
            <div className="grid2">{labels.map((label,i)=><Field key={label} label={label} value={[a,b,c,d][i]} setValue={[setA,setB,setC,setD][i]}/>)}</div>}
