@@ -63,7 +63,15 @@ export default function CalculatorPage({ params }: { params: { slug: string } })
     Math: calc.slug==="average-calculator"?["Numbers separated by commas"]:calc.slug==="percentage-calculator"?["Number","Percentage"]:calc.slug==="ratio-calculator"||calc.slug==="lcm-hcf-calculator"||calc.slug==="probability-calculator"?["First / favorable","Second / total"]:["Value","Second value"],
     Health: calc.slug==="bmi-calculator"?["Weight","Height"]:calc.slug==="bmr-calculator"?["Weight","Height","Sex (1 male / 2 female)","Age"]:calc.slug==="calorie-calculator"?["BMR","Activity factor"]:["Height"],
   } as Record<string,string[]>;
-  const labels = isConv?["Value","From unit","To unit"]:calc.slug==="age-calculator"?["Date of birth"]:fields[calc.category]||["Value","Second value"];
+  const labels = isConv?["Value","From unit","To unit"]:{calc.slug==="age-calculator"?
+  <label className="field">
+    <span>Date of birth</span>
+    <input
+      type="date"
+      value={a}
+      onChange={e => setA(e.target.value)}
+    />
+  </label>
 
   return <main>
     <header className="nav"><div className="brand"><span>✦</span> Calc<span>Hub</span></div><div className="nav-links"><a href="/">Home</a><a href="/#calculators">All calculators</a></div></header>
