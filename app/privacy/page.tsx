@@ -1,0 +1,2 @@
+import Link from "next/link";
+export default function Privacy(){return <main className="container section"><Link href="/">← CalcHub</Link><h1>Privacy Policy</h1><p>CalcHub aims to collect only the information necessary to operate and improve the website. Third-party advertising or analytics services may use cookies or similar technologies according to their own policies.</p><h2>Contact</h2><p>For privacy questions, add your preferred contact email here before publishing.</p></main>}
