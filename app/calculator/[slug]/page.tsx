@@ -1,7 +1,7 @@
  "use client";
 
 import { useMemo, useState } from "react";
-import { calculatorCatalog } from "../lib/calculators";
+import { calculatorCatalog } from "../../lib/calculators";
 
 function Field({ label, value, setValue, suffix }: { label: string; value: string; setValue: (v:string)=>void; suffix?:string }) {
   return <label className="field"><span>{label}</span><div className="input-wrap"><input inputMode="decimal" value={value} onChange={e=>setValue(e.target.value)} placeholder="0"/>{suffix && <b>{suffix}</b>}</div></label>;
