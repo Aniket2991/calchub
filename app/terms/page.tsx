@@ -1,2 +1,0 @@
-import Link from "next/link";
-export default function Terms(){return <main className="container section"><Link href="/">← CalcHub</Link><h1>Terms of Use</h1><p>CalcHub calculators provide estimates for informational purposes. You are responsible for checking inputs, assumptions and any applicable rates or terms before using a result for a financial, health or other important decision.</p></main>}

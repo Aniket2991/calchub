@@ -1,2 +1,0 @@
-import Link from "next/link";
-export default function About(){return <main className="container section"><Link href="/">← CalcHub</Link><h1>About CalcHub</h1><p className="lead">CalcHub is a collection of simple online calculators designed for everyday use.</p><p>Our goal is to make common calculations easier to access without unnecessary complexity.</p></main>}
