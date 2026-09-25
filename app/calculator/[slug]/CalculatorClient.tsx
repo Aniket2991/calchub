@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { calculators, getCalculator } from "../../../lib/calculators";
-
+import { calculatorContent } from "../../../lib/calculator-content";
 type Values = Record<string,string>;
 
 function money(n:number) { return "₹" + n.toLocaleString("en-IN",{maximumFractionDigits:2}); }
@@ -17,11 +17,19 @@ export default function CalculatorClient({ slug }: { slug: string }) {
   if (!calc) return <main className="container section"><h1>Calculator not found</h1><Link href="/">Back to CalcHub</Link></main>;
 
   const calculator = calc;
-  const related = calculators.filter(c => c.category === calculator.category && c.slug !== calculator.slug).slice(0,3);
-
-  const set = (k:string,x:string) => setV(p=>({...p,[k]:x}));
+const content = calculatorContent[calculator.slug];
+const related = calculators
+  .filter(
+    c =>
+      c.category === calculator.category &&
+      c.slug !== calculator.slug
+  )
+  .slice(0, 3);
+  
+  const set = (k: string, x: string) =>
+  setV((p) => ({ ...p, [k]: x }));
   const field = (label:string,key:string,type="number",placeholder="") => (
-    <div className="field"><label>{label}</label><input type={type} value={v[key]||""} placeholder={placeholder} onChange={e=>set(key,e.target.value)} /></div>
+<div className="field"><label>{label}</label><input type={type} value={v[key]||""} placeholder={placeholder} onChange={e=>set(key,e.target.value)} /></div>
   );
 
   function calculate() {
@@ -145,12 +153,58 @@ export default function CalculatorClient({ slug }: { slug: string }) {
           </aside>
         </div>
 
-        <section className="panel contentSection">
-          <h2>About this calculator</h2>
-          <p>{calculator.name} is designed to give you a quick estimate from the values you enter. Keep your inputs accurate and use the result as a reference.</p>
-          <h2>How to use it</h2>
-          <ol><li>Enter the required values.</li><li>Review the inputs.</li><li>Press Calculate to see the result.</li></ol>
-        </section>
+    <section className="panel contentSection">
+  <h2>About this calculator</h2>
+  <p>{content?.intro}</p>
+
+  {content?.formula && (
+    <>
+      <h2>Formula</h2>
+      <p>{content.formula}</p>
+    </>
+  )}
+
+  {content?.example && (
+    <>
+      <h2>Example</h2>
+      <p>{content.example}</p>
+    </>
+  )}
+
+  <h2>How to use it</h2>
+
+  <ol>
+    <li>Enter the required values.</li>
+    <li>Review the inputs.</li>
+    <li>Press Calculate to see the result.</li>
+  </ol>
+
+  {content?.tips?.length ? (
+    <>
+      <h2>Tips</h2>
+      <ul>
+        {content.tips.map((tip) => (
+          <li key={tip}>{tip}</li>
+        ))}
+      </ul>
+    </>
+  ) : null}
+
+  {content?.faqs?.length ? (
+    <>
+      <h2>Frequently asked questions</h2>
+
+      <div className="faq">
+        {content.faqs.map((faq) => (
+          <details key={faq.question}>
+            <summary>{faq.question}</summary>
+            <p>{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </>
+  ) : null}
+</section>
 
         {related.length>0 && <section className="section"><div className="sectionHead"><div><h2>Related calculators</h2><p>More tools from {calculator.category}.</p></div></div><div className="related">{related.map(c=><Link className="card" href={`/calculator/${c.slug}`} key={c.slug}><div className="icon">{c.icon}</div><h3>{c.name}</h3><p>{c.description}</p></Link>)}</div></section>}
       </main>

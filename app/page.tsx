@@ -112,7 +112,12 @@ export default function Home() {
       <footer className="footer">
         <div className="container footerGrid">
           <div><div className="logo"><span className="logoMark">+</span>CalcHub</div><p style={{color:"#777",fontSize:13}}>Useful calculations, made simple.</p></div>
-          <div className="footerLinks"><Link href="/about">About</Link><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link></div>
+      <div className="footerLinks">
+  <Link href="/about">About</Link>
+  <Link href="/contact">Contact</Link>
+  <Link href="/privacy">Privacy</Link>
+  <Link href="/terms">Terms</Link>
+</div>
         </div>
       </footer>
     </>
