@@ -62,22 +62,21 @@ ${message}
       answer: response.text || "I couldn't generate a response."
     });
 
-  } catch (error) {
-    console.error("CalcHub Gemini AI error:", error);
+ } catch (error) {
+  console.error("CalcHub Gemini AI error:", error);
 
-    const err = error as {
-      message?: string;
-      status?: number;
-      statusText?: string;
-    };
+  const err = error as {
+    message?: string;
+    status?: number;
+    statusText?: string;
+  };
 
-    return NextResponse.json(
-      {
-        error: "Gemini API error",
-        status: err.status || 500,
-        details: err.message || "Unknown Gemini API error"
-      },
-      { status: 500 }
-    );
-  }
+  return NextResponse.json(
+    {
+      error: "Gemini API error",
+      status: err.status || 500,
+      details: err.message || "Unknown Gemini API error"
+    },
+    { status: 500 }
+  );
 }
