@@ -1,21 +1,22 @@
 import { NextResponse } from "next/server";
-import OpenAI from "openai";
+import { GoogleGenAI } from "@google/genai";
 
 export async function POST(request: Request) {
   try {
-    const apiKey = process.env.OPENAI_API_KEY;
+    const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
       return NextResponse.json(
         {
           error:
-            "CalcHub AI is not configured yet. Please add OPENAI_API_KEY in Vercel Environment Variables."
+            "CalcHub AI is not configured yet. Please add GEMINI_API_KEY in Vercel Environment Variables."
         },
         { status: 503 }
       );
     }
 
     const body = await request.json();
+
     const message = String(body?.message || "").trim();
     const context = body?.context || {};
 
@@ -26,37 +27,42 @@ export async function POST(request: Request) {
       );
     }
 
-    const client = new OpenAI({
+    const ai = new GoogleGenAI({
       apiKey
     });
 
-    const model = process.env.OPENAI_MODEL || "gpt-5.6-luna";
-
-    const response = await client.responses.create({
-      model,
-      instructions: `
-You are CalcHub AI, a helpful assistant inside the CalcHub calculator website.
+    const prompt = `
+You are CalcHub AI, the intelligent assistant inside the CalcHub calculator website.
 
 Your job is to:
 - Explain calculator results clearly.
 - Explain formulas in simple language.
-- Help users choose the appropriate calculator.
+- Help users choose the correct calculator.
 - Help users understand calculations.
-- Be concise and practical.
-- Do not invent calculation results.
-- For financial or health topics, clearly distinguish estimates from professional advice.
+- Answer basic mathematics and finance questions.
+- Be concise, friendly and practical.
+- Never invent calculation results.
+- If numbers are provided, calculate carefully.
+- For financial topics, explain that results are estimates and not professional financial advice.
+- If the user asks about a CalcHub calculator, guide them toward the appropriate calculator.
 
 Current calculator context:
 ${JSON.stringify(context)}
-      `,
-      input: message
+
+User question:
+${message}
+`;
+
+    const response = await ai.models.generateContent({
+      model: "gemini-3.8-flash",
+      contents: prompt
     });
 
     return NextResponse.json({
-      answer: response.output_text
+      answer: response.text || "I couldn't generate a response."
     });
   } catch (error) {
-    console.error("CalcHub AI error:", error);
+    console.error("CalcHub Gemini AI error:", error);
 
     return NextResponse.json(
       {
