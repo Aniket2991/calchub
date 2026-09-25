@@ -1,6 +1,47 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 
+const sleep = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
+
+async function generateWithRetry(
+  ai: GoogleGenAI,
+  model: string,
+  prompt: string
+) {
+  let lastError: unknown;
+
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      return await ai.models.generateContent({
+        model,
+        contents: prompt
+      });
+    } catch (error) {
+      lastError = error;
+
+      const err = error as {
+        status?: number;
+        message?: string;
+      };
+
+      // Retry only temporary server/rate-limit errors.
+      if (
+        err.status !== 503 &&
+        err.status !== 429 &&
+        err.status !== 500
+      ) {
+        throw error;
+      }
+
+      // 1s → 2s → 4s
+      await sleep(1000 * Math.pow(2, attempt));
+    }
+  }
+
+  throw lastError;
+}
+
 export async function POST(request: Request) {
   try {
     const apiKey = process.env.GEMINI_API_KEY;
@@ -53,28 +94,52 @@ User question:
 ${message}
 `;
 
-    const response = await ai.models.generateContent({
-      model: "gemini-3.8-flash",
-      contents: prompt
-    });
+    let response;
+
+    try {
+      // Primary model
+      response = await generateWithRetry(
+        ai,
+        "gemini-3.8-flash",
+        prompt
+      );
+    } catch (primaryError) {
+      console.error(
+        "Primary Gemini model failed:",
+        primaryError
+      );
+
+      // Fallback model
+      response = await generateWithRetry(
+        ai,
+        "gemini-3.5-flash-lite",
+        prompt
+      );
+    }
 
     return NextResponse.json({
-      answer: response.text || "I couldn't generate a response."
+      answer:
+        response.text ||
+        "I couldn't generate a response."
     });
   } catch (error) {
-    console.error("CalcHub Gemini AI error:", error);
+    console.error(
+      "CalcHub Gemini AI error:",
+      error
+    );
 
     const err = error as {
       message?: string;
       status?: number;
-      statusText?: string;
     };
 
     return NextResponse.json(
       {
         error: "Gemini API error",
         status: err.status || 500,
-        details: err.message || "Unknown Gemini API error"
+        details:
+          err.message ||
+          "Unknown Gemini API error"
       },
       { status: 500 }
     );
