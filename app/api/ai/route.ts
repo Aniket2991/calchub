@@ -4,6 +4,23 @@ import { GoogleGenAI } from "@google/genai";
 const sleep = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
 
+const calculators = [
+  "emi-calculator",
+  "sip-calculator",
+  "gst-calculator",
+  "discount-calculator",
+  "simple-interest",
+  "compound-interest",
+  "percentage-calculator",
+  "average-calculator",
+  "bmi-calculator",
+  "age-calculator",
+  "date-difference",
+  "length-converter",
+  "weight-converter",
+  "temperature-converter"
+];
+
 async function generateWithRetry(
   ai: GoogleGenAI,
   model: string,
@@ -22,10 +39,8 @@ async function generateWithRetry(
 
       const err = error as {
         status?: number;
-        message?: string;
       };
 
-      // Retry only temporary server/rate-limit errors.
       if (
         err.status !== 503 &&
         err.status !== 429 &&
@@ -34,12 +49,20 @@ async function generateWithRetry(
         throw error;
       }
 
-      // 1s → 2s → 4s
       await sleep(1000 * Math.pow(2, attempt));
     }
   }
 
   throw lastError;
+}
+
+function cleanJson(text: string) {
+  const cleaned = text
+    .replace(/```json/g, "")
+    .replace(/```/g, "")
+    .trim();
+
+  return JSON.parse(cleaned);
 }
 
 export async function POST(request: Request) {
@@ -73,31 +96,94 @@ export async function POST(request: Request) {
     });
 
     const prompt = `
-You are CalcHub AI, the intelligent assistant inside the CalcHub calculator website.
+You are CalcHub AI.
 
-Your job is to:
-- Explain calculator results clearly.
-- Explain formulas in simple language.
-- Help users choose the correct calculator.
-- Help users understand calculations.
-- Answer basic mathematics and finance questions.
-- Be concise, friendly and practical.
-- Never invent calculation results.
-- If numbers are provided, calculate carefully.
-- For financial topics, explain that results are estimates and not professional financial advice.
-- If the user asks about a CalcHub calculator, guide them toward the appropriate calculator.
+Your task is to understand the user's request and determine whether they are asking to use one of CalcHub's calculators.
+
+Available calculators:
+${calculators.join(", ")}
+
+Return ONLY valid JSON.
+Do not use markdown.
+Do not add explanations outside the JSON.
+
+JSON format:
+
+{
+  "calculator": "calculator-slug-or-null",
+  "values": {},
+  "answer": "short helpful response"
+}
+
+Rules:
+
+1. If the user clearly wants a calculation that matches a CalcHub calculator, identify it.
+2. Extract the values from the user's message.
+3. Convert units when necessary.
+4. For EMI:
+   - p = loan amount
+   - rate = annual interest rate
+   - months = loan tenure in months
+5. For SIP:
+   - p = monthly investment
+   - rate = expected annual return
+   - months = investment period in months
+6. For GST:
+   - amount = amount
+   - gst = GST percentage
+   - mode = "add" or "remove"
+7. For discount:
+   - price = original price
+   - discount = discount percentage
+8. For simple interest:
+   - p = principal
+   - rate = annual rate
+   - years = time in years
+9. For compound interest:
+   - p = principal
+   - rate = annual rate
+   - years = time in years
+   - frequency = compounds per year
+10. For percentage:
+   - a = number
+   - b = percentage
+11. For average:
+   - numbers = comma-separated numbers
+12. For BMI:
+   - weight = kilograms
+   - height = centimeters
+13. For age:
+   - dob = YYYY-MM-DD if a date of birth is provided
+14. For date difference:
+   - start = YYYY-MM-DD
+   - end = YYYY-MM-DD
+15. For length conversion:
+   - value = number
+   - from = source unit
+   - to = target unit
+16. For weight conversion:
+   - value = number
+   - from = source unit
+   - to = target unit
+17. For temperature conversion:
+   - value = number
+   - from = C, F, or K
+   - to = C, F, or K
+18. If required information is missing, keep the calculator identified but leave the missing value out.
+19. If the request is not a calculator request, use:
+   "calculator": null
+20. Never invent missing values.
 
 Current calculator context:
 ${JSON.stringify(context)}
 
-User question:
+User request:
 ${message}
 `;
 
     let response;
 
     try {
-      // Primary model
       response = await generateWithRetry(
         ai,
         "gemini-3.8-flash",
@@ -109,7 +195,6 @@ ${message}
         primaryError
       );
 
-      // Fallback model
       response = await generateWithRetry(
         ai,
         "gemini-3.5-flash-lite",
@@ -117,10 +202,26 @@ ${message}
       );
     }
 
+    const rawText = response.text || "";
+
+    let parsed;
+
+    try {
+      parsed = cleanJson(rawText);
+    } catch {
+      return NextResponse.json({
+        answer: rawText,
+        calculator: null,
+        values: {}
+      });
+    }
+
     return NextResponse.json({
-      answer:
-        response.text ||
-        "I couldn't generate a response."
+      answer: parsed.answer || "",
+      calculator: calculators.includes(parsed.calculator)
+        ? parsed.calculator
+        : null,
+      values: parsed.values || {}
     });
   } catch (error) {
     console.error(
