@@ -1,109 +1,281 @@
 import Link from "next/link";
 import { calculators } from "../lib/calculators";
 
-const popular = ["emi-calculator","sip-calculator","gst-calculator","age-calculator","bmi-calculator","percentage-calculator","discount-calculator","temperature-converter"];
+const popular = [
+  "emi-calculator",
+  "sip-calculator",
+  "gst-calculator",
+  "age-calculator",
+  "bmi-calculator",
+  "percentage-calculator",
+  "discount-calculator",
+  "temperature-converter",
+];
 
 export default function Home() {
-  const popularCalcs = popular.map(s => calculators.find(c => c.slug === s)!).filter(Boolean);
-  const categories = [...new Set(calculators.map(c => c.category))];
+  const popularCalcs = popular
+    .map((s) => calculators.find((c) => c.slug === s)!)
+    .filter(Boolean);
+
+  const categories = [...new Set(calculators.map((c) => c.category))];
 
   return (
     <>
       <header className="header">
         <div className="container nav">
-          <Link className="logo" href="/"><span className="logoMark">+</span>CalcHub</Link>
-          <nav className="navLinks">
+          <Link className="logo" href="/">
+            <span className="logoMark">+</span>CalcHub
+          </Link>
+
+          <nav className="navLinks" aria-label="Main navigation">
             <Link href="/#popular">Popular</Link>
             <Link href="/#categories">Categories</Link>
             <Link href="/about">About</Link>
+            <Link href="/contact">Contact</Link>
           </nav>
         </div>
       </header>
 
       <main>
+        {/* Hero */}
         <section className="hero">
           <div className="container heroGrid">
             <div>
               <div className="eyebrow">Simple • Fast • Free</div>
-              <h1>Calculations, without the clutter.</h1>
-              <p>CalcHub brings everyday finance, math, health, date and conversion calculators into one clean place.</p>
+
+              <h1>Free Online Calculators for Everyday Use</h1>
+
+              <p>
+                CalcHub provides easy-to-use calculators for finance, math,
+                health, dates, and everyday unit conversions. Get clear
+                results quickly without complicated tools.
+              </p>
+
               <div className="search">
-                <input aria-label="Search calculators" placeholder="What do you want to calculate?" />
-                <a className="primary" href="#popular">Explore</a>
+                <input
+                  aria-label="Search calculators"
+                  placeholder="What do you want to calculate?"
+                />
+                <a className="primary" href="#popular">
+                  Explore Calculators
+                </a>
               </div>
             </div>
+
             <div className="heroCard">
               <div className="mini">CALCHUB / QUICK START</div>
-              <h3>Pick a calculator. Get an answer.</h3>
+
+              <h2>Pick a calculator. Get an answer.</h2>
+
               <div className="miniCalc">
-                <div className="miniBox"><span>Finance</span>EMI · SIP · GST</div>
-                <div className="miniBox"><span>Math</span>% · Average</div>
-                <div className="miniBox"><span>Health</span>BMI</div>
-                <div className="miniBox"><span>Everyday</span>Age · Units</div>
+                <div className="miniBox">
+                  <span>Finance</span>
+                  EMI · SIP · GST
+                </div>
+
+                <div className="miniBox">
+                  <span>Math</span>
+                  % · Average
+                </div>
+
+                <div className="miniBox">
+                  <span>Health</span>
+                  BMI
+                </div>
+
+                <div className="miniBox">
+                  <span>Everyday</span>
+                  Age · Units
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        <div className="container"><div className="ad">ADVERTISEMENT</div></div>
+        <div className="container">
+          <div className="ad">ADVERTISEMENT</div>
+        </div>
 
+        {/* Popular */}
         <section className="section" id="popular">
           <div className="container">
             <div className="sectionHead">
-              <div><h2>Popular calculators</h2><p>Useful tools for everyday decisions.</p></div>
+              <div>
+                <h2>Popular Calculators</h2>
+                <p>
+                  Quickly calculate common financial, mathematical, health,
+                  and everyday values.
+                </p>
+              </div>
             </div>
+
             <div className="grid">
-              {popularCalcs.map(c => (
-                <Link className="card" href={`/calculator/${c.slug}`} key={c.slug}>
-                  <div className="icon">{c.icon}</div><h3>{c.name}</h3><p>{c.description}</p>
+              {popularCalcs.map((c) => (
+                <Link
+                  className="card"
+                  href={`/calculator/${c.slug}`}
+                  key={c.slug}
+                >
+                  <div className="icon">{c.icon}</div>
+                  <h3>{c.name}</h3>
+                  <p>{c.description}</p>
                 </Link>
               ))}
             </div>
           </div>
         </section>
 
+        {/* Categories */}
         <section className="section" id="categories">
           <div className="container">
-            <div className="sectionHead"><div><h2>Browse by category</h2><p>Everything organized in one place.</p></div></div>
+            <div className="sectionHead">
+              <div>
+                <h2>Browse Calculators by Category</h2>
+                <p>
+                  Find the right calculator by choosing a category below.
+                </p>
+              </div>
+            </div>
+
             <div className="categoryRow">
-              {categories.map(c => <a className="chip" href={`#${c.toLowerCase().replaceAll(" ","-").replace("&","and")}`} key={c}>{c}</a>)}
+              {categories.map((c) => (
+                <a
+                  className="chip"
+                  href={`#${c
+                    .toLowerCase()
+                    .replaceAll(" ", "-")
+                    .replace("&", "and")}`}
+                  key={c}
+                >
+                  {c}
+                </a>
+              ))}
             </div>
           </div>
         </section>
 
-        {categories.map(cat => (
-          <section className="section" id={cat.toLowerCase().replaceAll(" ","-").replace("&","and")} key={cat}>
+        {/* Category calculator sections */}
+        {categories.map((cat) => (
+          <section
+            className="section"
+            id={cat.toLowerCase().replaceAll(" ", "-").replace("&", "and")}
+            key={cat}
+          >
             <div className="container">
-              <div className="sectionHead"><div><h2>{cat}</h2><p>Free calculators for {cat.toLowerCase()}.</p></div></div>
+              <div className="sectionHead">
+                <div>
+                  <h2>{cat} Calculators</h2>
+                  <p>
+                    Free {cat.toLowerCase()} calculators designed for quick
+                    and simple calculations.
+                  </p>
+                </div>
+              </div>
+
               <div className="grid">
-                {calculators.filter(c => c.category === cat).map(c => (
-                  <Link className="card" href={`/calculator/${c.slug}`} key={c.slug}>
-                    <div className="icon">{c.icon}</div><h3>{c.name}</h3><p>{c.description}</p>
-                  </Link>
-                ))}
+                {calculators
+                  .filter((c) => c.category === cat)
+                  .map((c) => (
+                    <Link
+                      className="card"
+                      href={`/calculator/${c.slug}`}
+                      key={c.slug}
+                    >
+                      <div className="icon">{c.icon}</div>
+                      <h3>{c.name}</h3>
+                      <p>{c.description}</p>
+                    </Link>
+                  ))}
               </div>
             </div>
           </section>
         ))}
 
+        {/* Why CalcHub */}
         <section className="section">
           <div className="container">
-            <div className="sectionHead"><div><h2>Why CalcHub?</h2><p>Designed to make small calculations feel effortless.</p></div></div>
+            <div className="sectionHead">
+              <div>
+                <h2>Why Use CalcHub?</h2>
+                <p>
+                  Designed to make everyday calculations simple and
+                  straightforward.
+                </p>
+              </div>
+            </div>
+
             <div className="featureGrid">
-              <div className="feature"><strong>Fast to use</strong><span>Focused interfaces with the important inputs up front.</span></div>
-              <div className="feature"><strong>Mobile friendly</strong><span>Responsive layouts that work comfortably on phones and desktops.</span></div>
-              <div className="feature"><strong>Clear results</strong><span>Results are presented in a simple format so they are easy to understand.</span></div>
+              <div className="feature">
+                <strong>Fast to use</strong>
+                <span>
+                  Focused calculator interfaces with important inputs easy to
+                  find.
+                </span>
+              </div>
+
+              <div className="feature">
+                <strong>Mobile friendly</strong>
+                <span>
+                  Responsive layouts designed for phones, tablets, and
+                  desktops.
+                </span>
+              </div>
+
+              <div className="feature">
+                <strong>Clear results</strong>
+                <span>
+                  Results are presented in a simple format that is easy to
+                  understand.
+                </span>
+              </div>
             </div>
           </div>
         </section>
 
+        {/* FAQ */}
         <section className="section">
           <div className="container">
-            <div className="sectionHead"><div><h2>Frequently asked questions</h2><p>Quick answers about CalcHub.</p></div></div>
+            <div className="sectionHead">
+              <div>
+                <h2>Frequently Asked Questions</h2>
+                <p>Common questions about using CalcHub.</p>
+              </div>
+            </div>
+
             <div className="faq">
-              <details><summary>Are CalcHub calculators free?</summary><p>Yes. The calculators are designed to be free to use.</p></details>
-              <details><summary>Can I use CalcHub on my phone?</summary><p>Yes. The interface is responsive and designed for mobile screens as well as desktops.</p></details>
-              <details><summary>Are financial results guaranteed?</summary><p>No. Financial calculators provide estimates based on the numbers and assumptions you enter. Check actual rates, fees and terms before making financial decisions.</p></details>
+              <details>
+                <summary>Are CalcHub calculators free?</summary>
+                <p>
+                  Yes. CalcHub calculators are designed to be free to use.
+                </p>
+              </details>
+
+              <details>
+                <summary>Can I use CalcHub on my phone?</summary>
+                <p>
+                  Yes. CalcHub uses a responsive interface designed for
+                  mobile screens as well as desktops.
+                </p>
+              </details>
+
+              <details>
+                <summary>Are financial calculator results guaranteed?</summary>
+                <p>
+                  No. Financial calculators provide estimates based on the
+                  values and assumptions you enter. Always check actual
+                  interest rates, fees, taxes, and terms before making
+                  financial decisions.
+                </p>
+              </details>
+
+              <details>
+                <summary>Does CalcHub provide medical advice?</summary>
+                <p>
+                  No. Health-related calculators are provided for general
+                  informational purposes and should not replace professional
+                  medical advice.
+                </p>
+              </details>
             </div>
           </div>
         </section>
@@ -111,13 +283,22 @@ export default function Home() {
 
       <footer className="footer">
         <div className="container footerGrid">
-          <div><div className="logo"><span className="logoMark">+</span>CalcHub</div><p style={{color:"#777",fontSize:13}}>Useful calculations, made simple.</p></div>
-      <div className="footerLinks">
-  <Link href="/about">About</Link>
-  <Link href="/contact">Contact</Link>
-  <Link href="/privacy">Privacy</Link>
-  <Link href="/terms">Terms</Link>
-</div>
+          <div>
+            <div className="logo">
+              <span className="logoMark">+</span>CalcHub
+            </div>
+
+            <p style={{ color: "#777", fontSize: 13 }}>
+              Useful calculations, made simple.
+            </p>
+          </div>
+
+          <div className="footerLinks">
+            <Link href="/about">About</Link>
+            <Link href="/contact">Contact</Link>
+            <Link href="/privacy">Privacy</Link>
+            <Link href="/terms">Terms</Link>
+          </div>
         </div>
       </footer>
     </>
