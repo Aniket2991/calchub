@@ -3,27 +3,72 @@ import "./globals.css";
 import AIChat from "./components/AIChat";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://calchub-blond.vercel.app"),
+
   title: {
     default: "CalcHub — Free Online Calculators",
-    template: "%s | CalcHub"
+    template: "%s | CalcHub",
   },
+
   description:
-    "Fast, free and easy-to-use online calculators for finance, math, health, dates and everyday conversions.",
+    "Free online calculators for EMI, SIP, GST, percentage, BMI, age, interest, discounts, conversions and more. Fast and easy to use.",
+
   keywords: [
-    "online calculator",
+    "online calculators",
+    "free online calculator",
     "EMI calculator",
     "SIP calculator",
     "GST calculator",
-    "age calculator",
+    "percentage calculator",
     "BMI calculator",
-    "percentage calculator"
-  ]
+    "age calculator",
+    "compound interest calculator",
+    "simple interest calculator",
+    "discount calculator",
+    "unit converter",
+  ],
+
+  alternates: {
+    canonical: "https://calchub-blond.vercel.app/",
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+
+  openGraph: {
+    title: "CalcHub — Free Online Calculators",
+    description:
+      "Free calculators for finance, math, health, dates, and everyday conversions.",
+    url: "https://calchub-blond.vercel.app/",
+    siteName: "CalcHub",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary",
+    title: "CalcHub — Free Online Calculators",
+    description:
+      "Free calculators for finance, math, health, dates, and everyday conversions.",
+  },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      <body>{children}<AIChat /></body>
+      <body>
+        {children}
+        <AIChat />
+      </body>
     </html>
   );
 }
