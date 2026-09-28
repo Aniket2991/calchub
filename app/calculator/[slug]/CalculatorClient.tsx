@@ -208,7 +208,25 @@ const related = calculators
 
         {related.length>0 && <section className="section"><div className="sectionHead"><div><h2>Related calculators</h2><p>More tools from {calculator.category}.</p></div></div><div className="related">{related.map(c=><Link className="card" href={`/calculator/${c.slug}`} key={c.slug}><div className="icon">{c.icon}</div><h3>{c.name}</h3><p>{c.description}</p></Link>)}</div></section>}
       </main>
-      <footer className="footer"><div className="container footerGrid"><div className="logo"><span className="logoMark">+</span>CalcHub</div><div className="footerLinks"><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link></div></div></footer>
+    <footer className="footer">
+  <div className="container footerGrid">
+    <div>
+      <div className="logo">
+        <span className="logoMark">+</span>CalcHub
+      </div>
+      <p style={{ color: "#777", fontSize: 13 }}>
+        Useful calculations, made simple.
+      </p>
+    </div>
+
+    <div className="footerLinks">
+      <Link href="/about">About</Link>
+      <Link href="/contact">Contact</Link>
+      <Link href="/privacy">Privacy</Link>
+      <Link href="/terms">Terms</Link>
+    </div>
+  </div>
+</footer>  
     </>
   );
 }
