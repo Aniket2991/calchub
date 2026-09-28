@@ -7,38 +7,53 @@ export type CalculatorContent = {
 };
 
 export const calculatorContent: Record<string, CalculatorContent> = {
-  "emi-calculator": {
-    intro:
-      "The EMI Calculator helps estimate the monthly payment for a loan using the loan amount, annual interest rate and loan tenure. It also shows the estimated total payment and total interest.",
-    formula:
-      "EMI = P × r × (1 + r)ⁿ ÷ ((1 + r)ⁿ − 1), where P is the loan amount, r is the monthly interest rate and n is the number of monthly payments.",
-    example:
-      "For example, a loan of ₹5,00,000 at an annual interest rate of 9% for 60 months can be entered into the calculator to estimate the monthly EMI.",
-    tips: [
-      "Enter the annual interest rate as a percentage.",
-      "Enter the loan tenure in months.",
-      "Check the total interest as well as the monthly EMI.",
-      "Actual loan payments can vary depending on lender terms, fees and other charges."
-    ],
-    faqs: [
-      {
-        question: "What is EMI?",
-        answer:
-          "EMI stands for Equated Monthly Instalment. It is the regular amount paid toward a loan according to the applicable repayment schedule."
-      },
-      {
-        question: "Does a longer loan tenure reduce EMI?",
-        answer:
-          "A longer tenure can reduce the monthly payment, but it can also increase the total interest paid over the life of the loan."
-      },
-      {
-        question: "Is the EMI result exact?",
-        answer:
-          "The result is an estimate based on the values entered. Actual repayment amounts can differ because of lender-specific terms, fees and other charges."
-      }
-    ]
-  },
+"emi-calculator": {
+  intro:
+    "The EMI Calculator helps you estimate the monthly instalment for a loan based on the loan amount, annual interest rate and repayment tenure. It also estimates the total amount you will repay and the total interest paid over the loan period.",
 
+  formula:
+    "EMI = P × r × (1 + r)ⁿ ÷ ((1 + r)ⁿ − 1), where P is the principal loan amount, r is the monthly interest rate expressed as a decimal, and n is the total number of monthly payments.",
+
+  example:
+    "For example, if you borrow ₹5,00,000 at an annual interest rate of 9% for 60 months, the estimated EMI is about ₹10,380 per month. The estimated total repayment is about ₹6,22,772, including about ₹1,22,772 in interest. Actual amounts may differ depending on the lender's terms, fees and repayment conditions.",
+
+  tips: [
+    "Enter the loan amount you plan to borrow.",
+    "Enter the annual interest rate as a percentage, such as 9%.",
+    "Enter the loan tenure in months. For example, 5 years is 60 months.",
+    "Compare both the monthly EMI and total interest before evaluating a loan.",
+    "A longer tenure can reduce the monthly EMI but may increase the total interest paid.",
+    "Actual loan costs can vary because of lender-specific rates, processing fees, taxes, insurance and other charges."
+  ],
+
+  faqs: [
+    {
+      question: "What is EMI?",
+      answer:
+        "EMI stands for Equated Monthly Instalment. It is the scheduled amount a borrower pays periodically toward a loan, generally including both principal and interest."
+    },
+    {
+      question: "How is EMI calculated?",
+      answer:
+        "The EMI is calculated using the loan amount, monthly interest rate and total number of monthly payments. The calculator uses the standard reducing-balance EMI formula."
+    },
+    {
+      question: "Does a longer loan tenure reduce EMI?",
+      answer:
+        "A longer tenure can reduce the monthly EMI because the repayment is spread over more months. However, it can increase the total interest paid over the life of the loan."
+    },
+    {
+      question: "Does a lower interest rate reduce EMI?",
+      answer:
+        "Generally, a lower interest rate reduces the interest component of the repayment and can reduce the EMI when the loan amount and tenure remain the same."
+    },
+    {
+      question: "Is the EMI result exact?",
+      answer:
+        "The result is an estimate based on the values entered into the calculator. Actual repayment amounts may differ because lenders can apply different rates, fees, rounding methods and other charges."
+    }
+  ]
+},
   "sip-calculator": {
     intro:
       "The SIP Calculator estimates the future value of regular monthly investments based on the investment amount, expected annual return and investment period.",
