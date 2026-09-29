@@ -133,6 +133,467 @@ const related = calculators
         let out=to==="C"?c:to==="F"?c*9/5+32:c+273.15;
         r=out.toLocaleString("en-IN",{maximumFractionDigits:4})+" °"+to; break;
       }
+      case "salary-calculator": {
+  const gross = num(v.gross);
+  const deductions = num(v.deductions);
+
+  const takeHome = gross - deductions;
+
+  r = money(takeHome);
+
+  rr = [
+    ["Gross monthly salary", money(gross)],
+    ["Total deductions", money(deductions)],
+    ["Estimated annual take-home", money(takeHome * 12)],
+  ];
+
+  break;
+}
+
+case "income-tax-calculator": {
+  const income = num(v.income);
+  const regime = v.regime || "new";
+
+  function calculateNewTax(x: number) {
+    let tax = 0;
+
+    if (x > 2400000) {
+      tax += (x - 2400000) * 0.30;
+      x = 2400000;
+    }
+
+    if (x > 2000000) {
+      tax += (x - 2000000) * 0.25;
+      x = 2000000;
+    }
+
+    if (x > 1600000) {
+      tax += (x - 1600000) * 0.20;
+      x = 1600000;
+    }
+
+    if (x > 1200000) {
+      tax += (x - 1200000) * 0.15;
+      x = 1200000;
+    }
+
+    if (x > 800000) {
+      tax += (x - 800000) * 0.10;
+      x = 800000;
+    }
+
+    if (x > 400000) {
+      tax += (x - 400000) * 0.05;
+    }
+
+    return tax;
+  }
+
+  function calculateOldTax(x: number) {
+    let tax = 0;
+
+    if (x > 1000000) {
+      tax += (x - 1000000) * 0.30;
+      x = 1000000;
+    }
+
+    if (x > 500000) {
+      tax += (x - 500000) * 0.20;
+      x = 500000;
+    }
+
+    if (x > 250000) {
+      tax += (x - 250000) * 0.05;
+    }
+
+    return tax;
+  }
+
+  let tax =
+    regime === "new"
+      ? calculateNewTax(income)
+      : calculateOldTax(income);
+
+  if (regime === "new" && income <= 1200000) {
+    tax = 0;
+  }
+
+  if (regime === "old" && income <= 500000) {
+    tax = Math.max(0, tax - 12500);
+  }
+
+  const cess = tax * 0.04;
+  const totalTax = tax + cess;
+
+  r = money(totalTax);
+
+  rr = [
+    ["Tax before cess", money(tax)],
+    ["Health & education cess", money(cess)],
+    ["Estimated total tax", money(totalTax)],
+  ];
+
+  break;
+}
+
+case "profit-loss-calculator": {
+  const cost = num(v.cost);
+  const selling = num(v.selling);
+
+  const difference = selling - cost;
+
+  if (difference >= 0) {
+    const profitPercent = cost ? (difference / cost) * 100 : 0;
+
+    r = money(difference);
+
+    rr = [
+      ["Status", "Profit"],
+      ["Profit", money(difference)],
+      ["Profit percentage", profitPercent.toFixed(2) + "%"],
+    ];
+  } else {
+    const loss = Math.abs(difference);
+    const lossPercent = cost ? (loss / cost) * 100 : 0;
+
+    r = money(loss);
+
+    rr = [
+      ["Status", "Loss"],
+      ["Loss", money(loss)],
+      ["Loss percentage", lossPercent.toFixed(2) + "%"],
+    ];
+  }
+
+  break;
+}
+
+case "percentage-change-calculator": {
+  const original = num(v.original);
+  const current = num(v.current);
+
+  if (original === 0) {
+    r = "Original value cannot be 0.";
+    break;
+  }
+
+  const change = ((current - original) / Math.abs(original)) * 100;
+
+  r = change.toFixed(2) + "%";
+
+  rr = [
+    ["Original value", original.toLocaleString("en-IN")],
+    ["New value", current.toLocaleString("en-IN")],
+    ["Change", change >= 0 ? "Increase" : "Decrease"],
+  ];
+
+  break;
+}
+
+case "ratio-calculator": {
+  const a = Math.abs(Math.round(num(v.a)));
+  const b = Math.abs(Math.round(num(v.b)));
+
+  if (!a || !b) {
+    r = "Enter two positive numbers.";
+    break;
+  }
+
+  function gcd(x: number, y: number): number {
+    while (y) {
+      const temp = y;
+      y = x % y;
+      x = temp;
+    }
+
+    return x;
+  }
+
+  const divisor = gcd(a, b);
+
+  r = `${a / divisor}:${b / divisor}`;
+
+  rr = [
+    ["Original ratio", `${a}:${b}`],
+    ["Simplified ratio", r],
+  ];
+
+  break;
+}
+
+case "fraction-calculator": {
+  const n1 = Math.round(num(v.n1));
+  const d1 = Math.round(num(v.d1));
+  const n2 = Math.round(num(v.n2));
+  const d2 = Math.round(num(v.d2));
+  const operation = v.operation || "add";
+
+  if (d1 === 0 || d2 === 0) {
+    r = "Denominator cannot be 0.";
+    break;
+  }
+
+  let numerator = 0;
+  let denominator = 1;
+
+  if (operation === "add") {
+    numerator = n1 * d2 + n2 * d1;
+    denominator = d1 * d2;
+  } else if (operation === "subtract") {
+    numerator = n1 * d2 - n2 * d1;
+    denominator = d1 * d2;
+  } else if (operation === "multiply") {
+    numerator = n1 * n2;
+    denominator = d1 * d2;
+  } else {
+    if (n2 === 0) {
+      r = "Cannot divide by zero.";
+      break;
+    }
+
+    numerator = n1 * d2;
+    denominator = d1 * n2;
+  }
+
+  const divisor = Math.abs(
+    (() => {
+      let a = Math.abs(numerator);
+      let b = Math.abs(denominator);
+
+      while (b) {
+        const temp = b;
+        b = a % b;
+        a = temp;
+      }
+
+      return a || 1;
+    })()
+  );
+
+  numerator /= divisor;
+  denominator /= divisor;
+
+  if (denominator < 0) {
+    numerator *= -1;
+    denominator *= -1;
+  }
+
+  r =
+    denominator === 1
+      ? String(numerator)
+      : `${numerator}/${denominator}`;
+
+  rr = [["Result", r]];
+
+  break;
+}
+
+case "time-calculator": {
+  const h1 = num(v.h1);
+  const m1 = num(v.m1);
+  const h2 = num(v.h2);
+  const m2 = num(v.m2);
+  const operation = v.operation || "add";
+
+  const first = h1 * 60 + m1;
+  const second = h2 * 60 + m2;
+
+  let total =
+    operation === "subtract"
+      ? first - second
+      : first + second;
+
+  total = ((total % 1440) + 1440) % 1440;
+
+  const hours = Math.floor(total / 60);
+  const minutes = total % 60;
+
+  r = `${hours} hours ${minutes} minutes`;
+
+  rr = [
+    ["Total minutes", String(total)],
+  ];
+
+  break;
+}
+
+case "hours-calculator": {
+  const start = v.startTime || "";
+  const end = v.endTime || "";
+
+  if (!start || !end) {
+    r = "Enter both times.";
+    break;
+  }
+
+  const [sh, sm] = start.split(":").map(Number);
+  const [eh, em] = end.split(":").map(Number);
+
+  let startMinutes = sh * 60 + sm;
+  let endMinutes = eh * 60 + em;
+
+  if (endMinutes < startMinutes) {
+    endMinutes += 1440;
+  }
+
+  const duration = endMinutes - startMinutes;
+
+  r = `${Math.floor(duration / 60)} hours ${
+    duration % 60
+  } minutes`;
+
+  rr = [
+    ["Total minutes", String(duration)],
+  ];
+
+  break;
+}
+
+case "age-difference-calculator": {
+  if (!v.dob1 || !v.dob2) {
+    r = "Select both dates.";
+    break;
+  }
+
+  const first = new Date(v.dob1 + "T00:00:00");
+  const second = new Date(v.dob2 + "T00:00:00");
+
+  const older = first < second ? first : second;
+  const newer = first < second ? second : first;
+
+  let years = newer.getFullYear() - older.getFullYear();
+  let months = newer.getMonth() - older.getMonth();
+  let days = newer.getDate() - older.getDate();
+
+  if (days < 0) {
+    months--;
+
+    const previousMonth = new Date(
+      newer.getFullYear(),
+      newer.getMonth(),
+      0
+    );
+
+    days += previousMonth.getDate();
+  }
+
+  if (months < 0) {
+    years--;
+    months += 12;
+  }
+
+  r = `${years} years, ${months} months, ${days} days`;
+
+  rr = [
+    ["Earlier date", older.toLocaleDateString("en-IN")],
+    ["Later date", newer.toLocaleDateString("en-IN")],
+  ];
+
+  break;
+}
+
+case "area-calculator": {
+  const shape = v.shape || "rectangle";
+  const a = num(v.a);
+  const b = num(v.b);
+
+  let area = 0;
+
+  if (shape === "rectangle") {
+    area = a * b;
+  } else if (shape === "triangle") {
+    area = 0.5 * a * b;
+  } else {
+    area = Math.PI * a * a;
+  }
+
+  r = area.toLocaleString("en-IN", {
+    maximumFractionDigits: 6,
+  });
+
+  rr = [
+    ["Shape", shape],
+    ["Area", "square units"],
+  ];
+
+  break;
+}
+
+case "volume-calculator": {
+  const shape = v.shape || "cuboid";
+  const a = num(v.a);
+  const b = num(v.b);
+  const c = num(v.c);
+
+  let volume = 0;
+
+  if (shape === "cuboid") {
+    volume = a * b * c;
+  } else if (shape === "cylinder") {
+    volume = Math.PI * a * a * b;
+  } else {
+    volume = (4 / 3) * Math.PI * Math.pow(a, 3);
+  }
+
+  r = volume.toLocaleString("en-IN", {
+    maximumFractionDigits: 6,
+  });
+
+  rr = [
+    ["Shape", shape],
+    ["Volume", "cubic units"],
+  ];
+
+  break;
+}
+
+case "speed-calculator": {
+  const distance = num(v.distance);
+  const time = num(v.time);
+
+  if (time === 0) {
+    r = "Time cannot be 0.";
+    break;
+  }
+
+  const speed = distance / time;
+
+  r = speed.toLocaleString("en-IN", {
+    maximumFractionDigits: 4,
+  });
+
+  rr = [
+    ["Distance", distance.toLocaleString("en-IN")],
+    ["Time", time.toLocaleString("en-IN")],
+    ["Average speed", r],
+  ];
+
+  break;
+}
+
+case "fuel-cost-calculator": {
+  const distance = num(v.distance);
+  const mileage = num(v.mileage);
+  const fuelPrice = num(v.fuelPrice);
+
+  if (mileage === 0) {
+    r = "Mileage cannot be 0.";
+    break;
+  }
+
+  const fuelUsed = distance / mileage;
+  const cost = fuelUsed * fuelPrice;
+
+  r = money(cost);
+
+  rr = [
+    ["Distance", distance + " km"],
+    ["Fuel required", fuelUsed.toFixed(2) + " L"],
+    ["Fuel price", money(fuelPrice) + "/L"],
+  ];
+
+  break;
+}
       default: r="This calculator is being expanded. Try one of the available calculators from the home page.";
     }
     setResult(r); setRows(rr);
@@ -164,7 +625,178 @@ const related = calculators
       case "length-converter": return <>{field("Value","value")} <div className="field"><label>From</label><select value={v.from||"m"} onChange={e=>set("from",e.target.value)}>{["mm","cm","m","km","in","ft","yd","mi"].map(x=><option key={x}>{x}</option>)}</select></div><div className="field"><label>To</label><select value={v.to||"ft"} onChange={e=>set("to",e.target.value)}>{["mm","cm","m","km","in","ft","yd","mi"].map(x=><option key={x}>{x}</option>)}</select></div></>;
       case "weight-converter": return <>{field("Value","value")} <div className="field"><label>From</label><select value={v.from||"kg"} onChange={e=>set("from",e.target.value)}>{["g","kg","lb","oz"].map(x=><option key={x}>{x}</option>)}</select></div><div className="field"><label>To</label><select value={v.to||"lb"} onChange={e=>set("to",e.target.value)}>{["g","kg","lb","oz"].map(x=><option key={x}>{x}</option>)}</select></div></>;
       case "temperature-converter": return <>{field("Value","value")} <div className="field"><label>From</label><select value={v.from||"C"} onChange={e=>set("from",e.target.value)}>{["C","F","K"].map(x=><option key={x}>{x}</option>)}</select></div><div className="field"><label>To</label><select value={v.to||"F"} onChange={e=>set("to",e.target.value)}>{["C","F","K"].map(x=><option key={x}>{x}</option>)}</select></div></>;
-      default: return <div className="notice">This calculator page is ready for expansion. More formulas can be added without changing the site design.</div>;
+      case "salary-calculator":
+  return (
+    <>
+      {field("Gross monthly salary", "gross")}
+      {field("Monthly deductions", "deductions")}
+    </>
+  );
+
+case "income-tax-calculator":
+  return (
+    <>
+      {field("Annual taxable income", "income")}
+
+      <div className="field">
+        <label>Tax regime</label>
+        <select
+          value={v.regime || "new"}
+          onChange={(e) => set("regime", e.target.value)}
+        >
+          <option value="new">New Regime</option>
+          <option value="old">Old Regime</option>
+        </select>
+      </div>
+    </>
+  );
+
+case "profit-loss-calculator":
+  return (
+    <>
+      {field("Cost price", "cost")}
+      {field("Selling price", "selling")}
+    </>
+  );
+
+case "percentage-change-calculator":
+  return (
+    <>
+      {field("Original value", "original")}
+      {field("New value", "current")}
+    </>
+  );
+
+case "ratio-calculator":
+  return (
+    <>
+      {field("First number", "a")}
+      {field("Second number", "b")}
+    </>
+  );
+
+case "fraction-calculator":
+  return (
+    <>
+      {field("Numerator 1", "n1")}
+      {field("Denominator 1", "d1")}
+      {field("Numerator 2", "n2")}
+      {field("Denominator 2", "d2")}
+
+      <div className="field full">
+        <label>Operation</label>
+
+        <select
+          value={v.operation || "add"}
+          onChange={(e) => set("operation", e.target.value)}
+        >
+          <option value="add">Add</option>
+          <option value="subtract">Subtract</option>
+          <option value="multiply">Multiply</option>
+          <option value="divide">Divide</option>
+        </select>
+      </div>
+    </>
+  );
+
+case "time-calculator":
+  return (
+    <>
+      {field("First hours", "h1")}
+      {field("First minutes", "m1")}
+      {field("Second hours", "h2")}
+      {field("Second minutes", "m2")}
+
+      <div className="field full">
+        <label>Operation</label>
+
+        <select
+          value={v.operation || "add"}
+          onChange={(e) => set("operation", e.target.value)}
+        >
+          <option value="add">Add</option>
+          <option value="subtract">Subtract</option>
+        </select>
+      </div>
+    </>
+  );
+
+case "hours-calculator":
+  return (
+    <>
+      {field("Start time", "startTime", "time")}
+      {field("End time", "endTime", "time")}
+    </>
+  );
+
+case "age-difference-calculator":
+  return (
+    <>
+      {field("First date", "dob1", "date")}
+      {field("Second date", "dob2", "date")}
+    </>
+  );
+
+case "area-calculator":
+  return (
+    <>
+      <div className="field full">
+        <label>Shape</label>
+
+        <select
+          value={v.shape || "rectangle"}
+          onChange={(e) => set("shape", e.target.value)}
+        >
+          <option value="rectangle">Rectangle</option>
+          <option value="triangle">Triangle</option>
+          <option value="circle">Circle</option>
+        </select>
+      </div>
+
+      {field("First dimension / radius", "a")}
+      {field("Second dimension", "b")}
+    </>
+  );
+
+case "volume-calculator":
+  return (
+    <>
+      <div className="field full">
+        <label>Shape</label>
+
+        <select
+          value={v.shape || "cuboid"}
+          onChange={(e) => set("shape", e.target.value)}
+        >
+          <option value="cuboid">Cuboid</option>
+          <option value="cylinder">Cylinder</option>
+          <option value="sphere">Sphere</option>
+        </select>
+      </div>
+
+      {field("First dimension / radius", "a")}
+      {field("Second dimension / height", "b")}
+      {field("Third dimension", "c")}
+    </>
+  );
+
+case "speed-calculator":
+  return (
+    <>
+      {field("Distance", "distance")}
+      {field("Time", "time")}
+    </>
+  );
+
+case "fuel-cost-calculator":
+  return (
+    <>
+      {field("Distance (km)", "distance")}
+      {field("Mileage (km/L)", "mileage")}
+      {field("Fuel price (₹/L)", "fuelPrice")}
+    </>
+  );
+     default: return <div className="notice">This calculator page is ready for expansion. More formulas can be added without changing the site design.</div>;
     }
   };
 
