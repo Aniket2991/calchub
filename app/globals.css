@@ -1341,3 +1341,213 @@ details p {
     bottom: 14px;
   }
 }
+/* =========================================
+   CALCHUB PREMIUM 3D CALCULATOR EFFECTS
+   ========================================= */
+
+/* Calculator panel depth */
+.calcLayout .panel {
+  transform: translateZ(0);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.calcLayout .panel:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    14px 22px 40px rgba(15, 23, 42, 0.12),
+    -5px -5px 14px rgba(255, 255, 255, 0.9);
+}
+
+/* 3D calculator inputs */
+.calcLayout .field input,
+.calcLayout .field select {
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.calcLayout .field input:hover,
+.calcLayout .field select:hover {
+  transform: translateY(-1px);
+}
+
+.calcLayout .field input:focus,
+.calcLayout .field select:focus {
+  transform: translateY(-2px);
+}
+
+/* Physical Calculate button */
+.calcLayout .actions .primary {
+  position: relative;
+
+  border: 0;
+  border-radius: 13px;
+
+  background:
+    linear-gradient(145deg, #ff7845, #df4f1d);
+
+  color: #fff;
+
+  padding: 13px 21px;
+
+  font-weight: 900;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 6px 0 #b93e16,
+    0 12px 22px rgba(223, 79, 29, 0.24);
+
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
+}
+
+.calcLayout .actions .primary:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 9px 0 #b93e16,
+    0 17px 28px rgba(223, 79, 29, 0.28);
+}
+
+.calcLayout .actions .primary:active {
+  transform: translateY(4px);
+
+  box-shadow:
+    0 2px 0 #b93e16,
+    0 6px 12px rgba(223, 79, 29, 0.20);
+}
+
+/* 3D Reset button */
+.calcLayout .actions .secondary {
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
+}
+
+.calcLayout .actions .secondary:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    7px 9px 15px rgba(15, 23, 42, 0.11);
+}
+
+.calcLayout .actions .secondary:active {
+  transform: translateY(3px);
+
+  box-shadow:
+    2px 3px 6px rgba(15, 23, 42, 0.08);
+}
+
+/* Result card depth */
+.calcLayout .result {
+  position: relative;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.calcLayout .result::before {
+  content: "";
+
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  border-radius: 50%;
+
+  background: rgba(255, 107, 53, 0.13);
+
+  filter: blur(35px);
+
+  top: -80px;
+  right: -60px;
+
+  pointer-events: none;
+}
+
+.calcLayout .result:hover {
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 32px 60px rgba(15, 23, 42, 0.30);
+}
+
+/* Result value emphasis */
+.resultValue {
+  transition:
+    transform 0.25s ease,
+    text-shadow 0.25s ease;
+}
+
+.result:hover .resultValue {
+  transform: translateX(2px);
+
+  text-shadow:
+    0 4px 20px rgba(255, 255, 255, 0.12);
+}
+
+/* Result rows become raised */
+.resultRow {
+  transition:
+    padding-left 0.18s ease,
+    padding-right 0.18s ease,
+    background 0.18s ease;
+}
+
+.resultRow:hover {
+  padding-left: 7px;
+  padding-right: 7px;
+
+  background: rgba(255, 255, 255, 0.035);
+}
+
+/* Related calculator cards */
+.related .card {
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.related .card:hover {
+  transform:
+    translateY(-8px)
+    rotateX(2deg);
+
+  box-shadow:
+    12px 20px 32px rgba(15, 23, 42, 0.14);
+}
+
+/* Calculator breadcrumb */
+.breadcrumb a {
+  transition: color 0.18s ease;
+}
+
+.breadcrumb a:hover {
+  color: var(--accent-dark);
+}
+
+/* Small screen adjustments */
+@media (max-width: 560px) {
+  .calcLayout .panel:hover,
+  .calcLayout .result:hover {
+    transform: none;
+  }
+
+  .calcLayout .actions {
+    flex-direction: column;
+  }
+
+  .calcLayout .actions .primary,
+  .calcLayout .actions .secondary {
+    width: 100%;
+  }
+}
