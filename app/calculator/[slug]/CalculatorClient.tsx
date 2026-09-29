@@ -40,17 +40,19 @@ const related = calculators
         const emi = m===0 ? P/n : P*m*Math.pow(1+m,n)/(Math.pow(1+m,n)-1);
         r=money(emi); rr=[["Loan amount",money(P)],["Total payment",money(emi*n)],["Total interest",money(emi*n-P)]]; break;
       }
-      case "loan-calculator": {
+     case "loan-calculator": {
   const P = num(v.p);
   const annual = num(v.rate);
   const n = num(v.months);
-  const r = annual / 12 / 100;
+  const monthlyRate = annual / 12 / 100;
 
   const payment =
-    r === 0
+    monthlyRate === 0
       ? P / n
-      : P * r * Math.pow(1 + r, n) /
-        (Math.pow(1 + r, n) - 1);
+      : P *
+        monthlyRate *
+        Math.pow(1 + monthlyRate, n) /
+        (Math.pow(1 + monthlyRate, n) - 1);
 
   const totalPayment = payment * n;
   const totalInterest = totalPayment - P;
