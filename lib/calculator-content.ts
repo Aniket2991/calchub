@@ -55,6 +55,37 @@ export const calculatorContent: Record<string, CalculatorContent> = {
     ]
   },
 
+  "loan-calculator": {
+  intro:
+    "The Loan Calculator estimates your monthly loan payment, total repayment amount, and total interest based on the loan amount, interest rate, and repayment period.",
+  formula:
+    "For a reducing-balance loan, EMI = P × r × (1 + r)ⁿ ÷ ((1 + r)ⁿ − 1), where P is the loan amount, r is the monthly interest rate, and n is the number of monthly payments.",
+  example:
+    "For example, if you borrow ₹5,00,000 at an annual interest rate of 9% for 5 years, the calculator estimates the monthly payment and shows the total amount repaid and total interest.",
+  tips: [
+    "Enter the actual loan amount you plan to borrow.",
+    "Check the lender's actual interest rate and fees before making a financial decision.",
+    "A longer repayment period can reduce the monthly payment but may increase total interest.",
+  ],
+  faqs: [
+    {
+      question: "What does the Loan Calculator calculate?",
+      answer:
+        "It estimates the monthly payment, total repayment amount, and total interest based on the values you enter.",
+    },
+    {
+      question: "Is the result guaranteed to match my lender?",
+      answer:
+        "No. Actual loan payments can differ because lenders may use different rates, fees, taxes, insurance, or calculation methods.",
+    },
+    {
+      question: "What is the difference between a Loan Calculator and an EMI Calculator?",
+      answer:
+        "Both can estimate loan repayments. A Loan Calculator is presented as a general loan-payment tool, while an EMI Calculator focuses specifically on equated monthly instalments.",
+    },
+  ],
+},
+  
   "sip-calculator": {
     intro:
       "The SIP Calculator estimates the potential future value of regular investments made at fixed intervals. It uses the investment amount, expected annual return and investment period to estimate the future value of the investment.",
