@@ -8,6 +8,13 @@ export type Calculator = {
 
 export const calculators: Calculator[] = [
   { slug:"emi-calculator", name:"EMI Calculator", description:"Calculate monthly loan payments and total interest.", category:"Finance", icon:"₹" },
+  {
+  slug: "loan-calculator",
+  name: "Loan Calculator",
+  description: "Calculate loan payments, total interest and total repayment.",
+  category: "Finance",
+  icon: "L",
+},
   { slug:"sip-calculator", name:"SIP Calculator", description:"Estimate returns from regular mutual fund investments.", category:"Finance", icon:"↗" },
   { slug:"gst-calculator", name:"GST Calculator", description:"Add or remove GST from any amount.", category:"Finance", icon:"%" },
   { slug:"discount-calculator", name:"Discount Calculator", description:"Find sale price and savings instantly.", category:"Finance", icon:"−" },
