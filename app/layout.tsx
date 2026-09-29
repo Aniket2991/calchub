@@ -65,6 +65,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6788658995256013"
+          crossOrigin="anonymous"
+        />
+      </head>
+
       <body>
         {children}
         <AIChat />
