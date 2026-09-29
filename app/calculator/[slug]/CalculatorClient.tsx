@@ -40,6 +40,31 @@ const related = calculators
         const emi = m===0 ? P/n : P*m*Math.pow(1+m,n)/(Math.pow(1+m,n)-1);
         r=money(emi); rr=[["Loan amount",money(P)],["Total payment",money(emi*n)],["Total interest",money(emi*n-P)]]; break;
       }
+      case "loan-calculator": {
+  const P = num(v.p);
+  const annual = num(v.rate);
+  const n = num(v.months);
+  const r = annual / 12 / 100;
+
+  const payment =
+    r === 0
+      ? P / n
+      : P * r * Math.pow(1 + r, n) /
+        (Math.pow(1 + r, n) - 1);
+
+  const totalPayment = payment * n;
+  const totalInterest = totalPayment - P;
+
+  r = money(payment);
+
+  rr = [
+    ["Loan amount", money(P)],
+    ["Total payment", money(totalPayment)],
+    ["Total interest", money(totalInterest)],
+  ];
+
+  break;
+}
       case "sip-calculator": {
         const p=num(v.p), rate=num(v.rate)/100/12, n=num(v.months);
         const fv = rate===0 ? p*n : p*((Math.pow(1+rate,n)-1)/rate)*(1+rate);
@@ -116,6 +141,14 @@ const related = calculators
   const common = () => {
     switch(calculator.slug) {
       case "emi-calculator": return <>{field("Loan amount","p")} {field("Annual interest rate (%)","rate")} {field("Loan tenure (months)","months")}</>;
+      case "loan-calculator":
+  return (
+    <>
+      {field("Loan amount", "p")}
+      {field("Annual interest rate (%)", "rate")}
+      {field("Loan tenure (months)", "months")}
+    </>
+  );
       case "sip-calculator": return <>{field("Monthly investment","p")} {field("Expected annual return (%)","rate")} {field("Number of months","months")}</>;
       case "gst-calculator": return <>{field("Amount","amount")} {field("GST rate (%)","gst")} <div className="field"><label>Mode</label><select value={v.mode||"add"} onChange={e=>set("mode",e.target.value)}><option value="add">Add GST</option><option value="remove">Remove GST</option></select></div></>;
       case "discount-calculator": return <>{field("Original price","price")} {field("Discount (%)","discount")}</>;
