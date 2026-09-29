@@ -175,7 +175,282 @@ export const calculatorContent: Record<string, CalculatorContent> = {
       }
     ]
   },
+"salary-calculator": {
+  intro:
+    "The Salary Calculator estimates monthly salary and take-home pay after the deductions you enter.",
+  formula:
+    "Take-home pay = gross salary − total deductions.",
+  example:
+    "For example, if your monthly gross salary is ₹50,000 and your total monthly deductions are ₹5,000, the estimated take-home pay is ₹45,000.",
+  tips: [
+    "Enter your actual gross salary and regular deductions.",
+    "Employer contributions may not be part of your take-home pay.",
+    "Actual salary structures can vary between employers.",
+  ],
+  faqs: [
+    {
+      question: "What does take-home salary mean?",
+      answer:
+        "Take-home salary is the amount remaining after the deductions entered into the calculator.",
+    },
+    {
+      question: "Does this calculate income tax?",
+      answer:
+        "No. Use the Income Tax Calculator separately for an estimated income-tax calculation.",
+    },
+  ],
+},
 
+"income-tax-calculator": {
+  intro:
+    "The Income Tax Calculator provides an estimate of individual income tax in India using the selected tax regime and taxable income.",
+  formula:
+    "Estimated tax is calculated by applying the applicable slab rates to taxable income, then adding applicable cess and considering the applicable rebate.",
+  example:
+    "For example, enter your estimated taxable income and select the tax regime to see an approximate tax amount.",
+  tips: [
+    "Use taxable income rather than simply entering your gross salary.",
+    "Tax calculations can depend on deductions, exemptions, age, income type and other conditions.",
+    "Always verify the final calculation against the latest Income Tax Department rules.",
+  ],
+  faqs: [
+    {
+      question: "Which tax year does this calculator use?",
+      answer:
+        "The current version uses the individual tax slab structure applicable for AY 2026-27. Tax rules can change, so verify the result before filing.",
+    },
+    {
+      question: "Is this an official income-tax calculation?",
+      answer:
+        "No. It is an informational estimate and should not replace an official tax calculation or professional tax advice.",
+    },
+  ],
+},
+
+"profit-loss-calculator": {
+  intro:
+    "Calculate profit or loss from the cost price and selling price.",
+  formula:
+    "Profit = Selling Price − Cost Price. Loss = Cost Price − Selling Price.",
+  example:
+    "If an item costs ₹1,000 and is sold for ₹1,200, the profit is ₹200 and the profit percentage is 20%.",
+  tips: [
+    "Enter both values using the same currency.",
+    "Profit percentage is calculated using cost price as the base.",
+  ],
+  faqs: [
+    {
+      question: "What is profit percentage?",
+      answer:
+        "Profit percentage is profit divided by cost price, multiplied by 100.",
+    },
+    {
+      question: "What is loss percentage?",
+      answer:
+        "Loss percentage is loss divided by cost price, multiplied by 100.",
+    },
+  ],
+},
+
+"percentage-change-calculator": {
+  intro:
+    "Calculate the percentage increase or decrease between an original value and a new value.",
+  formula:
+    "Percentage change = ((New Value − Original Value) ÷ Original Value) × 100.",
+  example:
+    "If a price increases from ₹100 to ₹120, the percentage change is 20%.",
+  tips: [
+    "Use the earlier value as the original value.",
+    "A positive result means an increase and a negative result means a decrease.",
+  ],
+  faqs: [
+    {
+      question: "Can percentage change be negative?",
+      answer:
+        "Yes. A negative result represents a decrease from the original value.",
+    },
+  ],
+},
+
+"ratio-calculator": {
+  intro:
+    "Simplify a ratio and calculate an equivalent value when one part is known.",
+  formula:
+    "Ratios are simplified by dividing both parts by their greatest common divisor.",
+  example:
+    "A ratio of 20:30 simplifies to 2:3.",
+  tips: [
+    "Enter positive whole numbers for the simplest ratio calculation.",
+    "Both parts of a ratio must use the same type of measurement.",
+  ],
+  faqs: [
+    {
+      question: "How do you simplify a ratio?",
+      answer:
+        "Divide both numbers by their greatest common divisor.",
+    },
+  ],
+},
+
+"fraction-calculator": {
+  intro:
+    "Perform addition, subtraction, multiplication and division with two fractions.",
+  formula:
+    "Fractions are calculated using common denominators for addition and subtraction and direct numerator and denominator multiplication for multiplication and division.",
+  example:
+    "For example, 1/2 + 1/4 = 3/4.",
+  tips: [
+    "Do not enter zero as a denominator.",
+    "Check the operation before calculating.",
+  ],
+  faqs: [
+    {
+      question: "Can the calculator simplify the result?",
+      answer:
+        "Yes. The result is reduced to its simplest fraction where possible.",
+    },
+  ],
+},
+
+"time-calculator": {
+  intro:
+    "Add or subtract hours and minutes using a simple time calculation.",
+  formula:
+    "Time is converted into total minutes, calculated, then converted back into hours and minutes.",
+  example:
+    "2 hours 30 minutes plus 1 hour 45 minutes equals 4 hours 15 minutes.",
+  tips: [
+    "Enter hours and minutes separately.",
+    "Minutes are automatically carried into hours when they reach 60.",
+  ],
+  faqs: [
+    {
+      question: "Can I subtract time?",
+      answer:
+        "Yes. Select the subtraction operation and enter the two time values.",
+    },
+  ],
+},
+
+"hours-calculator": {
+  intro:
+    "Calculate the number of hours and minutes between a start time and an end time.",
+  formula:
+    "Duration = End time − Start time.",
+  example:
+    "A shift from 9:00 AM to 5:30 PM lasts 8 hours 30 minutes.",
+  tips: [
+    "Use the same day unless the period crosses midnight.",
+    "Check AM and PM carefully when entering times.",
+  ],
+  faqs: [
+    {
+      question: "Can it calculate an overnight shift?",
+      answer:
+        "Yes. If the end time is earlier than the start time, the calculator treats it as continuing into the next day.",
+    },
+  ],
+},
+
+"age-difference-calculator": {
+  intro:
+    "Calculate the difference between two dates in years, months and days.",
+  formula:
+    "The calculator compares the two calendar dates and accounts for different month lengths.",
+  example:
+    "Enter two dates of birth to find their calendar age difference.",
+  tips: [
+    "Enter the dates accurately.",
+    "The result is a calendar difference rather than an approximate number of days divided by 365.",
+  ],
+  faqs: [
+    {
+      question: "Is age difference the same as days divided by 365?",
+      answer:
+        "No. Calendar age differences account for months and days, so they can differ from a simple 365-day calculation.",
+    },
+  ],
+},
+
+"area-calculator": {
+  intro:
+    "Calculate the area of common shapes using the required dimensions.",
+  formula:
+    "Rectangle area = length × width. Circle area = π × radius². Triangle area = ½ × base × height.",
+  example:
+    "A rectangle measuring 10 m by 5 m has an area of 50 square metres.",
+  tips: [
+    "Use consistent units for all dimensions.",
+    "The result is expressed in squared units.",
+  ],
+  faqs: [
+    {
+      question: "What shapes can I calculate?",
+      answer:
+        "The first version supports rectangle, triangle and circle calculations.",
+    },
+  ],
+},
+
+"volume-calculator": {
+  intro:
+    "Calculate the volume of common three-dimensional shapes.",
+  formula:
+    "Cuboid volume = length × width × height. Cylinder volume = π × radius² × height.",
+  example:
+    "A box measuring 2 m × 3 m × 4 m has a volume of 24 cubic metres.",
+  tips: [
+    "Use the same unit for every dimension.",
+    "Volume is expressed in cubic units.",
+  ],
+  faqs: [
+    {
+      question: "What shapes are supported?",
+      answer:
+        "The first version supports cuboid, cylinder and sphere calculations.",
+    },
+  ],
+},
+
+"speed-calculator": {
+  intro:
+    "Calculate speed, distance or travel time using the relationship between the three values.",
+  formula:
+    "Speed = Distance ÷ Time.",
+  example:
+    "A vehicle travelling 120 km in 2 hours has an average speed of 60 km/h.",
+  tips: [
+    "Use matching distance and time units.",
+    "This calculator gives average speed rather than instantaneous speed.",
+  ],
+  faqs: [
+    {
+      question: "Can I calculate travel time?",
+      answer:
+        "Yes. Enter distance and speed and the calculator can determine the estimated travel time.",
+    },
+  ],
+},
+
+"fuel-cost-calculator": {
+  intro:
+    "Estimate fuel cost using travel distance, vehicle mileage and fuel price.",
+  formula:
+    "Fuel required = Distance ÷ Mileage. Fuel cost = Fuel required × Fuel price.",
+  example:
+    "For a 300 km trip, a vehicle giving 15 km/l would use about 20 litres of fuel.",
+  tips: [
+    "Use the vehicle's real-world average mileage when possible.",
+    "Fuel prices can vary by location and date.",
+  ],
+  faqs: [
+    {
+      question: "Does this include tolls?",
+      answer:
+        "No. It estimates fuel cost only.",
+    },
+  ],
+},
   "discount-calculator": {
     intro:
       "The Discount Calculator helps you find the discount amount, final sale price and estimated savings when a percentage discount is applied to an original price.",
