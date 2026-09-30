@@ -890,7 +890,7 @@ export const calculatorContent: Record<string, CalculatorContent> = {
           "Yes. Celsius and Fahrenheit can have negative values. Kelvin is an absolute temperature scale and does not use temperatures below absolute zero."
       }
     ]
-  }
+  },
     "loan-calculator": {
     intro:
       "The Loan Calculator estimates the monthly payment, total repayment and total interest for a loan using the loan amount, annual interest rate and repayment period.",
