@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { calculators } from "../lib/calculators";
 
+const categorySlug = (category: string) =>
+  category.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
 const popular = [
   "emi-calculator",
   "sip-calculator",
@@ -19,8 +22,43 @@ export default function Home() {
 
   const categories = [...new Set(calculators.map((c) => c.category))];
 
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "CalcHub",
+    url: "https://calchub-blond.vercel.app/",
+    description:
+      "Free online calculators for finance, math, health, dates and everyday conversions.",
+  };
+
+  const calculatorListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "CalcHub Online Calculators",
+    numberOfItems: calculators.length,
+    itemListElement: calculators.map((calculator, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: calculator.name,
+      url: "https://calchub-blond.vercel.app/calculator/" + calculator.slug,
+    })),
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(websiteSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(calculatorListSchema),
+        }}
+      />
+
       <header className="header">
         <div className="container nav">
           <Link className="logo" href="/">
@@ -141,10 +179,7 @@ export default function Home() {
               {categories.map((c) => (
                 <a
                   className="chip"
-                  href={`#${c
-                    .toLowerCase()
-                    .replaceAll(" ", "-")
-                    .replace("&", "and")}`}
+                  href={`/category/${categorySlug(c)}`}
                   key={c}
                 >
                   {c}
