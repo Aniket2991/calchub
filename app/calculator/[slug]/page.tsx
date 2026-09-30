@@ -15,6 +15,9 @@ export function generateStaticParams() {
   }));
 }
 
+const categorySlug = (category: string) =>
+  category.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
 function cleanDescription(text: string, maxLength = 155) {
   const clean = text.replace(/\s+/g, " ").trim();
 
@@ -105,6 +108,12 @@ export default async function CalculatorPage({ params }: Props) {
       {
         "@type": "ListItem",
         position: 2,
+        name: calculator.category,
+        item: SITE_URL + "/category/" + categorySlug(calculator.category),
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
         name: calculator.name,
         item: calculatorUrl,
       },
