@@ -1,12 +1,29 @@
 import type { Metadata } from "next";
 import CalculatorClient from "./CalculatorClient";
-import { getCalculator } from "../../../lib/calculators";
+import { calculators, getCalculator } from "../../../lib/calculators";
+import { calculatorContent } from "../../../lib/calculator-content";
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
 
 const SITE_URL = "https://calchub-blond.vercel.app";
+
+export function generateStaticParams() {
+  return calculators.map((calculator) => ({
+    slug: calculator.slug,
+  }));
+}
+
+function cleanDescription(text: string, maxLength = 155) {
+  const clean = text.replace(/\s+/g, " ").trim();
+
+  if (clean.length <= maxLength) {
+    return clean;
+  }
+
+  return `${clean.slice(0, maxLength - 3).trimEnd()}...`;
+}
 
 export async function generateMetadata({
   params,
@@ -19,21 +36,48 @@ export async function generateMetadata({
       title: "Calculator | CalcHub",
       description:
         "Use free online calculators for finance, math, health, dates and everyday conversions.",
+      robots: {
+        index: false,
+        follow: false,
+      },
     };
   }
 
+  const content = calculatorContent[calculator.slug];
+  const description = cleanDescription(
+    content?.intro || calculator.description
+  );
+  const canonicalUrl = `${SITE_URL}/calculator/${calculator.slug}`;
+
   return {
     title: `${calculator.name} — Free Online Calculator`,
-    description: `${calculator.description} Use the free ${calculator.name.toLowerCase()} on CalcHub for quick and easy calculations.`,
+    keywords: [
+      calculator.name,
+      `${calculator.name} online`,
+      `free ${calculator.name.toLowerCase()}`,
+      "online calculator",
+      "CalcHub",
+    ],
+    description,
     alternates: {
-      canonical: `${SITE_URL}/calculator/${slug}`,
+      canonical: canonicalUrl,
+    },
+    robots: {
+      index: true,
+      follow: true,
     },
     openGraph: {
       title: `${calculator.name} — Free Online Calculator`,
-      description: calculator.description,
-      url: `${SITE_URL}/calculator/${slug}`,
+      description,
+      url: canonicalUrl,
       siteName: "CalcHub",
+      locale: "en_IN",
       type: "website",
+    },
+    twitter: {
+      card: "summary",
+      title: `${calculator.name} — Free Online Calculator`,
+      description,
     },
   };
 }
@@ -46,7 +90,7 @@ export default async function CalculatorPage({ params }: Props) {
     return <CalculatorClient slug={slug} />;
   }
 
-  const calculatorUrl = `${SITE_URL}/calculator/${slug}`;
+  const calculatorUrl = `${SITE_URL}/calculator/${calculator.slug}`;
 
   const breadcrumbSchema = {
     "@context": "https://schema.org",
@@ -61,12 +105,6 @@ export default async function CalculatorPage({ params }: Props) {
       {
         "@type": "ListItem",
         position: 2,
-        name: calculator.category,
-        item: `${SITE_URL}/`,
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
         name: calculator.name,
         item: calculatorUrl,
       },
@@ -79,7 +117,12 @@ export default async function CalculatorPage({ params }: Props) {
     name: calculator.name,
     url: calculatorUrl,
     description: calculator.description,
-    applicationCategory: "CalculatorApplication",
+    applicationCategory:
+      calculator.category === "Finance"
+        ? "FinanceApplication"
+        : calculator.category === "Health"
+          ? "HealthApplication"
+          : "UtilitiesApplication",
     operatingSystem: "Any",
     browserRequirements: "Requires JavaScript",
     isAccessibleForFree: true,
