@@ -120,6 +120,22 @@ export default async function CalculatorPage({ params }: Props) {
     ],
   };
 
+  const faqSchema =
+    content?.faqs?.length
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: content.faqs.map((faq) => ({
+            "@type": "Question",
+            name: faq.question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: faq.answer,
+            },
+          })),
+        }
+      : null;
+
   const webApplicationSchema = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
@@ -162,6 +178,15 @@ export default async function CalculatorPage({ params }: Props) {
           __html: JSON.stringify(webApplicationSchema),
         }}
       />
+
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(faqSchema),
+          }}
+        />
+      )}
 
       <CalculatorClient slug={slug} />
     </>
