@@ -891,4 +891,371 @@ export const calculatorContent: Record<string, CalculatorContent> = {
       }
     ]
   }
+    "loan-calculator": {
+    intro:
+      "The Loan Calculator estimates the monthly payment, total repayment and total interest for a loan using the loan amount, annual interest rate and repayment period.",
+    formula:
+      "Monthly payment = P × r × (1 + r)ⁿ ÷ ((1 + r)ⁿ − 1), where P is the loan amount, r is the monthly interest rate and n is the number of monthly payments.",
+    example:
+      "For example, enter a loan amount of ₹5,00,000, an annual interest rate of 9% and a repayment period of 60 months to estimate the monthly payment and total interest.",
+    tips: [
+      "Enter the loan amount you plan to borrow.",
+      "Enter the annual interest rate as a percentage.",
+      "Enter the repayment period in months.",
+      "Compare both monthly payment and total interest.",
+      "Actual loan costs may include processing fees, insurance, taxes or other lender charges."
+    ],
+    faqs: [
+      {
+        question: "What does a loan calculator calculate?",
+        answer:
+          "It estimates the regular loan payment, total repayment and total interest using the values you enter."
+      },
+      {
+        question: "Does a longer loan period reduce the monthly payment?",
+        answer:
+          "A longer repayment period can reduce the monthly payment, but it may increase the total interest paid."
+      }
+    ]
+  },
+
+  "salary-calculator": {
+    intro:
+      "The Salary Calculator helps estimate monthly salary and take-home pay from annual salary and estimated deductions.",
+    formula:
+      "Estimated monthly salary = Annual salary ÷ 12. Estimated take-home pay depends on the deductions entered or assumptions used by the calculator.",
+    example:
+      "Enter an annual salary to estimate the corresponding monthly salary and review the estimated deductions and take-home amount.",
+    tips: [
+      "Enter annual salary in rupees.",
+      "Review deductions carefully because actual payroll deductions vary.",
+      "Take-home salary can differ from CTC because CTC may include employer contributions and other benefits."
+    ],
+    faqs: [
+      {
+        question: "Is take-home salary the same as CTC?",
+        answer:
+          "No. CTC can include employer contributions and benefits that are not directly paid as monthly take-home salary."
+      },
+      {
+        question: "Why can actual salary differ from the calculator?",
+        answer:
+          "Actual salary can depend on income tax, provident fund, professional tax, benefits and employer-specific payroll rules."
+      }
+    ]
+  },
+
+  "income-tax-calculator": {
+    intro:
+      "The Income Tax Calculator provides an estimate of income tax based on the income and tax-regime inputs you provide. Tax calculations can depend on deductions, exemptions, rebates, surcharge, cess and the nature of income.",
+    formula:
+      "Estimated tax is calculated by applying the applicable tax rates to taxable income, followed by applicable rebate, surcharge and cess rules.",
+    example:
+      "Enter your taxable income and select the applicable tax regime to estimate the income tax liability.",
+    tips: [
+      "Use taxable income rather than automatically assuming gross salary is taxable income.",
+      "Check whether deductions or exemptions apply to your situation.",
+      "Tax rules can change between tax years, so verify important calculations against official Income Tax Department guidance.",
+      "This calculator is an estimate and is not tax advice."
+    ],
+    faqs: [
+      {
+        question: "Does this calculator provide an exact tax liability?",
+        answer:
+          "No. It provides an estimate based on the information and assumptions entered. Actual tax liability can depend on income sources, deductions, exemptions, rebates, surcharge and other applicable rules."
+      },
+      {
+        question: "Can tax rules change?",
+        answer:
+          "Yes. Tax rates, rebates, deductions and other provisions can change between tax years. Always verify important tax calculations using current official guidance."
+      }
+    ]
+  },
+
+  "profit-loss-calculator": {
+    intro:
+      "The Profit & Loss Calculator calculates profit or loss and the corresponding percentage from cost price and selling price.",
+    formula:
+      "Profit = Selling Price − Cost Price. Loss = Cost Price − Selling Price. Profit percentage = Profit ÷ Cost Price × 100.",
+    example:
+      "Enter a cost price of ₹1,000 and a selling price of ₹1,200 to calculate the profit and profit percentage.",
+    tips: [
+      "Enter the original cost price accurately.",
+      "Enter the actual selling price.",
+      "Use the profit or loss percentage to compare different transactions."
+    ],
+    faqs: [
+      {
+        question: "How is profit calculated?",
+        answer:
+          "Profit is calculated by subtracting the cost price from the selling price when the selling price is higher."
+      },
+      {
+        question: "How is loss calculated?",
+        answer:
+          "Loss is calculated by subtracting the selling price from the cost price when the selling price is lower."
+      }
+    ]
+  },
+
+  "percentage-change-calculator": {
+    intro:
+      "The Percentage Change Calculator calculates the percentage increase or decrease between an original value and a new value.",
+    formula:
+      "Percentage change = (New value − Original value) ÷ Original value × 100.",
+    example:
+      "If an original value is 100 and the new value is 120, the percentage change is a 20% increase.",
+    tips: [
+      "Enter the original value first.",
+      "Enter the new value second.",
+      "A positive result indicates an increase and a negative result indicates a decrease."
+    ],
+    faqs: [
+      {
+        question: "What does a positive percentage change mean?",
+        answer:
+          "A positive percentage change means the new value is higher than the original value."
+      },
+      {
+        question: "What does a negative percentage change mean?",
+        answer:
+          "A negative percentage change means the new value is lower than the original value."
+      }
+    ]
+  },
+
+  "ratio-calculator": {
+    intro:
+      "The Ratio Calculator helps simplify ratios and calculate equivalent ratio values.",
+    formula:
+      "A ratio can be simplified by dividing all parts by their greatest common divisor.",
+    example:
+      "A ratio of 20:30 can be simplified to 2:3 by dividing both values by 10.",
+    tips: [
+      "Enter positive ratio values.",
+      "Keep the order of the ratio values correct.",
+      "Simplifying a ratio does not change the relationship between its parts."
+    ],
+    faqs: [
+      {
+        question: "How do you simplify a ratio?",
+        answer:
+          "Divide all parts of the ratio by their greatest common divisor."
+      },
+      {
+        question: "What is an equivalent ratio?",
+        answer:
+          "An equivalent ratio represents the same relationship using different numbers."
+      }
+    ]
+  },
+
+  "fraction-calculator": {
+    intro:
+      "The Fraction Calculator performs common operations such as addition, subtraction, multiplication and division of fractions.",
+    formula:
+      "For addition and subtraction, fractions are converted to a common denominator. Multiplication multiplies numerators and denominators. Division multiplies by the reciprocal of the second fraction.",
+    example:
+      "For example, 1/2 + 1/4 equals 3/4 after converting the fractions to a common denominator.",
+    tips: [
+      "Enter valid numerator and denominator values.",
+      "Do not use zero as a denominator.",
+      "Simplify the final fraction when needed."
+    ],
+    faqs: [
+      {
+        question: "Can fractions with different denominators be added?",
+        answer:
+          "Yes. They are first converted to equivalent fractions with a common denominator."
+      },
+      {
+        question: "Can you divide by a fraction?",
+        answer:
+          "Yes. Division by a fraction is performed by multiplying by its reciprocal, provided the divisor is not zero."
+      }
+    ]
+  },
+
+  "time-calculator": {
+    intro:
+      "The Time Calculator adds or subtracts hours and minutes to help with everyday time calculations.",
+    formula:
+      "Time values are converted into total minutes, the selected operation is performed, and the result is converted back into hours and minutes.",
+    example:
+      "For example, adding 2 hours 30 minutes and 1 hour 45 minutes gives 4 hours 15 minutes.",
+    tips: [
+      "Enter hours and minutes separately.",
+      "Keep minutes between 0 and 59 for standard time notation.",
+      "Check whether you want to add or subtract the entered times."
+    ],
+    faqs: [
+      {
+        question: "Can this calculator subtract time?",
+        answer:
+          "Yes. Select the subtract operation and enter the two time values."
+      },
+      {
+        question: "Can minutes exceed 59?",
+        answer:
+          "The calculator uses hours and minutes as separate time units, so standard minute values should normally be between 0 and 59."
+      }
+    ]
+  },
+
+  "hours-calculator": {
+    intro:
+      "The Hours Calculator calculates the elapsed time between a start time and an end time.",
+    formula:
+      "Elapsed time is calculated from the difference between the end time and start time.",
+    example:
+      "Enter a start time of 9:00 AM and an end time of 5:00 PM to calculate the elapsed duration.",
+    tips: [
+      "Enter the correct start time.",
+      "Enter the correct end time.",
+      "Check whether the period crosses midnight when interpreting the result."
+    ],
+    faqs: [
+      {
+        question: "What does the Hours Calculator measure?",
+        answer:
+          "It calculates the elapsed duration between the selected start and end times."
+      },
+      {
+        question: "Can it be used for work hours?",
+        answer:
+          "Yes. It can help estimate the duration between a work start time and end time."
+      }
+    ]
+  },
+
+  "age-difference-calculator": {
+    intro:
+      "The Age Difference Calculator calculates the difference between two dates of birth in years, months and days.",
+    formula:
+      "The calculator compares the two dates and determines the calendar difference between the earlier and later date.",
+    example:
+      "Select two dates of birth to calculate the approximate age difference between them.",
+    tips: [
+      "Enter both dates correctly.",
+      "The order of the dates does not affect which person is identified as older.",
+      "Calendar differences can vary depending on month lengths and leap years."
+    ],
+    faqs: [
+      {
+        question: "Can I compare two dates of birth?",
+        answer:
+          "Yes. Enter both dates to calculate the calendar difference between them."
+      },
+      {
+        question: "Does the calculator account for different month lengths?",
+        answer:
+          "Yes. The calculation uses calendar dates rather than assuming every month has the same number of days."
+      }
+    ]
+  },
+
+  "area-calculator": {
+    intro:
+      "The Area Calculator calculates the area of common geometric shapes including rectangles, triangles and circles.",
+    formula:
+      "Rectangle: Area = length × width. Triangle: Area = ½ × base × height. Circle: Area = π × radius².",
+    example:
+      "For a rectangle measuring 10 units by 5 units, the area is 50 square units.",
+    tips: [
+      "Use the same unit for all dimensions.",
+      "For a circle, enter the radius rather than the diameter.",
+      "The result is expressed in square units."
+    ],
+    faqs: [
+      {
+        question: "How is the area of a rectangle calculated?",
+        answer:
+          "Multiply the length by the width."
+      },
+      {
+        question: "How is the area of a circle calculated?",
+        answer:
+          "Multiply π by the square of the radius."
+      }
+    ]
+  },
+
+  "volume-calculator": {
+    intro:
+      "The Volume Calculator calculates the volume of common three-dimensional shapes including cuboids, cylinders and spheres.",
+    formula:
+      "Cuboid: Volume = length × width × height. Cylinder: Volume = π × radius² × height. Sphere: Volume = 4/3 × π × radius³.",
+    example:
+      "A cuboid measuring 5 units × 4 units × 3 units has a volume of 60 cubic units.",
+    tips: [
+      "Use consistent units for all dimensions.",
+      "For cylinders and spheres, enter the radius.",
+      "The result is expressed in cubic units."
+    ],
+    faqs: [
+      {
+        question: "How is the volume of a cuboid calculated?",
+        answer:
+          "Multiply its length, width and height."
+      },
+      {
+        question: "How is the volume of a sphere calculated?",
+        answer:
+          "Use the formula 4/3 × π × radius³."
+      }
+    ]
+  },
+
+  "speed-calculator": {
+    intro:
+      "The Speed Calculator estimates speed from distance and travel time.",
+    formula:
+      "Speed = Distance ÷ Time.",
+    example:
+      "If a vehicle travels 120 kilometres in 2 hours, its average speed is 60 kilometres per hour.",
+    tips: [
+      "Use compatible distance and time units.",
+      "Enter a time greater than zero.",
+      "The result represents average speed based on the values entered."
+    ],
+    faqs: [
+      {
+        question: "How is speed calculated?",
+        answer:
+          "Speed is calculated by dividing distance by the time taken."
+      },
+      {
+        question: "Is this the same as instantaneous speed?",
+        answer:
+          "No. The calculator estimates average speed over the distance and time entered."
+      }
+    ]
+  },
+
+  "fuel-cost-calculator": {
+    intro:
+      "The Fuel Cost Calculator estimates fuel usage and travel cost from distance, vehicle mileage and fuel price.",
+    formula:
+      "Fuel required = Distance ÷ Mileage. Fuel cost = Fuel required × Fuel price.",
+    example:
+      "If a vehicle travels 300 km, gives 15 km/L mileage and fuel costs ₹100/L, the estimated fuel requirement is 20 litres and the estimated cost is ₹2,000.",
+    tips: [
+      "Enter the total travel distance in kilometres.",
+      "Enter the vehicle mileage in kilometres per litre.",
+      "Use the current fuel price per litre for a more relevant estimate.",
+      "Actual mileage can vary with traffic, driving style, vehicle load and road conditions."
+    ],
+    faqs: [
+      {
+        question: "How is fuel cost calculated?",
+        answer:
+          "Fuel required is estimated by dividing distance by mileage, then multiplying the fuel required by the fuel price."
+      },
+      {
+        question: "Why can actual fuel cost be different?",
+        answer:
+          "Actual fuel consumption can vary because of traffic, speed, driving conditions, vehicle condition and changes in fuel price."
+      }
+    ]
+  },
 };
