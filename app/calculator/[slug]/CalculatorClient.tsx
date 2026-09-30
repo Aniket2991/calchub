@@ -491,6 +491,15 @@ case "income-tax-calculator": {
     tax = Math.max(0, tax - 12500);
   }
 
+  // Marginal relief under the new regime for income just above ₹12 lakh.
+  if (regime === "new" && income > 1200000) {
+    const excessIncome = income - 1200000;
+
+    if (tax > excessIncome) {
+      tax = excessIncome;
+    }
+  }
+
   const cess = tax * 0.04;
   const totalTax = tax + cess;
 
