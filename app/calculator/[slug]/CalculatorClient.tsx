@@ -1,57 +1,139 @@
- "use client";
+"use client";
+
 import Link from "next/link";
 import { useState } from "react";
 import { calculators, getCalculator } from "../../../lib/calculators";
 import { calculatorContent } from "../../../lib/calculator-content";
-type Values = Record<string,string>;
 
-function money(n:number) { return "₹" + n.toLocaleString("en-IN",{maximumFractionDigits:2}); }
-function num(v:string) { return Number(v) || 0; }
+type Values = Record<string, string>;
+
+function money(n: number) {
+  if (!Number.isFinite(n)) return "—";
+
+  return (
+    "₹" +
+    n.toLocaleString("en-IN", {
+      maximumFractionDigits: 2,
+    })
+  );
+}
+
+function num(v: string | undefined) {
+  const n = Number(v);
+  return Number.isFinite(n) ? n : 0;
+}
+
 
 export default function CalculatorClient({ slug }: { slug: string }) {
-  const calc = getCalculator(slug);
-  const [v,setV] = useState<Values>({});
-  const [result,setResult] = useState<string>("Enter values and calculate.");
-  const [rows,setRows] = useState<[string,string][]>([]);
+  const calculator = getCalculator(slug);
 
-  if (!calc) return <main className="container section"><h1>Calculator not found</h1><Link href="/">Back to CalcHub</Link></main>;
+  const [v, setV] = useState<Values>({});
+  const [result, setResult] = useState<string>(
+    "Enter values and calculate."
+  );
+  const [rows, setRows] = useState<[string, string][]>([]);
 
-  const calculator = calc;
-const content = calculatorContent[calculator.slug];
-const related = calculators
-  .filter(
-    c =>
-      c.category === calculator.category &&
-      c.slug !== calculator.slug
-  )
-  .slice(0, 3);
-  
-  const set = (k: string, x: string) =>
-  setV((p) => ({ ...p, [k]: x }));
-  const field = (label:string,key:string,type="number",placeholder="") => (
-<div className="field"><label>{label}</label><input type={type} value={v[key]||""} placeholder={placeholder} onChange={e=>set(key,e.target.value)} /></div>
+  if (!calculator) {
+    return (
+      <main className="container section">
+        <h1>Calculator not found</h1>
+        <p>The calculator you are looking for does not exist.</p>
+        <Link href="/">Back to CalcHub</Link>
+      </main>
+    );
+  }
+
+  const content = calculatorContent[calculator.slug];
+
+  const related = calculators
+    .filter(
+      (item) =>
+        item.slug !== calculator.slug &&
+        item.category === calculator.category
+    )
+    .slice(0, 4);
+
+
+  const set = (key: string, value: string) => {
+    setV((previous) => ({
+      ...previous,
+      [key]: value,
+    }));
+  };
+
+  const field = (
+    label: string,
+    key: string,
+    type = "number",
+    placeholder = ""
+  ) => (
+    <div className="field">
+      <label htmlFor={key}>{label}</label>
+
+      <input
+        id={key}
+        type={type}
+        value={v[key] || ""}
+        placeholder={placeholder}
+        onChange={(e) => set(key, e.target.value)}
+      />
+    </div>
   );
 
   function calculate() {
     let r=""; let rr:[string,string][]=[];
     switch(calculator.slug) {
-      case "emi-calculator": {
-        const P=num(v.p), annual=num(v.rate), n=num(v.months), m=annual/12/100;
-        const emi = m===0 ? P/n : P*m*Math.pow(1+m,n)/(Math.pow(1+m,n)-1);
-        r=money(emi); rr=[["Loan amount",money(P)],["Total payment",money(emi*n)],["Total interest",money(emi*n-P)]]; break;
-      }
+     case "emi-calculator": {
+  const P = num(v.p);
+  const annual = num(v.rate);
+  const n = num(v.months);
+
+  if (P <= 0 || n <= 0) {
+    r = "Enter a valid loan amount and loan tenure.";
+    break;
+  }
+
+  const monthlyRate = annual / 12 / 100;
+
+  const emi =
+    monthlyRate === 0
+      ? P / n
+      : (P *
+          monthlyRate *
+          Math.pow(1 + monthlyRate, n)) /
+        (Math.pow(1 + monthlyRate, n) - 1);
+
+  const totalPayment = emi * n;
+  const totalInterest = totalPayment - P;
+
+  r = money(emi);
+
+  rr = [
+    ["Loan amount", money(P)],
+    ["Total payment", money(totalPayment)],
+    ["Total interest", money(totalInterest)],
+  ];
+
+  break;
+}
      case "loan-calculator": {
   const P = num(v.p);
   const annual = num(v.rate);
   const n = num(v.months);
+
+  if (P <= 0 || n <= 0) {
+    r = "Enter a valid loan amount and loan tenure.";
+    break;
+  }
+
   const monthlyRate = annual / 12 / 100;
 
   const payment =
     monthlyRate === 0
       ? P / n
-      : P *
-        monthlyRate *
-        Math.pow(1 + monthlyRate, n) /
+      : (P *
+          monthlyRate *
+          Math.pow(1 + monthlyRate, n)) /
         (Math.pow(1 + monthlyRate, n) - 1);
 
   const totalPayment = payment * n;
@@ -68,28 +150,114 @@ const related = calculators
   break;
 }
       case "sip-calculator": {
-        const p=num(v.p), rate=num(v.rate)/100/12, n=num(v.months);
-        const fv = rate===0 ? p*n : p*((Math.pow(1+rate,n)-1)/rate)*(1+rate);
-        r=money(fv); rr=[["Invested amount",money(p*n)],["Estimated gain",money(fv-p*n)]]; break;
-      }
+  const p = num(v.p);
+  const annualReturn = num(v.rate);
+  const n = num(v.months);
+
+  if (p <= 0 || n <= 0) {
+    r = "Enter a valid investment amount and duration.";
+    break;
+  }
+
+  const rate = annualReturn / 100 / 12;
+
+  const fv =
+    rate === 0
+      ? p * n
+      : p *
+        ((Math.pow(1 + rate, n) - 1) / rate) *
+        (1 + rate);
+
+  r = money(fv);
+
+  rr = [
+    ["Invested amount", money(p * n)],
+    ["Estimated gain", money(fv - p * n)],
+  ];
+
+  break;
+}
       case "gst-calculator": {
-        const a=num(v.amount), g=num(v.gst)/100, mode=v.mode||"add";
-        const total=mode==="add"?a*(1+g):a/(1+g);
-        const gst=mode==="add"?a*g:a-total;
-        r=money(total); rr=[["GST amount",money(gst)],["Base amount",money(mode==="add"?a:total)]]; break;
-      }
+  const a = num(v.amount);
+  const g = num(v.gst);
+  const mode = v.mode || "add";
+
+  if (a < 0 || g < 0) {
+    r = "Enter valid positive values.";
+    break;
+  }
+
+  const rate = g / 100;
+  const total = mode === "add" ? a * (1 + rate) : a / (1 + rate);
+  const gst = mode === "add" ? a * rate : a - total;
+
+  r = money(total);
+
+  rr = [
+    ["GST amount", money(gst)],
+    ["Base amount", money(mode === "add" ? a : total)],
+  ];
+
+  break;
+}
       case "discount-calculator": {
-        const p=num(v.price), d=num(v.discount), save=p*d/100;
-        r=money(p-save); rr=[["Original price",money(p)],["You save",money(save)],["Discount",d+"%"]]; break;
+        const p = num(v.price);
+        const d = num(v.discount);
+
+        if (p < 0 || d < 0 || d > 100) {
+          r = "Enter a valid price and discount between 0% and 100%.";
+          break;
+        }
+
+        const save = p * d / 100;
+
+        r = money(p - save);
+        rr = [
+          ["Original price", money(p)],
+          ["You save", money(save)],
+          ["Discount", d + "%"],
+        ];
+        break;
       }
       case "simple-interest": {
-        const p=num(v.p), rate=num(v.rate), years=num(v.years), interest=p*rate*years/100;
-        r=money(p+interest); rr=[["Principal",money(p)],["Interest",money(interest)]]; break;
+        const p = num(v.p);
+        const rate = num(v.rate);
+        const years = num(v.years);
+
+        if (p < 0 || rate < 0 || years < 0) {
+          r = "Enter valid positive values.";
+          break;
+        }
+
+        const interest = p * rate * years / 100;
+
+        r = money(p + interest);
+        rr = [
+          ["Principal", money(p)],
+          ["Interest", money(interest)],
+        ];
+        break;
       }
       case "compound-interest": {
-        const p=num(v.p), rate=num(v.rate)/100, years=num(v.years), n=num(v.frequency)||1;
-        const a=p*Math.pow(1+rate/n,n*years);
-        r=money(a); rr=[["Principal",money(p)],["Interest",money(a-p)]]; break;
+        const p = num(v.p);
+        const rate = num(v.rate);
+        const years = num(v.years);
+        const n = num(v.frequency);
+
+        if (p < 0 || rate < 0 || years < 0 || n <= 0) {
+          r = "Enter valid principal, rate, time and frequency.";
+          break;
+        }
+
+        const periodicRate = rate / 100 / n;
+        const a = p * Math.pow(1 + periodicRate, n * years);
+
+        r = money(a);
+        rr = [
+          ["Principal", money(p)],
+          ["Interest", money(a - p)],
+        ];
+        break;
       }
       case "percentage-calculator": {
         const a=num(v.a), b=num(v.b); r=(a*b/100).toLocaleString("en-IN",{maximumFractionDigits:4}); rr=[["Percentage",b+"% of "+a]]; break;
@@ -100,23 +268,108 @@ const related = calculators
         r=avg.toLocaleString("en-IN",{maximumFractionDigits:4}); rr=[["Numbers",String(nums.length)]]; break;
       }
       case "bmi-calculator": {
-        const kg=num(v.weight), cm=num(v.height), bmi=kg/Math.pow(cm/100,2);
-        const status=bmi<18.5?"Underweight":bmi<25?"Healthy range":bmi<30?"Overweight":"Obesity";
-        r=bmi.toFixed(1); rr=[["Category",status]]; break;
-      }
+  const kg = num(v.weight);
+  const cm = num(v.height);
+
+  if (kg <= 0 || cm <= 0) {
+    r = "Enter a valid weight and height.";
+    break;
+  }
+
+  const bmi = kg / Math.pow(cm / 100, 2);
+
+  const status =
+    bmi < 18.5
+      ? "Underweight"
+      : bmi < 25
+      ? "Healthy range"
+      : bmi < 30
+      ? "Overweight"
+      : "Obesity";
+
+  r = bmi.toFixed(1);
+
+  rr = [["Category", status]];
+
+  break;
+}
       case "age-calculator": {
-        if(!v.dob){r="Select your date of birth.";break;}
-        const birth=new Date(v.dob+"T00:00:00"), now=new Date();
-        let years=now.getFullYear()-birth.getFullYear(), months=now.getMonth()-birth.getMonth(), days=now.getDate()-birth.getDate();
-        if(days<0){months--; const prev=new Date(now.getFullYear(),now.getMonth(),0); days+=prev.getDate();}
-        if(months<0){years--;months+=12;}
-        r=`${years} years, ${months} months, ${days} days`; rr=[["Date of birth",birth.toLocaleDateString("en-IN")]]; break;
-      }
+  if (!v.dob) {
+    r = "Select your date of birth.";
+    break;
+  }
+
+  const birth = new Date(v.dob + "T00:00:00");
+  const now = new Date();
+
+  if (Number.isNaN(birth.getTime())) {
+    r = "Enter a valid date of birth.";
+    break;
+  }
+
+  if (birth > now) {
+    r = "Date of birth cannot be in the future.";
+    break;
+  }
+
+  let years = now.getFullYear() - birth.getFullYear();
+  let months = now.getMonth() - birth.getMonth();
+  let days = now.getDate() - birth.getDate();
+
+  if (days < 0) {
+    months--;
+
+    const previousMonth = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      0
+    );
+
+    days += previousMonth.getDate();
+  }
+
+  if (months < 0) {
+    years--;
+    months += 12;
+  }
+
+  r = `${years} years, ${months} months, ${days} days`;
+
+  rr = [
+    ["Date of birth", birth.toLocaleDateString("en-IN")],
+  ];
+
+  break;
+}
       case "date-difference": {
-        const a=new Date((v.start||"")+"T00:00:00"), b=new Date((v.end||"")+"T00:00:00");
-        const days=Math.round(Math.abs(b.getTime()-a.getTime())/86400000);
-        r=days+" days"; rr=[["Approx. weeks",(days/7).toFixed(1)]]; break;
-      }
+  if (!v.start || !v.end) {
+    r = "Select both dates.";
+    break;
+  }
+
+  const a = new Date(v.start + "T00:00:00");
+  const b = new Date(v.end + "T00:00:00");
+
+  if (
+    Number.isNaN(a.getTime()) ||
+    Number.isNaN(b.getTime())
+  ) {
+    r = "Enter valid dates.";
+    break;
+  }
+
+  const days = Math.round(
+    Math.abs(b.getTime() - a.getTime()) / 86400000
+  );
+
+  r = `${days} days`;
+
+  rr = [
+    ["Approx. weeks", (days / 7).toFixed(1)],
+  ];
+
+  break;
+}
       case "length-converter": {
         const x=num(v.value), from=v.from||"m", to=v.to||"ft";
         const m:{[k:string]:number}={mm:.001,cm:.01,m:1,km:1000,in:.0254,ft:.3048,yd:.9144,mi:1609.344};
@@ -137,6 +390,16 @@ const related = calculators
   const gross = num(v.gross);
   const deductions = num(v.deductions);
 
+  if (gross < 0 || deductions < 0) {
+    r = "Enter valid salary values.";
+    break;
+  }
+
+  if (deductions > gross) {
+    r = "Deductions cannot exceed gross salary.";
+    break;
+  }
+
   const takeHome = gross - deductions;
 
   r = money(takeHome);
@@ -153,6 +416,11 @@ const related = calculators
 case "income-tax-calculator": {
   const income = num(v.income);
   const regime = v.regime || "new";
+
+  if (income < 0) {
+    r = "Income cannot be negative.";
+    break;
+  }
 
   function calculateNewTax(x: number) {
     let tax = 0;
@@ -395,6 +663,11 @@ case "time-calculator": {
   const m2 = num(v.m2);
   const operation = v.operation || "add";
 
+  if (h1 < 0 || h2 < 0 || m1 < 0 || m1 >= 60 || m2 < 0 || m2 >= 60) {
+    r = "Enter valid hours and minutes.";
+    break;
+  }
+
   const first = h1 * 60 + m1;
   const second = h2 * 60 + m2;
 
@@ -458,6 +731,11 @@ case "age-difference-calculator": {
   const first = new Date(v.dob1 + "T00:00:00");
   const second = new Date(v.dob2 + "T00:00:00");
 
+  if (Number.isNaN(first.getTime()) || Number.isNaN(second.getTime())) {
+    r = "Enter valid dates.";
+    break;
+  }
+
   const older = first < second ? first : second;
   const newer = first < second ? second : first;
 
@@ -497,6 +775,11 @@ case "area-calculator": {
   const a = num(v.a);
   const b = num(v.b);
 
+  if (a <= 0 || (shape !== "circle" && b <= 0)) {
+    r = "Enter valid positive dimensions.";
+    break;
+  }
+
   let area = 0;
 
   if (shape === "rectangle") {
@@ -525,6 +808,15 @@ case "volume-calculator": {
   const b = num(v.b);
   const c = num(v.c);
 
+  if (
+    a <= 0 ||
+    (shape !== "sphere" && b <= 0) ||
+    (shape === "cuboid" && c <= 0)
+  ) {
+    r = "Enter valid positive dimensions.";
+    break;
+  }
+
   let volume = 0;
 
   if (shape === "cuboid") {
@@ -551,8 +843,8 @@ case "speed-calculator": {
   const distance = num(v.distance);
   const time = num(v.time);
 
-  if (time === 0) {
-    r = "Time cannot be 0.";
+  if (distance < 0 || time <= 0) {
+    r = "Enter a valid distance and time.";
     break;
   }
 
@@ -576,10 +868,10 @@ case "fuel-cost-calculator": {
   const mileage = num(v.mileage);
   const fuelPrice = num(v.fuelPrice);
 
-  if (mileage === 0) {
-    r = "Mileage cannot be 0.";
-    break;
-  }
+  if (distance < 0 || mileage <= 0 || fuelPrice < 0) {
+  r = "Enter valid distance, mileage and fuel price.";
+  break;
+}
 
   const fuelUsed = distance / mileage;
   const cost = fuelUsed * fuelPrice;
@@ -873,7 +1165,34 @@ case "fuel-cost-calculator":
   ) : null}
 </section>
 
-        {related.length>0 && <section className="section"><div className="sectionHead"><div><h2>Related calculators</h2><p>More tools from {calculator.category}.</p></div></div><div className="related">{related.map(c=><Link className="card" href={`/calculator/${c.slug}`} key={c.slug}><div className="icon">{c.icon}</div><h3>{c.name}</h3><p>{c.description}</p></Link>)}</div></section>}
+        {related.length > 0 && (
+  <section className="section">
+    <div className="sectionHead">
+      <div>
+        <h2>Related calculators</h2>
+        <p>
+          More tools from {calculator.category}.
+        </p>
+      </div>
+    </div>
+
+    <div className="related">
+      {related.map((item) => (
+        <Link
+          className="card"
+          href={`/calculator/${item.slug}`}
+          key={item.slug}
+        >
+          <div className="icon">{item.icon}</div>
+
+          <h3>{item.name}</h3>
+
+          <p>{item.description}</p>
+        </Link>
+      ))}
+    </div>
+  </section>
+)}
       </main>
     <footer className="footer">
   <div className="container footerGrid">
