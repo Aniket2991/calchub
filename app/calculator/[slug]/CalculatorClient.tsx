@@ -43,13 +43,14 @@ export default function CalculatorClient({ slug }: { slug: string }) {
     );
   }
 
-  const content = calculatorContent[calculator.slug];
+  const currentCalculator = calculator;
+  const content = calculatorContent[currentCalculator.slug];
 
   const related = calculators
     .filter(
       (item) =>
-        item.slug !== calculator.slug &&
-        item.category === calculator.category
+        item.slug !== currentCalculator.slug &&
+        item.category === currentCalculator.category
     )
     .slice(0, 4);
 
@@ -82,7 +83,7 @@ export default function CalculatorClient({ slug }: { slug: string }) {
 
   function calculate() {
     let r=""; let rr:[string,string][]=[];
-    switch(calculator.slug) {
+    switch(currentCalculator.slug) {
      case "emi-calculator": {
   const P = num(v.p);
   const annual = num(v.rate);
@@ -894,7 +895,7 @@ case "fuel-cost-calculator": {
   function reset(){setV({});setResult("Enter values and calculate.");setRows([]);}
 
   const common = () => {
-    switch(calculator.slug) {
+    switch(currentCalculator.slug) {
       case "emi-calculator": return <>{field("Loan amount","p")} {field("Annual interest rate (%)","rate")} {field("Loan tenure (months)","months")}</>;
       case "loan-calculator":
   return (
@@ -1096,11 +1097,11 @@ case "fuel-cost-calculator":
     <>
       <header className="header"><div className="container nav"><Link className="logo" href="/"><span className="logoMark">+</span>CalcHub</Link><nav className="navLinks"><Link href="/">All calculators</Link><Link href="/about">About</Link></nav></div></header>
       <main className="container">
-        <div className="breadcrumb"><Link href="/">Home</Link> / {calculator.category} / {calculator.name}</div>
-        <section className="calcHero"><div className="eyebrow">{calculator.category}</div></section>
+        <div className="breadcrumb"><Link href="/">Home</Link> / {currentCalculator.category} / {currentCalculator.name}</div>
+        <section className="calcHero"><div className="eyebrow">{currentCalculator.category}</div></section>
         <div className="calcLayout">
           <section className="panel">
-            <h1>{calculator.name}</h1><p className="lead">{calculator.description}</p>
+            <h1>{currentCalculator.name}</h1><p className="lead">{currentCalculator.description}</p>
             <div className="fields">{common()}</div>
             <div className="actions"><button className="primary" onClick={calculate}>Calculate</button><button className="secondary" onClick={reset}>Reset</button></div>
           </section>
@@ -1171,7 +1172,7 @@ case "fuel-cost-calculator":
       <div>
         <h2>Related calculators</h2>
         <p>
-          More tools from {calculator.category}.
+          More tools from {currentCalculator.category}.
         </p>
       </div>
     </div>
