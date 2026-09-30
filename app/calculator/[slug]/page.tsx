@@ -94,6 +94,7 @@ export default async function CalculatorPage({ params }: Props) {
   }
 
   const calculatorUrl = `${SITE_URL}/calculator/${calculator.slug}`;
+  const content = calculatorContent[calculator.slug];
 
   const breadcrumbSchema = {
     "@context": "https://schema.org",
