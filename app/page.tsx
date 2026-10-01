@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useMemo, useState } from "react";
 import { calculators } from "../lib/calculators";
 
 const categorySlug = (category: string) =>
@@ -16,6 +19,23 @@ const popular = [
 ];
 
 export default function Home() {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const searchResults = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+
+    if (!query) return [];
+
+    return calculators
+      .filter((calculator) =>
+        [calculator.name, calculator.description, calculator.category]
+          .join(" ")
+          .toLowerCase()
+          .includes(query)
+      )
+      .slice(0, 6);
+  }, [searchQuery]);
+
   const popularCalcs = popular
     .map((s) => calculators.find((c) => c.slug === s)!)
     .filter(Boolean);
@@ -93,11 +113,71 @@ export default function Home() {
                 <input
                   aria-label="Search calculators"
                   placeholder="What do you want to calculate?"
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" && searchResults[0]) {
+                      window.location.href = `/calculator/${searchResults[0].slug}`;
+                    }
+                  }}
                 />
                 <a className="primary" href="#popular">
                   Explore Calculators
                 </a>
               </div>
+
+              {searchQuery.trim() && (
+                <div
+                  style={{
+                    marginTop: 8,
+                    background: "rgba(255,255,255,0.96)",
+                    border: "1px solid rgba(15,23,42,0.08)",
+                    borderRadius: 16,
+                    boxShadow: "0 18px 40px rgba(15,23,42,0.12)",
+                    overflow: "hidden",
+                  }}
+                >
+                  {searchResults.length > 0 ? (
+                    searchResults.map((calculator) => (
+                      <Link
+                        key={calculator.slug}
+                        href={`/calculator/${calculator.slug}`}
+                        style={{
+                          display: "block",
+                          padding: "14px 16px",
+                          color: "inherit",
+                          textDecoration: "none",
+                          borderBottom: "1px solid rgba(15,23,42,0.06)",
+                        }}
+                        onClick={() => setSearchQuery("")}
+                      >
+                        <strong>{calculator.name}</strong>
+                        <span
+                          style={{
+                            display: "block",
+                            marginTop: 3,
+                            color: "#64748b",
+                            fontSize: 13,
+                          }}
+                        >
+                          {calculator.category} · {calculator.description}
+                        </span>
+                      </Link>
+                    ))
+                  ) : (
+                    <div
+                      style={{
+                        padding: "15px 16px",
+                        color: "#64748b",
+                        fontSize: 14,
+                      }}
+                    >
+                      No calculator found. Try “EMI”, “GST”, “BMI” or
+                      “percentage”.
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="heroCard">
