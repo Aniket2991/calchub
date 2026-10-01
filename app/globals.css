@@ -2257,3 +2257,102 @@ details p {
     border-color: rgba(148,163,184,.2);
   }
 }
+
+
+.mobileQuickActions {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .mobileQuickActions {
+    display: block;
+    margin: 8px auto 28px;
+    width: min(calc(100% - 28px), 680px);
+  }
+
+  .mobileQuickHead {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+
+  .mobileQuickEyebrow {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: .14em;
+    color: #64748b;
+  }
+
+  .mobileQuickHead h2 {
+    margin: 0;
+    font-size: 22px;
+    letter-spacing: -.02em;
+  }
+
+  .mobileQuickHead a {
+    color: #2563eb;
+    font-size: 13px;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .mobileQuickGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .mobileQuickCard {
+    min-height: 108px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid rgba(148,163,184,.2);
+    border-radius: 18px;
+    background: rgba(255,255,255,.72);
+    box-shadow: 0 10px 26px rgba(15,23,42,.07);
+    color: inherit;
+    text-decoration: none;
+    backdrop-filter: blur(12px);
+  }
+
+  .mobileQuickCard:active {
+    transform: scale(.98);
+  }
+
+  .mobileQuickIcon {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 11px;
+    background: rgba(37,99,235,.1);
+    color: #2563eb;
+    font-weight: 900;
+  }
+
+  .mobileQuickCard strong {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 1.25;
+  }
+
+  .mobileQuickCard small {
+    color: #64748b;
+    font-size: 11px;
+  }
+
+  [data-theme="dark"] .mobileQuickCard {
+    background: rgba(15,23,42,.72);
+  }
+
+  [data-theme="dark"] .mobileQuickEyebrow,
+  [data-theme="dark"] .mobileQuickCard small {
+    color: #94a3b8;
+  }
+}
