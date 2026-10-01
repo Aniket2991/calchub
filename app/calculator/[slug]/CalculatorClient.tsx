@@ -1198,7 +1198,7 @@ case "fuel-cost-calculator":
       <header className="header"><div className="container nav"><Link className="logo" href="/"><span className="logoMark">+</span>CalcHub</Link><nav className="navLinks"><Link href="/">All calculators</Link><Link href="/about">About</Link></nav></div></header>
       <main className="container">
         <div className="breadcrumb"><Link href="/">Home</Link> / <Link href={`/category/${currentCalculator.category.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`}>{currentCalculator.category}</Link> / <span aria-current="page">{currentCalculator.name}</span></div>
-        <section className="calcHero"><div className="eyebrow">{currentCalculator.category}</div></section>
+        <section className="calcHero"><div className="eyebrow">{currentCalculator.category}</div><div className="mobileCalcBar"><span>{currentCalculator.name}</span><FavoriteButton slug={currentCalculator.slug} /></div></section>
         <div className="calcLayout">
           <section className="panel">
             <div className="calcTitleRow">
@@ -1209,11 +1209,11 @@ case "fuel-cost-calculator":
               <FavoriteButton slug={currentCalculator.slug} />
             </div>
             <div className="fields">{common()}</div>
-            <div className="actions"><button className="primary" onClick={calculate}>Calculate</button><button className="secondary" onClick={reset}>Reset</button></div>
+            <div className="actions"><button className="primary calculateButton" onClick={calculate}>Calculate</button><button className="secondary" onClick={reset}>Reset</button></div>
           </section>
           <aside className="result">
             <div className="resultLabel">Your result</div>
-            <div className="resultValue">{result}</div>
+            <div className="resultValue resultValueAnimated" key={result}>{result}</div>
             <div className="resultActions">
               <button
                 className="resultAction"
