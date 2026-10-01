@@ -186,25 +186,28 @@ export default function Home() {
               <h2>Pick a calculator. Get an answer.</h2>
 
               <div className="miniCalc">
-                <div className="miniBox">
+                <Link className="miniBox" href="/calculator/emi-calculator">
                   <span>Finance</span>
                   EMI · SIP · GST
-                </div>
+                </Link>
 
-                <div className="miniBox">
+                <Link
+                  className="miniBox"
+                  href="/calculator/percentage-calculator"
+                >
                   <span>Math</span>
                   % · Average
-                </div>
+                </Link>
 
-                <div className="miniBox">
+                <Link className="miniBox" href="/calculator/bmi-calculator">
                   <span>Health</span>
                   BMI
-                </div>
+                </Link>
 
-                <div className="miniBox">
+                <Link className="miniBox" href="/calculator/age-calculator">
                   <span>Everyday</span>
                   Age · Units
-                </div>
+                </Link>
               </div>
             </div>
           </div>
