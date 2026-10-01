@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { calculators, getCalculator } from "../../../lib/calculators";
 import { calculatorContent } from "../../../lib/calculator-content";
+import { FavoriteButton } from "../../components/UserTools";
 
 type Values = Record<string, string>;
 
@@ -46,6 +47,26 @@ export default function CalculatorClient({ slug }: { slug: string }) {
 
   const currentCalculator = calculator;
   const content = calculatorContent[currentCalculator.slug];
+
+  useEffect(() => {
+    try {
+      const key = "calchub-recent";
+      const saved = JSON.parse(window.localStorage.getItem(key) || "[]");
+      const recent = Array.isArray(saved)
+        ? saved.filter((item): item is string => typeof item === "string")
+        : [];
+
+      const next = [
+        currentCalculator.slug,
+        ...recent.filter((item) => item !== currentCalculator.slug),
+      ].slice(0, 8);
+
+      window.localStorage.setItem(key, JSON.stringify(next));
+      window.dispatchEvent(new Event("calchub-recent-changed"));
+    } catch {
+      // Recent history is optional and should never block calculator use.
+    }
+  }, [currentCalculator.slug]);
 
   const related = calculators
     .filter(
@@ -1149,7 +1170,13 @@ case "fuel-cost-calculator":
         <section className="calcHero"><div className="eyebrow">{currentCalculator.category}</div></section>
         <div className="calcLayout">
           <section className="panel">
-            <h1>{currentCalculator.name}</h1><p className="lead">{currentCalculator.description}</p>
+            <div className="calcTitleRow">
+              <div>
+                <h1>{currentCalculator.name}</h1>
+                <p className="lead">{currentCalculator.description}</p>
+              </div>
+              <FavoriteButton slug={currentCalculator.slug} />
+            </div>
             <div className="fields">{common()}</div>
             <div className="actions"><button className="primary" onClick={calculate}>Calculate</button><button className="secondary" onClick={reset}>Reset</button></div>
           </section>
