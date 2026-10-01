@@ -1714,3 +1714,58 @@ details p {
     display: none;
   }
 }
+
+
+/* -------------------- */
+/* Calculator result actions */
+/* -------------------- */
+
+.resultActions {
+  display: flex;
+  gap: 8px;
+  margin: 14px 0 16px;
+  flex-wrap: wrap;
+}
+
+.resultAction {
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-radius: 10px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.08);
+  color: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease, opacity 0.18s ease;
+}
+
+.resultAction:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.resultAction:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.resultAction:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+[data-theme="dark"] .resultAction {
+  background: rgba(30, 41, 59, 0.9);
+  border-color: rgba(148, 163, 184, 0.24);
+  color: #f8fafc;
+}
+
+@media (max-width: 560px) {
+  .resultActions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .resultAction {
+    width: 100%;
+  }
+}
