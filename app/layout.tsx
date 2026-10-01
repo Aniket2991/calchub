@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
 import AIChat from "./components/AIChat";
+import ThemeToggle from "./components/ThemeToggle";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
@@ -67,8 +68,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem("calchub-theme");if(t!=="light"&&t!=="dark"){t=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.dataset.theme=t}catch(e){}})()`,
+          }}
+        />
         {/* Google AdSense */}
         <script
           async
@@ -101,6 +107,7 @@ export default function RootLayout({
 
       <body>
         {children}
+        <ThemeToggle />
         <AIChat />
       </body>
     </html>
