@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { calculators } from "../lib/calculators";
+import { FavoriteButton, RecentCalculators } from "./components/UserTools";
 
 const categorySlug = (category: string) =>
   category.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -217,6 +218,8 @@ export default function Home() {
           <div className="ad">ADVERTISEMENT</div>
         </div>
 
+        <RecentCalculators />
+
         {/* Popular */}
         <section className="section" id="popular">
           <div className="container">
@@ -240,6 +243,7 @@ export default function Home() {
                   <div className="icon">{c.icon}</div>
                   <h3>{c.name}</h3>
                   <p>{c.description}</p>
+                  <FavoriteButton slug={c.slug} />
                 </Link>
               ))}
             </div>
@@ -302,6 +306,7 @@ export default function Home() {
                       <div className="icon">{c.icon}</div>
                       <h3>{c.name}</h3>
                       <p>{c.description}</p>
+                      <FavoriteButton slug={c.slug} />
                     </Link>
                   ))}
               </div>
