@@ -2162,3 +2162,44 @@ details p {
 .dashboardEmpty { padding: 28px; border: 1px dashed rgba(100,116,139,.28); border-radius: 18px; color: #64748b; background: rgba(255,255,255,.45); }
 [data-theme="dark"] .dashboardEmpty { background: rgba(15,23,42,.35); color: #94a3b8; }
 @media (max-width: 700px) { .dashboardHead { align-items: start; flex-direction: column; } .dashboardSection { margin-top: 36px; } }
+
+
+/* PWA install prompt */
+.heroInstall {
+  margin-top: 16px;
+  min-height: 44px;
+}
+.installAppButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid rgba(37,99,235,.25);
+  border-radius: 12px;
+  padding: 10px 15px;
+  background: rgba(255,255,255,.78);
+  color: #0f172a;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 750;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(15,23,42,.08);
+  backdrop-filter: blur(12px);
+}
+.installAppButton:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(15,23,42,.12);
+}
+[data-theme="dark"] .installAppButton {
+  background: rgba(15,23,42,.78);
+  color: #f8fafc;
+  border-color: rgba(96,165,250,.3);
+}
+@media (max-width: 640px) {
+  .heroInstall {
+    margin-top: 14px;
+  }
+  .installAppButton {
+    width: 100%;
+    justify-content: center;
+  }
+}
