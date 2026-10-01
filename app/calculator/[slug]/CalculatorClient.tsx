@@ -1106,7 +1106,7 @@ case "fuel-cost-calculator":
     <>
       <header className="header"><div className="container nav"><Link className="logo" href="/"><span className="logoMark">+</span>CalcHub</Link><nav className="navLinks"><Link href="/">All calculators</Link><Link href="/about">About</Link></nav></div></header>
       <main className="container">
-        <div className="breadcrumb"><Link href="/">Home</Link> / {currentCalculator.category} / {currentCalculator.name}</div>
+        <div className="breadcrumb"><Link href="/">Home</Link> / <Link href={`/category/${currentCalculator.category.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`}>{currentCalculator.category}</Link> / <span aria-current="page">{currentCalculator.name}</span></div>
         <section className="calcHero"><div className="eyebrow">{currentCalculator.category}</div></section>
         <div className="calcLayout">
           <section className="panel">
