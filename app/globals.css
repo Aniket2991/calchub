@@ -2356,3 +2356,165 @@ details p {
     color: #94a3b8;
   }
 }
+
+
+/* Native-style calculator mobile experience */
+.mobileCalcBar {
+  display: none;
+}
+
+.resultValueAnimated {
+  animation: resultPop .24s ease-out;
+}
+
+@keyframes resultPop {
+  from {
+    opacity: .35;
+    transform: translateY(5px) scale(.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 700px) {
+  .calcHero {
+    margin-bottom: 8px;
+  }
+
+  .mobileCalcBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 10px;
+    padding: 10px 12px;
+    border: 1px solid rgba(148,163,184,.2);
+    border-radius: 16px;
+    background: rgba(255,255,255,.72);
+    box-shadow: 0 8px 22px rgba(15,23,42,.06);
+    backdrop-filter: blur(12px);
+  }
+
+  .mobileCalcBar > span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  .mobileCalcBar .favoriteButton {
+    flex: 0 0 auto;
+  }
+
+  .calcLayout {
+    gap: 14px;
+  }
+
+  .calcLayout .panel {
+    border-radius: 22px;
+    padding: 18px;
+  }
+
+  .calcTitleRow {
+    align-items: flex-start;
+  }
+
+  .calcTitleRow h1 {
+    font-size: 25px;
+    line-height: 1.12;
+  }
+
+  .lead {
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .fields {
+    grid-template-columns: 1fr;
+    gap: 13px;
+  }
+
+  .field,
+  .field.full {
+    grid-column: 1 / -1;
+  }
+
+  .field input,
+  .field select {
+    min-height: 50px;
+    font-size: 16px;
+    border-radius: 14px;
+  }
+
+  .actions {
+    position: sticky;
+    bottom: 78px;
+    z-index: 20;
+    margin: 18px -4px -4px;
+    padding: 8px;
+    border: 1px solid rgba(148,163,184,.18);
+    border-radius: 17px;
+    background: rgba(248,250,252,.88);
+    backdrop-filter: blur(14px);
+  }
+
+  .actions .primary,
+  .actions .secondary {
+    min-height: 50px;
+    font-size: 15px;
+    border-radius: 13px;
+  }
+
+  .result {
+    order: -1;
+    position: relative;
+    overflow: hidden;
+    border-radius: 24px;
+    padding: 20px;
+  }
+
+  .result::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 90% 0%, rgba(37,99,235,.12), transparent 45%);
+  }
+
+  .resultValue {
+    position: relative;
+    font-size: clamp(28px, 8vw, 42px);
+    line-height: 1.1;
+    overflow-wrap: anywhere;
+  }
+
+  .resultActions {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .resultAction {
+    min-height: 44px;
+    border-radius: 12px;
+  }
+
+  .resultRows {
+    position: relative;
+    margin-top: 16px;
+  }
+
+  [data-theme="dark"] .mobileCalcBar {
+    background: rgba(15,23,42,.72);
+  }
+
+  [data-theme="dark"] .actions {
+    background: rgba(15,23,42,.9);
+  }
+}
