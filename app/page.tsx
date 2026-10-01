@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { calculators } from "../lib/calculators";
 import { CalculationHistory, FavoriteButton, MyCalculators, RecentCalculators } from "./components/UserTools";
 import InstallAppButton from "./components/InstallAppButton";
+import MobileQuickActions from "./components/MobileQuickActions";
 
 const categorySlug = (category: string) =>
   category.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
