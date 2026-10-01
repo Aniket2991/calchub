@@ -2152,3 +2152,13 @@ details p {
 .latestResult span {
   font-weight: 700;
 }
+
+
+/* My Calculators dashboard */
+.dashboardHead { align-items: end; }
+.dashboardSection { margin-top: 48px; }
+.dashboardCard { position: relative; }
+.dashboardArrow { display: inline-block; margin-top: 10px; font-weight: 700; font-size: 13px; }
+.dashboardEmpty { padding: 28px; border: 1px dashed rgba(100,116,139,.28); border-radius: 18px; color: #64748b; background: rgba(255,255,255,.45); }
+[data-theme="dark"] .dashboardEmpty { background: rgba(15,23,42,.35); color: #94a3b8; }
+@media (max-width: 700px) { .dashboardHead { align-items: start; flex-direction: column; } .dashboardSection { margin-top: 36px; } }
