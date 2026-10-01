@@ -2125,3 +2125,30 @@ details p {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Saved calculation restore action */
+.historyOpenButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 14px;
+  padding: 9px 13px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 13px;
+  background: rgba(99, 102, 241, 0.1);
+  color: inherit;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  transition: transform .2s ease, background .2s ease;
+}
+
+.historyOpenButton:hover {
+  transform: translateY(-1px);
+  background: rgba(99, 102, 241, 0.16);
+}
+
+.latestResult span {
+  font-weight: 700;
+}
