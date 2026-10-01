@@ -3,6 +3,7 @@ import Script from "next/script";
 import "./globals.css";
 import AIChat from "./components/AIChat";
 import ThemeToggle from "./components/ThemeToggle";
+import InstallAppButton from "./components/InstallAppButton";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
