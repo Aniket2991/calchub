@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { calculators } from "../lib/calculators";
-import { CalculationHistory, FavoriteButton, RecentCalculators } from "./components/UserTools";
+import { CalculationHistory, FavoriteButton, MyCalculators, RecentCalculators } from "./components/UserTools";
 
 const categorySlug = (category: string) =>
   category.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -89,6 +89,7 @@ export default function Home() {
           <nav className="navLinks" aria-label="Main navigation">
             <Link href="/#popular">Popular</Link>
             <Link href="/#categories">Categories</Link>
+            <Link href="/#my-calculators">My Calculators</Link>
             <Link href="/about">About</Link>
             <Link href="/contact">Contact</Link>
           </nav>
@@ -218,6 +219,7 @@ export default function Home() {
           <div className="ad">ADVERTISEMENT</div>
         </div>
 
+        <MyCalculators />
         <RecentCalculators />
         <CalculationHistory />
 
