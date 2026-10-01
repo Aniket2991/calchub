@@ -235,16 +235,14 @@ export default function Home() {
 
             <div className="grid">
               {popularCalcs.map((c) => (
-                <Link
-                  className="card"
-                  href={`/calculator/${c.slug}`}
-                  key={c.slug}
-                >
-                  <div className="icon">{c.icon}</div>
-                  <h3>{c.name}</h3>
-                  <p>{c.description}</p>
+                <div className="card cardWithFavorite" key={c.slug}>
+                  <Link className="cardMainLink" href={`/calculator/${c.slug}`}>
+                    <div className="icon">{c.icon}</div>
+                    <h3>{c.name}</h3>
+                    <p>{c.description}</p>
+                  </Link>
                   <FavoriteButton slug={c.slug} />
-                </Link>
+                </div>
               ))}
             </div>
           </div>
@@ -298,16 +296,14 @@ export default function Home() {
                 {calculators
                   .filter((c) => c.category === cat)
                   .map((c) => (
-                    <Link
-                      className="card"
-                      href={`/calculator/${c.slug}`}
-                      key={c.slug}
-                    >
-                      <div className="icon">{c.icon}</div>
-                      <h3>{c.name}</h3>
-                      <p>{c.description}</p>
+                    <div className="card cardWithFavorite" key={c.slug}>
+                      <Link className="cardMainLink" href={`/calculator/${c.slug}`}>
+                        <div className="icon">{c.icon}</div>
+                        <h3>{c.name}</h3>
+                        <p>{c.description}</p>
+                      </Link>
                       <FavoriteButton slug={c.slug} />
-                    </Link>
+                    </div>
                   ))}
               </div>
             </div>
