@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { calculators } from "../lib/calculators";
-import { FavoriteButton, RecentCalculators } from "./components/UserTools";
+import { CalculationHistory, FavoriteButton, RecentCalculators } from "./components/UserTools";
 
 const categorySlug = (category: string) =>
   category.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -219,6 +219,7 @@ export default function Home() {
         </div>
 
         <RecentCalculators />
+        <CalculationHistory />
 
         {/* Popular */}
         <section className="section" id="popular">
