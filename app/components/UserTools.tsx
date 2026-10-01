@@ -140,12 +140,18 @@ export function CalculationHistory() {
                     <strong>{value}</strong>
                   </div>
                 ) : null)}
-                {item.rows.map(([label, value]) => (
-                  <div className="historyRow" key={label}>
+                {item.rows.map(([label, value], index) => (
+                  <div className="historyRow" key={`${item.id}-${label}-${index}`}>
                     <span>{label}</span>
                     <strong>{value}</strong>
                   </div>
                 ))}
+                <Link
+                  className="historyOpenButton"
+                  href={`/calculator/${item.slug}?restore=${encodeURIComponent(item.id)}`}
+                >
+                  Open calculation →
+                </Link>
               </div>
             </details>
           ))}
@@ -251,7 +257,7 @@ export function MyCalculators() {
               <span>{history.length}</span>
             </div>
             {latestHistory ? (
-              <Link className="latestResult" href={`/calculator/${latestHistory.slug}`}>
+              <Link className="latestResult" href={`/calculator/${latestHistory.slug}?restore=${encodeURIComponent(latestHistory.id)}`}>
                 <small>{latestHistory.calculatorName}</small>
                 <strong>{latestHistory.result}</strong>
                 <span>Open calculator →</span>
