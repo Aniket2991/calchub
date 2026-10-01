@@ -50,6 +50,26 @@ export default function CalculatorClient({ slug }: { slug: string }) {
 
   useEffect(() => {
     try {
+      const restoreId = new URLSearchParams(window.location.search).get("restore");
+      if (restoreId) {
+        const saved = JSON.parse(window.localStorage.getItem("calchub-history") || "[]");
+        const restored = Array.isArray(saved)
+          ? saved.find((item) => item && item.id === restoreId && item.slug === currentCalculator.slug)
+          : null;
+
+        if (restored && restored.values && typeof restored.values === "object") {
+          setV(restored.values as Values);
+          if (typeof restored.result === "string") setResult(restored.result);
+          if (Array.isArray(restored.rows)) setRows(restored.rows as [string, string][]);
+        }
+      }
+    } catch {
+      // Restoring a saved calculation is optional and should never block the calculator.
+    }
+  }, [currentCalculator.slug]);
+
+  useEffect(() => {
+    try {
       const key = "calchub-recent";
       const saved = JSON.parse(window.localStorage.getItem(key) || "[]");
       const recent = Array.isArray(saved)
