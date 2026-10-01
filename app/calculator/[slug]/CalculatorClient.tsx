@@ -32,6 +32,7 @@ export default function CalculatorClient({ slug }: { slug: string }) {
     "Enter values and calculate."
   );
   const [rows, setRows] = useState<[string, string][]>([]);
+  const [copied, setCopied] = useState(false);
 
   if (!calculator) {
     return (
@@ -901,7 +902,45 @@ case "fuel-cost-calculator": {
     setResult(r); setRows(rr);
   }
 
-  function reset(){setV({});setResult("Enter values and calculate.");setRows([]);}
+  function reset(){
+    setV({});
+    setResult("Enter values and calculate.");
+    setRows([]);
+    setCopied(false);
+  }
+
+  async function copyResult() {
+    if (!result || result === "Enter values and calculate.") return;
+
+    try {
+      await navigator.clipboard.writeText(result);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1600);
+    } catch {
+      setCopied(false);
+    }
+  }
+
+  async function shareResult() {
+    if (!result || result === "Enter values and calculate.") return;
+
+    const text = `${currentCalculator.name}: ${result}`;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: currentCalculator.name,
+          text,
+          url: window.location.href,
+        });
+        return;
+      } catch {
+        // User cancelled the share sheet; no action needed.
+      }
+    }
+
+    await copyResult();
+  }
 
   const common = () => {
     switch(currentCalculator.slug) {
@@ -1117,6 +1156,24 @@ case "fuel-cost-calculator":
           <aside className="result">
             <div className="resultLabel">Your result</div>
             <div className="resultValue">{result}</div>
+            <div className="resultActions">
+              <button
+                className="resultAction"
+                type="button"
+                onClick={copyResult}
+                disabled={result === "Enter values and calculate."}
+              >
+                {copied ? "✓ Copied" : "Copy result"}
+              </button>
+              <button
+                className="resultAction"
+                type="button"
+                onClick={shareResult}
+                disabled={result === "Enter values and calculate."}
+              >
+                Share
+              </button>
+            </div>
             <div className="resultNote">Use the result as an estimate. Check the assumptions and inputs before relying on it for an important decision.</div>
             {rows.length>0 && <div className="resultRows">{rows.map(([a,b])=><div className="resultRow" key={a}><span>{a}</span><strong>{b}</strong></div>)}</div>}
           </aside>
