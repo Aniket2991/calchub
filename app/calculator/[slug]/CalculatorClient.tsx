@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { calculators, getCalculator } from "../../../lib/calculators";
 import { calculatorContent } from "../../../lib/calculator-content";
-import { FavoriteButton } from "../../components/UserTools";
+import { FavoriteButton, saveHistory } from "../../components/UserTools";
 
 type Values = Record<string, string>;
 
@@ -920,7 +920,18 @@ case "fuel-cost-calculator": {
 }
       default: r="This calculator is being expanded. Try one of the available calculators from the home page.";
     }
-    setResult(r); setRows(rr);
+    setResult(r);
+    setRows(rr);
+
+    if (r && !r.startsWith("Enter ") && !r.includes("cannot") && !r.includes("valid")) {
+      saveHistory({
+        slug: currentCalculator.slug,
+        calculatorName: currentCalculator.name,
+        result: r,
+        values: v,
+        rows: rr,
+      });
+    }
   }
 
   function reset(){
