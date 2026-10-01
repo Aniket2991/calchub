@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { calculators } from "../lib/calculators";
 import { CalculationHistory, FavoriteButton, MyCalculators, RecentCalculators } from "./components/UserTools";
+import InstallAppButton from "./components/InstallAppButton";
 
 const categorySlug = (category: string) =>
   category.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -102,6 +103,8 @@ export default function Home() {
           <div className="container heroGrid">
             <div>
               <div className="eyebrow">Simple • Fast • Free</div>
+
+              <div className="heroInstall"><InstallAppButton /></div>
 
               <h1>Free Online Calculators for Everyday Use</h1>
 
