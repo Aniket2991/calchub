@@ -89,7 +89,7 @@ export default function Home() {
           <nav className="navLinks" aria-label="Main navigation">
             <Link href="/#popular">Popular</Link>
             <Link href="/#categories">Categories</Link>
-            <Link href="/#my-calculators">My Calculators</Link>
+            <Link href="/my-calculators">My Calculators</Link>
             <Link href="/about">About</Link>
             <Link href="/contact">Contact</Link>
           </nav>
