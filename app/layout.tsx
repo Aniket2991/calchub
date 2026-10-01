@@ -5,6 +5,7 @@ import AIChat from "./components/AIChat";
 import ThemeToggle from "./components/ThemeToggle";
 import InstallAppButton from "./components/InstallAppButton";
 import ServiceWorkerRegister from "./components/ServiceWorkerRegister";
+import MobileNav from "./components/MobileNav";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
@@ -111,6 +112,7 @@ export default function RootLayout({
         {children}
         <ThemeToggle />
         <AIChat />
+        <MobileNav />
       </body>
     </html>
   );
