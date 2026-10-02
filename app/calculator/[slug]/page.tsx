@@ -137,6 +137,42 @@ export default async function CalculatorPage({ params }: Props) {
         }
       : null;
 
+  const howToSchema = content?.tips?.length
+    ? {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        name: `How to use the ${calculator.name}`,
+        description: `Step-by-step instructions for using the ${calculator.name} on CalcHub.`,
+        totalTime: "PT2M",
+        tool: [
+          {
+            "@type": "HowToTool",
+            name: "CalcHub calculator",
+          },
+        ],
+        step: [
+          {
+            "@type": "HowToStep",
+            position: 1,
+            name: "Enter values",
+            text: "Enter the required values in the calculator fields.",
+          },
+          {
+            "@type": "HowToStep",
+            position: 2,
+            name: "Review inputs",
+            text: "Check the values and options you entered.",
+          },
+          {
+            "@type": "HowToStep",
+            position: 3,
+            name: "Calculate",
+            text: "Press Calculate to see the result and supporting details.",
+          },
+        ],
+      }
+    : null;
+
   const webApplicationSchema = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
@@ -185,6 +221,15 @@ export default async function CalculatorPage({ params }: Props) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(faqSchema),
+          }}
+        />
+      )}
+
+      {howToSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(howToSchema),
           }}
         />
       )}
