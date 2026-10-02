@@ -170,7 +170,7 @@ export default function CalculatorCommandBar() {
             results.map((calculator, index) => (
               <Link
                 key={calculator.slug}
-                href={`/calculator/${calculator.slug}`}
+                href={calculator.slug === activeCalculator?.slug ? (smartTarget(query) ?? `/calculator/${calculator.slug}`) : `/calculator/${calculator.slug}`}
                 className={index === activeIndex ? "commandResult commandResultActive" : "commandResult"}
                 aria-current={calculator.slug === activeCalculator?.slug ? "true" : undefined}
                 onMouseEnter={() => setActiveIndex(index)}
