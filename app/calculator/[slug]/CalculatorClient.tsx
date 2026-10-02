@@ -98,10 +98,16 @@ export default function CalculatorClient({ slug }: { slug: string }) {
 
 
   const set = (key: string, value: string) => {
-    setV((previous) => ({
-      ...previous,
+    const next = {
+      ...v,
       [key]: value,
-    }));
+    };
+
+    setV(next);
+
+    window.requestAnimationFrame(() => {
+      calculate(next, false);
+    });
   };
 
   const field = (
@@ -123,7 +129,7 @@ export default function CalculatorClient({ slug }: { slug: string }) {
     </div>
   );
 
-  function calculate() {
+  function calculate(values: Values = v, persist = true) {\n    const v = values;
     let r=""; let rr:[string,string][]=[];
     switch(currentCalculator.slug) {
      case "emi-calculator": {
@@ -943,7 +949,7 @@ case "fuel-cost-calculator": {
     setResult(r);
     setRows(rr);
 
-    if (r && !r.startsWith("Enter ") && !r.includes("cannot") && !r.includes("valid")) {
+    if (persist && r && !r.startsWith("Enter ") && !r.includes("cannot") && !r.includes("valid")) {
       saveHistory({
         slug: currentCalculator.slug,
         calculatorName: currentCalculator.name,
@@ -1208,7 +1214,7 @@ case "fuel-cost-calculator":
               </div>
               <FavoriteButton slug={currentCalculator.slug} />
             </div>
-            <div className="fields">{common()}</div>
+            <div className="fields">{common()}</div>\n            <div className="liveCalcHint">Results update as you type. Use Calculate to save this calculation.</div>\n            <div className="liveCalcHint">Results update as you type. Use Calculate to save this calculation.</div>
             <div className="actions"><button className="primary calculateButton" onClick={calculate}>Calculate</button><button className="secondary" onClick={reset}>Reset</button></div>
           </section>
           <aside className="result">
