@@ -1214,7 +1214,7 @@ case "fuel-cost-calculator":
               </div>
               <FavoriteButton slug={currentCalculator.slug} />
             </div>
-            <div className="fields">{common()}</div>\n            <div className="liveCalcHint">Results update as you type. Use Calculate to save this calculation.</div>\n            <div className="liveCalcHint">Results update as you type. Use Calculate to save this calculation.</div>
+            <div className="fields">{common()}</div>\n            <div className="liveCalcHint">Results update as you type. Use Calculate to save this calculation.</div>
             <div className="actions"><button className="primary calculateButton" onClick={calculate}>Calculate</button><button className="secondary" onClick={reset}>Reset</button></div>
           </section>
           <aside className="result">
