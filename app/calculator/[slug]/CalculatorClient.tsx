@@ -129,7 +129,8 @@ export default function CalculatorClient({ slug }: { slug: string }) {
     </div>
   );
 
-  function calculate(values: Values = v, persist = true) {\n    const v = values;
+  function calculate(values: Values = v, persist = true) {
+    const v = values;
     let r=""; let rr:[string,string][]=[];
     switch(currentCalculator.slug) {
      case "emi-calculator": {
@@ -1214,7 +1215,8 @@ case "fuel-cost-calculator":
               </div>
               <FavoriteButton slug={currentCalculator.slug} />
             </div>
-            <div className="fields">{common()}</div>\n            <div className="liveCalcHint">Results update as you type. Use Calculate to save this calculation.</div>
+            <div className="fields">{common()}</div>
+            <div className="liveCalcHint">Results update as you type. Use Calculate to save this calculation.</div>
             <div className="actions"><button className="primary calculateButton" onClick={calculate}>Calculate</button><button className="secondary" onClick={reset}>Reset</button></div>
           </section>
           <aside className="result">
