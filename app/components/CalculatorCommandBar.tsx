@@ -26,32 +26,72 @@ function smartTarget(query: string) {
   const years = q.match(/([0-9]*\.?[0-9]+)\s*(?:years?|yrs?)/)?.[1];
   const params = new URLSearchParams();
 
-  if (/\bemi\b/.test(q) || /\bloan\b/.test(q)) {
-    const slug = pick(/\bemi\b/.test(q) ? "emi-calculator" : "loan-calculator");
-    if (slug && values[0] && percent[0] !== undefined && years) {
-      params.set("p", String(values[0])); params.set("rate", String(percent[0])); params.set("months", String(Number(years) * 12));
-      return `/calculator/${slug}?${params}`;
-    }
-  }
-  if (/\bsip\b/.test(q) && values.length >= 1 && percent[0] !== undefined && years) {
+  const link = (slug: string) => `/calculator/${pick(slug)}?${params.toString()}`;
+
+  if (/\bemi\b|\bloan\b/.test(q) && values[0] && percent[0] !== undefined && years) {
     params.set("p", String(values[0])); params.set("rate", String(percent[0])); params.set("months", String(Number(years) * 12));
-    return `/calculator/${pick("sip-calculator")}?${params}`;
+    return link(/\bemi\b/.test(q) ? "emi-calculator" : "loan-calculator");
+  }
+  if (/\bsip\b/.test(q) && values[0] !== undefined && percent[0] !== undefined && years) {
+    params.set("p", String(values[0])); params.set("rate", String(percent[0])); params.set("months", String(Number(years) * 12));
+    return link("sip-calculator");
   }
   if (/\bgst\b/.test(q) && values[0] !== undefined && percent[0] !== undefined) {
     params.set("amount", String(values[0])); params.set("gst", String(percent[0]));
-    return `/calculator/${pick("gst-calculator")}?${params}`;
+    if (/\bremove\b|\bexclusive\b/.test(q)) params.set("mode", "remove");
+    return link("gst-calculator");
   }
   if (/\bdiscount\b/.test(q) && values[0] !== undefined && percent[0] !== undefined) {
     params.set("price", String(values[0])); params.set("discount", String(percent[0]));
-    return `/calculator/${pick("discount-calculator")}?${params}`;
+    return link("discount-calculator");
   }
   if (/\bbmi\b/.test(q) && values.length >= 2) {
     params.set("weight", String(values[0])); params.set("height", String(values[1]));
-    return `/calculator/${pick("bmi-calculator")}?${params}`;
+    return link("bmi-calculator");
   }
   if (/\bpercentage\b|\bpercent\b/.test(q) && values.length >= 2) {
     params.set("a", String(values[0])); params.set("b", String(values[1]));
-    return `/calculator/${pick("percentage-calculator")}?${params}`;
+    return link("percentage-calculator");
+  }
+  if (/\bprofit\b|\bloss\b/.test(q) && values.length >= 2) {
+    params.set("cost", String(values[0])); params.set("selling", String(values[1]));
+    return link("profit-loss-calculator");
+  }
+  if (/\bchange\b/.test(q) && /\bpercentage\b|\bpercent\b/.test(q) && values.length >= 2) {
+    params.set("original", String(values[0])); params.set("current", String(values[1]));
+    return link("percentage-change-calculator");
+  }
+  if (/\bratio\b/.test(q)) {
+    const ratio = q.match(/([0-9]+(?:\.[0-9]+)?)\s*[:/]\s*([0-9]+(?:\.[0-9]+)?)/);
+    if (ratio) {
+      params.set("a", ratio[1]); params.set("b", ratio[2]);
+      return link("ratio-calculator");
+    }
+  }
+  if (/\barea\b/.test(q) && values.length >= 2) {
+    params.set("a", String(values[0])); params.set("b", String(values[1]));
+    if (/\bcircle\b/.test(q)) params.set("shape", "circle");
+    if (/\btriangle\b/.test(q)) params.set("shape", "triangle");
+    return link("area-calculator");
+  }
+  if (/\bvolume\b/.test(q) && values.length >= 2) {
+    params.set("a", String(values[0])); params.set("b", String(values[1]));
+    if (values[2] !== undefined) params.set("c", String(values[2]));
+    if (/\bcylinder\b/.test(q)) params.set("shape", "cylinder");
+    if (/\bsphere\b/.test(q)) params.set("shape", "sphere");
+    return link("volume-calculator");
+  }
+  if (/\bspeed\b/.test(q) && values.length >= 2) {
+    params.set("distance", String(values[0])); params.set("time", String(values[1]));
+    return link("speed-calculator");
+  }
+  if (/\bfuel\b|\bmileage\b/.test(q) && values.length >= 3) {
+    params.set("distance", String(values[0])); params.set("mileage", String(values[1])); params.set("fuelPrice", String(values[2]));
+    return link("fuel-cost-calculator");
+  }
+  if (/\bsalary\b/.test(q) && values.length >= 1) {
+    params.set("gross", String(values[0])); if (values[1] !== undefined) params.set("deductions", String(values[1]));
+    return link("salary-calculator");
   }
   return null;
 }
