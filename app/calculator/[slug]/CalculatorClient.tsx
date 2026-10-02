@@ -70,6 +70,21 @@ export default function CalculatorClient({ slug }: { slug: string }) {
 
   useEffect(() => {
     try {
+      const params = new URLSearchParams(window.location.search);
+      const next: Values = {};
+      params.forEach((value, key) => {
+        if (key !== "restore" && value) next[key] = value;
+      });
+      if (Object.keys(next).length) {
+        setV((current) => ({ ...current, ...next }));
+      }
+    } catch {
+      // URL prefill is optional and should never block calculator use.
+    }
+  }, [currentCalculator.slug]);
+
+  useEffect(() => {
+    try {
       const key = "calchub-recent";
       const saved = JSON.parse(window.localStorage.getItem(key) || "[]");
       const recent = Array.isArray(saved)
