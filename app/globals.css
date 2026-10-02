@@ -2155,7 +2155,7 @@ details p {
 
 
 /* My Calculators dashboard */
-.dashboardHead { align-items: end; }
+.dashboardHead { align-items: flex-end; }
 .dashboardSection { margin-top: 48px; }
 .dashboardCard { position: relative; }
 .dashboardArrow { display: inline-block; margin-top: 10px; font-weight: 700; font-size: 13px; }
@@ -2272,7 +2272,7 @@ details p {
 
   .mobileQuickHead {
     display: flex;
-    align-items: end;
+    align-items: flex-end;
     justify-content: space-between;
     gap: 16px;
     margin-bottom: 14px;
