@@ -60,6 +60,7 @@ export default function CalculatorCommandBar() {
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const results = useMemo(() => {
@@ -97,6 +98,23 @@ export default function CalculatorCommandBar() {
   useEffect(() => {
     setActiveIndex(0);
   }, [query]);
+
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(window.localStorage.getItem("calchub-searches") || "[]");
+      if (Array.isArray(saved)) {
+        setRecentSearches(saved.filter((item): item is string => typeof item === "string").slice(0, 5));
+      }
+    } catch {}
+  }, []);
+
+  const rememberSearch = (value: string) => {
+    const clean = value.trim();
+    if (!clean) return;
+    const next = [clean, ...recentSearches.filter((item) => item !== clean)].slice(0, 5);
+    setRecentSearches(next);
+    try { window.localStorage.setItem("calchub-searches", JSON.stringify(next)); } catch {}
+  };
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -156,7 +174,7 @@ export default function CalculatorCommandBar() {
             if (event.key === "Enter") {
               event.preventDefault();
               const selected = results[activeIndex] ?? first;
-              if (selected) window.location.href = smartTarget(query) ?? `/calculator/${selected.slug}`;
+              if (selected) { rememberSearch(query); window.location.href = smartTarget(query) ?? `/calculator/${selected.slug}`; }
             }
           }}
         />
@@ -166,6 +184,26 @@ export default function CalculatorCommandBar() {
 
       {open && (
         <div className="commandResults">
+          {!query.trim() && recentSearches.length > 0 && (
+            <div className="commandRecent">
+              <div className="commandRecentHead">
+                <span>Recent searches</span>
+                <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => {
+                  setRecentSearches([]);
+                  try { window.localStorage.removeItem("calchub-searches"); } catch {}
+                }}>Clear</button>
+              </div>
+              {recentSearches.map((search) => (
+                <button type="button" className="commandRecentItem" key={search} onMouseDown={(event) => event.preventDefault()} onClick={() => {
+                  setQuery(search);
+                  setOpen(true);
+                  inputRef.current?.focus();
+                }}>
+                  <span>↗</span>{search}
+                </button>
+              ))}
+            </div>
+          )}
           {results.length > 0 ? (
             results.map((calculator, index) => (
               <Link
@@ -175,6 +213,7 @@ export default function CalculatorCommandBar() {
                 aria-current={calculator.slug === activeCalculator?.slug ? "true" : undefined}
                 onMouseEnter={() => setActiveIndex(index)}
                 onClick={() => {
+                  rememberSearch(query);
                   setOpen(false);
                   setQuery("");
                 }}
