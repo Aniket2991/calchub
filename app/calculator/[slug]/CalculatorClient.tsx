@@ -34,6 +34,7 @@ export default function CalculatorClient({ slug }: { slug: string }) {
   );
   const [rows, setRows] = useState<[string, string][]>([]);
   const [copied, setCopied] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
 
   if (!calculator) {
     return (
@@ -1007,17 +1008,37 @@ case "fuel-cost-calculator": {
     }
   }
 
+  function calculationUrl() {
+    const params = new URLSearchParams();
+    Object.entries(v).forEach(([key, value]) => {
+      if (value !== undefined && value !== "") params.set(key, value);
+    });
+    const query = params.toString();
+    return `${window.location.origin}/calculator/${currentCalculator.slug}${query ? `?${query}` : ""}`;
+  }
+
+  async function copyLink() {
+    try {
+      await navigator.clipboard.writeText(calculationUrl());
+      setLinkCopied(true);
+      window.setTimeout(() => setLinkCopied(false), 1600);
+    } catch {
+      setLinkCopied(false);
+    }
+  }
+
   async function shareResult() {
     if (!result || result === "Enter values and calculate.") return;
 
     const text = `${currentCalculator.name}: ${result}`;
+    const url = calculationUrl();
 
     if (navigator.share) {
       try {
         await navigator.share({
           title: currentCalculator.name,
           text,
-          url: window.location.href,
+          url,
         });
         return;
       } catch {
@@ -1025,7 +1046,7 @@ case "fuel-cost-calculator": {
       }
     }
 
-    await copyResult();
+    await copyLink();
   }
 
   const common = () => {
@@ -1264,6 +1285,14 @@ case "fuel-cost-calculator":
                 disabled={result === "Enter values and calculate."}
               >
                 Share
+              </button>
+              <button
+                className="resultAction"
+                type="button"
+                onClick={copyLink}
+                disabled={Object.keys(v).length === 0}
+              >
+                {linkCopied ? "✓ Link copied" : "Copy link"}
               </button>
             </div>
             <div className="resultNote">Use the result as an estimate. Check the assumptions and inputs before relying on it for an important decision.</div>
