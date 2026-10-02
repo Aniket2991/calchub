@@ -6,6 +6,7 @@ import { calculators } from "../lib/calculators";
 import { CalculationHistory, FavoriteButton, MyCalculators, RecentCalculators } from "./components/UserTools";
 import InstallAppButton from "./components/InstallAppButton";
 import MobileQuickActions from "./components/MobileQuickActions";
+import CalculatorCommandBar from "./components/CalculatorCommandBar";
 
 const categorySlug = (category: string) =>
   category.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -22,22 +23,6 @@ const popular = [
 ];
 
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const searchResults = useMemo(() => {
-    const query = searchQuery.trim().toLowerCase();
-
-    if (!query) return [];
-
-    return calculators
-      .filter((calculator) =>
-        [calculator.name, calculator.description, calculator.category]
-          .join(" ")
-          .toLowerCase()
-          .includes(query)
-      )
-      .slice(0, 6);
-  }, [searchQuery]);
 
   const popularCalcs = popular
     .map((s) => calculators.find((c) => c.slug === s)!)
@@ -115,22 +100,7 @@ export default function Home() {
                 results quickly without complicated tools.
               </p>
 
-              <div className="search">
-                <input
-                  aria-label="Search calculators"
-                  placeholder="What do you want to calculate?"
-                  value={searchQuery}
-                  onChange={(event) => setSearchQuery(event.target.value)}
-                  onKeyDown={(event) => {
-                    if (event.key === "Enter" && searchResults[0]) {
-                      window.location.href = `/calculator/${searchResults[0].slug}`;
-                    }
-                  }}
-                />
-                <a className="primary" href="#popular">
-                  Explore Calculators
-                </a>
-              </div>
+              <CalculatorCommandBar />
 
               {searchQuery.trim() && (
                 <div
