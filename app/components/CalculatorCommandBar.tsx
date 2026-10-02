@@ -4,6 +4,58 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { calculators } from "../../lib/calculators";
 
+function parseNumber(value: string) {
+  const cleaned = value.toLowerCase().replace(/,/g, "").trim();
+  const match = cleaned.match(/([0-9]*\.?[0-9]+)\s*(lakh|lac|crore|cr|k)?/);
+  if (!match) return null;
+  const base = Number(match[1]);
+  if (!Number.isFinite(base)) return null;
+  const unit = match[2];
+  if (unit === "lakh" || unit === "lac") return base * 100000;
+  if (unit === "crore" || unit === "cr") return base * 10000000;
+  if (unit === "k") return base * 1000;
+  return base;
+}
+
+function smartTarget(query: string) {
+  const q = query.toLowerCase();
+  const pick = (slug: string) => calculators.find((c) => c.slug === slug)?.slug;
+  const nums = [...q.matchAll(/([0-9]*\.?[0-9]+(?:\s*(?:lakh|lac|crore|cr|k))?)/g)].map((m) => m[1]);
+  const values = nums.map(parseNumber).filter((n): n is number => n !== null);
+  const percent = [...q.matchAll(/([0-9]*\.?[0-9]+)\s*%/g)].map((m) => Number(m[1]));
+  const years = q.match(/([0-9]*\.?[0-9]+)\s*(?:years?|yrs?)/)?.[1];
+  const params = new URLSearchParams();
+
+  if (/\bemi\b/.test(q) || /\bloan\b/.test(q)) {
+    const slug = pick(/\bemi\b/.test(q) ? "emi-calculator" : "loan-calculator");
+    if (slug && values[0] && percent[0] !== undefined && years) {
+      params.set("p", String(values[0])); params.set("rate", String(percent[0])); params.set("months", String(Number(years) * 12));
+      return `/calculator/${slug}?${params}`;
+    }
+  }
+  if (/\bsip\b/.test(q) && values.length >= 1 && percent[0] !== undefined && years) {
+    params.set("p", String(values[0])); params.set("rate", String(percent[0])); params.set("months", String(Number(years) * 12));
+    return `/calculator/${pick("sip-calculator")}?${params}`;
+  }
+  if (/\bgst\b/.test(q) && values[0] !== undefined && percent[0] !== undefined) {
+    params.set("amount", String(values[0])); params.set("gst", String(percent[0]));
+    return `/calculator/${pick("gst-calculator")}?${params}`;
+  }
+  if (/\bdiscount\b/.test(q) && values[0] !== undefined && percent[0] !== undefined) {
+    params.set("price", String(values[0])); params.set("discount", String(percent[0]));
+    return `/calculator/${pick("discount-calculator")}?${params}`;
+  }
+  if (/\bbmi\b/.test(q) && values.length >= 2) {
+    params.set("weight", String(values[0])); params.set("height", String(values[1]));
+    return `/calculator/${pick("bmi-calculator")}?${params}`;
+  }
+  if (/\bpercentage\b|\bpercent\b/.test(q) && values.length >= 2) {
+    params.set("a", String(values[0])); params.set("b", String(values[1]));
+    return `/calculator/${pick("percentage-calculator")}?${params}`;
+  }
+  return null;
+}
+
 export default function CalculatorCommandBar() {
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
@@ -81,7 +133,7 @@ export default function CalculatorCommandBar() {
         <input
           ref={inputRef}
           aria-label="Find a calculator"
-          placeholder="Find a calculator…"
+          placeholder="Try: EMI 5 lakh 9% 5 years…"
           value={query}
           onFocus={() => setOpen(true)}
           onChange={(event) => {
@@ -104,7 +156,7 @@ export default function CalculatorCommandBar() {
             if (event.key === "Enter") {
               event.preventDefault();
               const selected = results[activeIndex] ?? first;
-              if (selected) window.location.href = `/calculator/${selected.slug}`;
+              if (selected) window.location.href = smartTarget(query) ?? `/calculator/${selected.slug}`;
             }
           }}
         />
