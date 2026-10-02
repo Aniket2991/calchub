@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
 import { calculators } from "../lib/calculators";
 import { CalculationHistory, FavoriteButton, MyCalculators, RecentCalculators } from "./components/UserTools";
 import InstallAppButton from "./components/InstallAppButton";
@@ -23,7 +22,6 @@ const popular = [
 ];
 
 export default function Home() {
-
   const popularCalcs = popular
     .map((s) => calculators.find((c) => c.slug === s)!)
     .filter(Boolean);
@@ -84,7 +82,6 @@ export default function Home() {
       </header>
 
       <main>
-        {/* Hero */}
         <section className="hero">
           <div className="container heroGrid">
             <div>
@@ -101,59 +98,6 @@ export default function Home() {
               </p>
 
               <CalculatorCommandBar />
-
-              {searchQuery.trim() && (
-                <div
-                  style={{
-                    marginTop: 8,
-                    background: "rgba(255,255,255,0.96)",
-                    border: "1px solid rgba(15,23,42,0.08)",
-                    borderRadius: 16,
-                    boxShadow: "0 18px 40px rgba(15,23,42,0.12)",
-                    overflow: "hidden",
-                  }}
-                >
-                  {searchResults.length > 0 ? (
-                    searchResults.map((calculator) => (
-                      <Link
-                        key={calculator.slug}
-                        href={`/calculator/${calculator.slug}`}
-                        style={{
-                          display: "block",
-                          padding: "14px 16px",
-                          color: "inherit",
-                          textDecoration: "none",
-                          borderBottom: "1px solid rgba(15,23,42,0.06)",
-                        }}
-                        onClick={() => setSearchQuery("")}
-                      >
-                        <strong>{calculator.name}</strong>
-                        <span
-                          style={{
-                            display: "block",
-                            marginTop: 3,
-                            color: "#64748b",
-                            fontSize: 13,
-                          }}
-                        >
-                          {calculator.category} · {calculator.description}
-                        </span>
-                      </Link>
-                    ))
-                  ) : (
-                    <div
-                      style={{
-                        padding: "15px 16px",
-                        color: "#64748b",
-                        fontSize: 14,
-                      }}
-                    >
-                      No calculator found. Try “EMI”, “GST”, “BMI” or
-                      “percentage”.
-                    </div>
-                  )}
-                </div>
-              )}
             </div>
 
             <div className="heroCard">
@@ -197,7 +141,8 @@ export default function Home() {
         <RecentCalculators />
         <CalculationHistory />
 
-        {/* Popular */}
+        <MobileQuickActions />
+
         <section className="section" id="popular">
           <div className="container">
             <div className="sectionHead">
@@ -225,7 +170,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Categories */}
         <section className="section" id="categories">
           <div className="container">
             <div className="sectionHead">
@@ -251,7 +195,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Category calculator sections */}
         {categories.map((cat) => (
           <section
             className="section"
@@ -287,7 +230,6 @@ export default function Home() {
           </section>
         ))}
 
-        {/* Why CalcHub */}
         <section className="section">
           <div className="container">
             <div className="sectionHead">
@@ -328,7 +270,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* FAQ */}
         <section className="section">
           <div className="container">
             <div className="sectionHead">
