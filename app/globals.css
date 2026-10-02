@@ -2736,3 +2736,50 @@ details p {
 [data-theme="dark"] .commandResultActive {
   background: rgba(37,99,235,.18);
 }
+
+.commandRecent {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(148,163,184,.12);
+}
+.commandRecentHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2px 4px 7px;
+  color: #64748b;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.commandRecentHead button {
+  border: 0;
+  background: transparent;
+  color: #2563eb;
+  cursor: pointer;
+  font: inherit;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.commandRecentItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 6px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+}
+.commandRecentItem:hover {
+  background: rgba(37,99,235,.07);
+}
+[data-theme="dark"] .commandRecentHead,
+[data-theme="dark"] .commandRecentItem {
+  color: #94a3b8;
+}
