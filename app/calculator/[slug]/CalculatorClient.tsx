@@ -111,6 +111,25 @@ export default function CalculatorClient({ slug }: { slug: string }) {
     )
     .slice(0, 4);
 
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      const isField = target?.tagName === "INPUT" || target?.tagName === "SELECT" || target?.tagName === "TEXTAREA";
+
+      if (isField && event.key === "Enter") {
+        event.preventDefault();
+        calculate();
+      }
+
+      if (event.key === "Escape" && isField) {
+        reset();
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [currentCalculator.slug, v]);
+
 
   const set = (key: string, value: string) => {
     setV({
