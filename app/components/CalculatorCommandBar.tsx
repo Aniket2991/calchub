@@ -7,6 +7,7 @@ import { calculators } from "../../lib/calculators";
 export default function CalculatorCommandBar() {
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const results = useMemo(() => {
@@ -42,6 +43,10 @@ export default function CalculatorCommandBar() {
   }, [query]);
 
   useEffect(() => {
+    setActiveIndex(0);
+  }, [query]);
+
+  useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
         event.preventDefault();
@@ -66,6 +71,7 @@ export default function CalculatorCommandBar() {
   }, []);
 
   const first = results[0];
+  const activeCalculator = results[activeIndex] ?? first;
 
   return (
     <div className="commandBarWrap">
@@ -83,8 +89,22 @@ export default function CalculatorCommandBar() {
             setOpen(true);
           }}
           onKeyDown={(event) => {
-            if (event.key === "Enter" && first) {
-              window.location.href = `/calculator/${first.slug}`;
+            if (!open || results.length === 0) return;
+
+            if (event.key === "ArrowDown") {
+              event.preventDefault();
+              setActiveIndex((index) => (index + 1) % results.length);
+            }
+
+            if (event.key === "ArrowUp") {
+              event.preventDefault();
+              setActiveIndex((index) => (index - 1 + results.length) % results.length);
+            }
+
+            if (event.key === "Enter") {
+              event.preventDefault();
+              const selected = results[activeIndex] ?? first;
+              if (selected) window.location.href = `/calculator/${selected.slug}`;
             }
           }}
         />
@@ -95,11 +115,13 @@ export default function CalculatorCommandBar() {
       {open && (
         <div className="commandResults">
           {results.length > 0 ? (
-            results.map((calculator) => (
+            results.map((calculator, index) => (
               <Link
                 key={calculator.slug}
                 href={`/calculator/${calculator.slug}`}
-                className="commandResult"
+                className={index === activeIndex ? "commandResult commandResultActive" : "commandResult"}
+                aria-current={calculator.slug === activeCalculator?.slug ? "true" : undefined}
+                onMouseEnter={() => setActiveIndex(index)}
                 onClick={() => {
                   setOpen(false);
                   setQuery("");
@@ -120,8 +142,8 @@ export default function CalculatorCommandBar() {
           )}
 
           <div className="commandFooter">
-            <span>Press Enter to open</span>
-            <span>Esc to close</span>
+            <span>↑ ↓ Navigate · Enter Open</span>
+            <span>Esc Close</span>
           </div>
         </div>
       )}
