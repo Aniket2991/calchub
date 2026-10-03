@@ -1296,6 +1296,9 @@ case "fuel-cost-calculator":
               </button>
             </div>
             <div className="resultNote">Use the result as an estimate. Check the assumptions and inputs before relying on it for an important decision.</div>
+            <div className="resultStatus" role="status" aria-live="polite">
+              {result === "Enter values and calculate." ? "Ready to calculate" : "Calculation complete"}
+            </div>
             {rows.length>0 && <div className="resultRows">{rows.map(([a,b])=><div className="resultRow" key={a}><span>{a}</span><strong>{b}</strong></div>)}</div>}
           </aside>
         </div>
