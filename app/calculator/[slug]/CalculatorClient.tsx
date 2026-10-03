@@ -35,6 +35,7 @@ export default function CalculatorClient({ slug }: { slug: string }) {
   const [rows, setRows] = useState<[string, string][]>([]);
   const [copied, setCopied] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
+  const [autoCalculate, setAutoCalculate] = useState(false);
 
   if (!calculator) {
     return (
@@ -78,6 +79,7 @@ export default function CalculatorClient({ slug }: { slug: string }) {
       });
       if (Object.keys(next).length) {
         setV((current) => ({ ...current, ...next }));
+        setAutoCalculate(true);
       }
     } catch {
       // URL prefill is optional and should never block calculator use.
@@ -988,6 +990,12 @@ case "fuel-cost-calculator": {
       });
     }
   }
+
+  useEffect(() => {
+    if (!autoCalculate) return;
+    setAutoCalculate(false);
+    calculate();
+  }, [autoCalculate]);
 
   function reset(){
     setV({});
