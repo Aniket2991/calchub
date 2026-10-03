@@ -3,7 +3,6 @@ import Script from "next/script";
 import "./globals.css";
 import AIChat from "./components/AIChat";
 import ThemeToggle from "./components/ThemeToggle";
-import InstallAppButton from "./components/InstallAppButton";
 import ServiceWorkerRegister from "./components/ServiceWorkerRegister";
 import MobileNav from "./components/MobileNav";
 
@@ -55,6 +54,22 @@ export const metadata: Metadata = {
     url: "https://calchub-blond.vercel.app/",
     siteName: "CalcHub",
     type: "website",
+  },
+
+  manifest: "/manifest.webmanifest",
+
+  icons: {
+    icon: [
+      { url: "/icon-192.svg", sizes: "192x192", type: "image/svg+xml" },
+      { url: "/icon-512.svg", sizes: "512x512", type: "image/svg+xml" },
+    ],
+    apple: "/icon-192.svg",
+  },
+
+  appleWebApp: {
+    capable: true,
+    title: "CalcHub",
+    statusBarStyle: "default",
   },
 
   twitter: {
@@ -112,6 +127,7 @@ export default function RootLayout({
         {children}
         <ThemeToggle />
         <AIChat />
+        <ServiceWorkerRegister />
         <MobileNav />
       </body>
     </html>
