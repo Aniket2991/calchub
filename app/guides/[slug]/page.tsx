@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { calculators } from "../../../lib/calculators";
 const guides: Record<string, {
   title: string;
   description: string;
@@ -85,6 +86,18 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
     );
   }
 
+  const relatedSlugs: Record<string, string[]> = {
+    "emi-calculator-guide": ["emi-calculator", "loan-calculator", "salary-calculator"],
+    "gst-calculator-guide": ["gst-calculator", "discount-calculator", "percentage-calculator"],
+    "percentage-calculator-guide": ["percentage-calculator", "percentage-change-calculator", "discount-calculator"],
+    "bmi-calculator-guide": ["bmi-calculator", "age-calculator", "percentage-calculator"],
+    "loan-calculator-guide": ["loan-calculator", "emi-calculator", "compound-interest"],
+  };
+
+  const relatedCalculators = (relatedSlugs[slug] ?? [])
+    .map((relatedSlug) => calculators.find((item) => item.slug === relatedSlug))
+    .filter(Boolean);
+
   const schema = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -118,6 +131,27 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
           <Link className="primary" href={guide.calculator}>Open calculator →</Link>
         </div>
       </article>
+
+      <section className="relatedGuides" aria-labelledby="related-calculators-title">
+        <div className="sectionHead">
+          <div>
+            <div className="eyebrow">CALCHUB / TOOLS</div>
+            <h2 id="related-calculators-title">Related calculators</h2>
+            <p className="lead">Use these calculators to continue with related calculations.</p>
+          </div>
+        </div>
+
+        <div className="grid">
+          {relatedCalculators.map((item) => (
+            <Link className="card cardMainLink" href={"/calculator/" + item!.slug} key={item!.slug}>
+              <div className="icon">{item!.icon}</div>
+              <h3>{item!.name}</h3>
+              <p>{item!.description}</p>
+              <span className="textLink">Open calculator →</span>
+            </Link>
+          ))}
+        </div>
+      </section>
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
     </main>
