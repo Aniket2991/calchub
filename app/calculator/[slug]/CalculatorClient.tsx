@@ -1057,10 +1057,6 @@ case "fuel-cost-calculator": {
     await copyLink();
   }
 
-  const common = () => {
-    switch(currentCalculator.slug) {
-      case "emi-calculator": return <>{field("Loan amount","p")} {field("Annual interest rate (%)","rate")} {field("Loan tenure (months)","months")}</>;
-      case "loan-calculator":
   const guideForCalculator = {
     "emi-calculator": {
       title: "EMI Calculator Guide",
@@ -1089,6 +1085,10 @@ case "fuel-cost-calculator": {
     },
   }[currentCalculator.slug];
 
+  const common = () => {
+    switch(currentCalculator.slug) {
+      case "emi-calculator": return <>{field("Loan amount","p")} {field("Annual interest rate (%)","rate")} {field("Loan tenure (months)","months")}</>;
+      case "loan-calculator":
   return (
     <>
       {field("Loan amount", "p")}
