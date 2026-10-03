@@ -1,8 +1,4 @@
-"use client";
-
 import Link from "next/link";
-import { use } from "react";
-
 const guides: Record<string, {
   title: string;
   description: string;
@@ -65,18 +61,19 @@ export function generateStaticParams() {
   return Object.keys(guides).map((slug) => ({ slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
-  const guide = guides[params.slug];
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const guide = guides[slug];
   if (!guide) return { title: "Guide Not Found | CalcHub" };
   return {
     title: guide.title,
     description: guide.description,
-    alternates: { canonical: "/guides/" + params.slug },
+    alternates: { canonical: "/guides/" + slug },
   };
 }
 
-export default function GuidePage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = use(params);
+export default async function GuidePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   const guide = guides[slug];
 
   if (!guide) {
