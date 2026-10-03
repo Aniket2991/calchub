@@ -2895,3 +2895,37 @@ details p {
     width: 100%;
   }
 }
+
+.calculatorGuideCta {
+  margin-top: 24px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.calculatorGuideCta h2 {
+  margin: 4px 0 8px;
+}
+
+.calculatorGuideCta p {
+  margin: 0;
+  max-width: 720px;
+}
+
+.calculatorGuideCta .primary {
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+@media (max-width: 700px) {
+  .calculatorGuideCta {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .calculatorGuideCta .primary {
+    width: 100%;
+  }
+}
