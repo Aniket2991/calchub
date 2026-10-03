@@ -96,6 +96,34 @@ export default async function CalculatorPage({ params }: Props) {
   const calculatorUrl = `${SITE_URL}/calculator/${calculator.slug}`;
   const content = calculatorContent[calculator.slug];
 
+  const relatedGuide = {
+    "emi-calculator": {
+      title: "EMI Calculator Guide",
+      description: "Learn how EMI is calculated, what affects your monthly payment and how to read the result.",
+      href: "/guides/emi-calculator-guide",
+    },
+    "gst-calculator": {
+      title: "GST Calculator Guide",
+      description: "Understand GST-inclusive and GST-exclusive calculations with simple examples.",
+      href: "/guides/gst-calculator-guide",
+    },
+    "percentage-calculator": {
+      title: "Percentage Calculator Guide",
+      description: "Learn common percentage formulas for discounts, increases, decreases and comparisons.",
+      href: "/guides/percentage-calculator-guide",
+    },
+    "bmi-calculator": {
+      title: "BMI Calculator Guide",
+      description: "Understand the BMI formula and what a BMI result can and cannot tell you.",
+      href: "/guides/bmi-calculator-guide",
+    },
+    "loan-calculator": {
+      title: "Loan Calculator Guide",
+      description: "See how loan amount, interest rate and tenure affect repayment and total interest.",
+      href: "/guides/loan-calculator-guide",
+    },
+  }[calculator.slug];
+
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -235,6 +263,19 @@ export default async function CalculatorPage({ params }: Props) {
       )}
 
       <CalculatorClient slug={slug} />
+
+      {relatedGuide && (
+        <section className="container relatedGuides" aria-labelledby="related-guide-title">
+          <div className="panel relatedGuideCard">
+            <div>
+              <div className="eyebrow">CALCHUB / GUIDE</div>
+              <h2 id="related-guide-title">{relatedGuide.title}</h2>
+              <p>{relatedGuide.description}</p>
+            </div>
+            <a className="primary" href={relatedGuide.href}>Read guide →</a>
+          </div>
+        </section>
+      )}
     </>
   );
 }
