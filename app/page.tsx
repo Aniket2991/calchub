@@ -75,6 +75,7 @@ export default function Home() {
             <Link href="/#popular">Popular</Link>
             <Link href="/#categories">Categories</Link>
             <Link href="/my-calculators">My Calculators</Link>
+            <Link href="/guides">Guides</Link>
             <Link href="/about">About</Link>
             <Link href="/contact">Contact</Link>
           </nav>
@@ -274,6 +275,37 @@ export default function Home() {
           <div className="container">
             <div className="sectionHead">
               <div>
+                <div className="eyebrow">LEARN / CALCULATE</div>
+                <h2>Calculator Guides</h2>
+                <p>
+                  Learn the formulas, inputs and practical meaning behind
+                  common calculations.
+                </p>
+              </div>
+              <Link href="/guides" className="textLink">View all guides →</Link>
+            </div>
+
+            <div className="featureGrid">
+              <Link className="feature" href="/guides/emi-calculator-guide">
+                <strong>EMI Calculator Guide</strong>
+                <span>Understand EMI, tenure, interest and total repayment.</span>
+              </Link>
+              <Link className="feature" href="/guides/gst-calculator-guide">
+                <strong>GST Calculator Guide</strong>
+                <span>Learn GST-inclusive and GST-exclusive calculations.</span>
+              </Link>
+              <Link className="feature" href="/guides/percentage-calculator-guide">
+                <strong>Percentage Calculator Guide</strong>
+                <span>Use percentages for change, discounts and comparisons.</span>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        <section className="section">
+          <div className="container">
+            <div className="sectionHead">
+              <div>
                 <h2>Frequently Asked Questions</h2>
                 <p>Common questions about using CalcHub.</p>
               </div>
@@ -331,6 +363,7 @@ export default function Home() {
           </div>
 
           <div className="footerLinks">
+            <Link href="/guides">Guides</Link>
             <Link href="/about">About</Link>
             <Link href="/contact">Contact</Link>
             <Link href="/privacy">Privacy</Link>
