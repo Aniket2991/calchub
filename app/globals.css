@@ -2783,3 +2783,43 @@ details p {
 [data-theme="dark"] .commandRecentItem {
   color: #94a3b8;
 }
+
+
+/* Accessible calculation status */
+.resultStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 9px;
+  padding: 6px 9px;
+  border-radius: 999px;
+  color: #94a3b8;
+  background: rgba(148,163,184,.08);
+  border: 1px solid rgba(148,163,184,.14);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.resultStatus::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34,197,94,.10);
+}
+
+[data-theme="dark"] .resultStatus {
+  color: #cbd5e1;
+  background: rgba(148,163,184,.07);
+  border-color: rgba(148,163,184,.16);
+}
+
+@media (max-width: 700px) {
+  .resultStatus {
+    margin-top: 8px;
+    font-size: 9px;
+  }
+}
