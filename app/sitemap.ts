@@ -30,6 +30,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: SITE_URL + "/terms",
       lastModified: new Date(),
     },
+    {
+      url: SITE_URL + "/guides",
+      lastModified: new Date(),
+    },
+    {
+      url: SITE_URL + "/guides/emi-calculator-guide",
+      lastModified: new Date(),
+    },
+    {
+      url: SITE_URL + "/guides/gst-calculator-guide",
+      lastModified: new Date(),
+    },
+    {
+      url: SITE_URL + "/guides/percentage-calculator-guide",
+      lastModified: new Date(),
+    },
+    {
+      url: SITE_URL + "/guides/bmi-calculator-guide",
+      lastModified: new Date(),
+    },
+    {
+      url: SITE_URL + "/guides/loan-calculator-guide",
+      lastModified: new Date(),
+    },
     ...categories.map((category) => ({
       url: SITE_URL + "/category/" + categorySlug(category),
       lastModified: new Date(),
