@@ -1061,6 +1061,34 @@ case "fuel-cost-calculator": {
     switch(currentCalculator.slug) {
       case "emi-calculator": return <>{field("Loan amount","p")} {field("Annual interest rate (%)","rate")} {field("Loan tenure (months)","months")}</>;
       case "loan-calculator":
+  const guideForCalculator = {
+    "emi-calculator": {
+      title: "EMI Calculator Guide",
+      description: "Learn how EMI is calculated, what affects your monthly payment and how to read the result.",
+      href: "/guides/emi-calculator-guide",
+    },
+    "gst-calculator": {
+      title: "GST Calculator Guide",
+      description: "Understand GST-inclusive and GST-exclusive calculations with simple examples.",
+      href: "/guides/gst-calculator-guide",
+    },
+    "percentage-calculator": {
+      title: "Percentage Calculator Guide",
+      description: "Learn common percentage formulas for discounts, increases, decreases and comparisons.",
+      href: "/guides/percentage-calculator-guide",
+    },
+    "bmi-calculator": {
+      title: "BMI Calculator Guide",
+      description: "Understand the BMI formula and what a BMI result can and cannot tell you.",
+      href: "/guides/bmi-calculator-guide",
+    },
+    "loan-calculator": {
+      title: "Loan Calculator Guide",
+      description: "See how loan amount, interest rate and tenure affect repayment and total interest.",
+      href: "/guides/loan-calculator-guide",
+    },
+  }[currentCalculator.slug];
+
   return (
     <>
       {field("Loan amount", "p")}
@@ -1363,6 +1391,17 @@ case "fuel-cost-calculator":
     </>
   ) : null}
 </section>
+
+        {guideForCalculator && (
+          <div className="guideCta calculatorGuideCta">
+            <div>
+              <div className="eyebrow">CALCHUB / GUIDE</div>
+              <h2>{guideForCalculator.title}</h2>
+              <p>{guideForCalculator.description}</p>
+            </div>
+            <Link className="primary" href={guideForCalculator.href}>Read guide →</Link>
+          </div>
+        )}
 
         {related.length > 0 && (
   <section className="section">
