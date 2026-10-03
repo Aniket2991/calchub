@@ -26,19 +26,30 @@ export default function InstallAppButton() {
       setInstallEvent(event as InstallPromptEvent);
     };
 
-    window.addEventListener("beforeinstallprompt", handler);
-    window.addEventListener("appinstalled", () => {
+    const onInstalled = () => {
       setInstalled(true);
       setInstallEvent(null);
-    });
+    };
 
-    return () => window.removeEventListener("beforeinstallprompt", handler);
+    window.addEventListener("beforeinstallprompt", handler);
+    window.addEventListener("appinstalled", onInstalled);
+
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handler);
+      window.removeEventListener("appinstalled", onInstalled);
+    };
   }, []);
 
   if (installed || !installEvent) return null;
 
   const install = async () => {
-    await installEvent.prompt();
+    try {
+      await installEvent.prompt();
+    } catch {
+      setInstallEvent(null);
+      return;
+    }
+
     const choice = await installEvent.userChoice;
     if (choice.outcome === "accepted") {
       setInstalled(true);
