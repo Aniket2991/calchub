@@ -234,7 +234,7 @@ export default async function CalculatorPage({ params }: Props) {
         />
       )}
 
-      <CalculatorClient slug={slug} />}
+      <CalculatorClient slug={slug} />
     </>
   );
 }
