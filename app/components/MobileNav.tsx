@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 
 export default function MobileNav() {
   const pathname = usePathname();
+  const isHome = pathname === "/";
+  const isMyCalculators = pathname.startsWith("/my-calculators");
 
   const items = [
     { href: "/", label: "Home", icon: "⌂" },
@@ -19,7 +21,12 @@ export default function MobileNav() {
         <Link
           key={item.href}
           href={item.href}
-          className={pathname === item.href ? "mobileNavItem active" : "mobileNavItem"}
+          className={
+            (item.href === "/" && isHome) ||
+            (item.href === "/my-calculators" && isMyCalculators)
+              ? "mobileNavItem active"
+              : "mobileNavItem"
+          }
         >
           <span aria-hidden="true">{item.icon}</span>
           <small>{item.label}</small>
