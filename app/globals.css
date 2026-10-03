@@ -2857,3 +2857,41 @@ details p {
   margin-top: 8px;
   text-decoration: none;
 }
+
+
+.relatedGuides {
+  margin-top: 24px;
+  margin-bottom: 40px;
+}
+
+.relatedGuideCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.relatedGuideCard h2 {
+  margin: 4px 0 8px;
+}
+
+.relatedGuideCard p {
+  margin: 0;
+  max-width: 720px;
+}
+
+.relatedGuideCard .primary {
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+@media (max-width: 700px) {
+  .relatedGuideCard {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .relatedGuideCard .primary {
+    width: 100%;
+  }
+}
