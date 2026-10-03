@@ -28,18 +28,18 @@ function smartTarget(query: string) {
   };
 
   const parseDate = (value: string) => {
-    const iso = value.match(/^(\\d{4})-(\\d{2})-(\\d{2})$/);
+    const iso = value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
     if (iso) return value;
 
-    const dmy = value.match(/^(\\d{1,2})[\\/-](\\d{1,2})[\\/-](\\d{4})$/);
+    const dmy = value.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})$/);
     if (!dmy) return null;
 
     return `${dmy[3]}-${dmy[2].padStart(2, "0")}-${dmy[1].padStart(2, "0")}`;
   };
 
-  const numberPattern = /([0-9]*\\.?[0-9]+)\\s*(lakh|lac|crore|cr|k)?/gi;
+  const numberPattern = /([0-9]*\.?[0-9]+)\s*(lakh|lac|crore|cr|k)?/gi;
   const parseNumber = (value: string) => {
-    const match = value.toLowerCase().replace(/,/g, "").match(/([0-9]*\\.?[0-9]+)\\s*(lakh|lac|crore|cr|k)?/);
+    const match = value.toLowerCase().replace(/,/g, "").match(/([0-9]*\.?[0-9]+)\s*(lakh|lac|crore|cr|k)?/);
     if (!match) return null;
     const base = Number(match[1]);
     if (!Number.isFinite(base)) return null;
@@ -62,81 +62,81 @@ function smartTarget(query: string) {
   const values = rawNumbers
     .map(parseNumber)
     .filter((n): n is number => n !== null);
-  const percent = [...q.matchAll(/([0-9]*\\.?[0-9]+)\\s*%/g)].map((m) => Number(m[1]));
-  const yearsMatch = q.match(/([0-9]*\\.?[0-9]+)\\s*(?:years?|yrs?)/);
+  const percent = [...q.matchAll(/([0-9]*\.?[0-9]+)\s*%/g)].map((m) => Number(m[1]));
+  const yearsMatch = q.match(/([0-9]*\.?[0-9]+)\s*(?:years?|yrs?)/);
   const years = yearsMatch ? Number(yearsMatch[1]) : null;
 
-  if (/\\bemi\\b/.test(q) && values[0] !== undefined && percent[0] !== undefined && years) {
+  if (/\bemi\b/.test(q) && values[0] !== undefined && percent[0] !== undefined && years) {
     params.set("p", String(values[0]));
     params.set("rate", String(percent[0]));
     params.set("months", String(years * 12));
     return link("emi-calculator");
   }
 
-  if (/\\bloan\\b/.test(q) && values[0] !== undefined && percent[0] !== undefined && years) {
+  if (/\bloan\b/.test(q) && values[0] !== undefined && percent[0] !== undefined && years) {
     params.set("p", String(values[0]));
     params.set("rate", String(percent[0]));
     params.set("months", String(years * 12));
     return link("loan-calculator");
   }
 
-  if (/\\bsip\\b/.test(q) && values[0] !== undefined && percent[0] !== undefined && years) {
+  if (/\bsip\b/.test(q) && values[0] !== undefined && percent[0] !== undefined && years) {
     params.set("p", String(values[0]));
     params.set("rate", String(percent[0]));
     params.set("months", String(years * 12));
     return link("sip-calculator");
   }
 
-  if (/\\bgst\\b/.test(q) && values[0] !== undefined && percent[0] !== undefined) {
+  if (/\bgst\b/.test(q) && values[0] !== undefined && percent[0] !== undefined) {
     params.set("amount", String(values[0]));
     params.set("gst", String(percent[0]));
-    params.set("mode", /\\b(remove|exclusive|excluding)\\b/.test(q) ? "remove" : "add");
+    params.set("mode", /\b(remove|exclusive|excluding)\b/.test(q) ? "remove" : "add");
     return link("gst-calculator");
   }
 
-  if (/\\bdiscount\\b/.test(q) && values[0] !== undefined && percent[0] !== undefined) {
+  if (/\bdiscount\b/.test(q) && values[0] !== undefined && percent[0] !== undefined) {
     params.set("price", String(values[0]));
     params.set("discount", String(percent[0]));
     return link("discount-calculator");
   }
 
-  if (/\\bbmi\\b/.test(q) && values.length >= 2) {
+  if (/\bbmi\b/.test(q) && values.length >= 2) {
     params.set("weight", String(values[0]));
     params.set("height", String(values[1]));
     return link("bmi-calculator");
   }
 
-  if (/\\bincome\\s+tax\\b|\\btax\\b/.test(q) && values[0] !== undefined) {
+  if (/\bincome\s+tax\b|\btax\b/.test(q) && values[0] !== undefined) {
     params.set("income", String(values[0]));
-    params.set("regime", /\\bold\\b/.test(q) ? "old" : "new");
+    params.set("regime", /\bold\b/.test(q) ? "old" : "new");
     return link("income-tax-calculator");
   }
 
-  if (/\\bsalary\\b/.test(q) && values[0] !== undefined) {
+  if (/\bsalary\b/.test(q) && values[0] !== undefined) {
     params.set("gross", String(values[0]));
     if (values[1] !== undefined) params.set("deductions", String(values[1]));
     return link("salary-calculator");
   }
 
-  if (/\\bprofit\\b|\\bloss\\b/.test(q) && values.length >= 2) {
+  if (/\bprofit\b|\bloss\b/.test(q) && values.length >= 2) {
     params.set("cost", String(values[0]));
     params.set("selling", String(values[1]));
     return link("profit-loss-calculator");
   }
 
-  if (/\\bpercentage\\s+change\\b|\\bpercent\\s+change\\b/.test(q) && values.length >= 2) {
+  if (/\bpercentage\s+change\b|\bpercent\s+change\b/.test(q) && values.length >= 2) {
     params.set("original", String(values[0]));
     params.set("current", String(values[1]));
     return link("percentage-change-calculator");
   }
 
-  if (/\\bpercentage\\b|\\bpercent\\b/.test(q) && values.length >= 2) {
+  if (/\bpercentage\b|\bpercent\b/.test(q) && values.length >= 2) {
     params.set("a", String(values[0]));
     params.set("b", String(values[1]));
     return link("percentage-calculator");
   }
 
-  if (/\\bcompound\\s+interest\\b|\\bcompound\\b/.test(q) && values.length >= 3) {
+  if (/\bcompound\s+interest\b|\bcompound\b/.test(q) && values.length >= 3) {
     params.set("p", String(values[0]));
     params.set("rate", String(values[1]));
     params.set("years", String(values[2]));
@@ -144,15 +144,15 @@ function smartTarget(query: string) {
     return link("compound-interest");
   }
 
-  if (/\\bsimple\\s+interest\\b|\\bsimple\\s+interest\\b/.test(q) && values.length >= 3) {
+  if (/\bsimple\s+interest\b|\bsimple\s+interest\b/.test(q) && values.length >= 3) {
     params.set("p", String(values[0]));
     params.set("rate", String(values[1]));
     params.set("years", String(values[2]));
     return link("simple-interest");
   }
 
-  if (/\\bratio\\b/.test(q)) {
-    const ratio = q.match(/([0-9]+(?:\\.[0-9]+)?)\\s*[:\\/]\\s*([0-9]+(?:\\.[0-9]+)?)/);
+  if (/\bratio\b/.test(q)) {
+    const ratio = q.match(/([0-9]+(?:\.[0-9]+)?)\s*[:\/]\s*([0-9]+(?:\.[0-9]+)?)/);
     if (ratio) {
       params.set("a", ratio[1]);
       params.set("b", ratio[2]);
@@ -160,8 +160,8 @@ function smartTarget(query: string) {
     }
   }
 
-  if (/\\bfraction\\b/.test(q)) {
-    const fraction = q.match(/(\\d+)\\s*\\/\\s*(\\d+)\\s*([+\\-*])\\s*(\\d+)\\s*\\/\\s*(\\d+)/);
+  if (/\bfraction\b/.test(q)) {
+    const fraction = q.match(/(\d+)\s*\/\s*(\d+)\s*([+\-*])\s*(\d+)\s*\/\s*(\d+)/);
     if (fraction) {
       params.set("n1", fraction[1]);
       params.set("d1", fraction[2]);
@@ -172,25 +172,25 @@ function smartTarget(query: string) {
     }
   }
 
-  if (/\\baverage\\b|\\bmean\\b/.test(q) && values.length >= 2) {
+  if (/\baverage\b|\bmean\b/.test(q) && values.length >= 2) {
     params.set("numbers", values.join(","));
     return link("average-calculator");
   }
 
-  if (/\\btime\\b/.test(q)) {
-    const times = [...q.matchAll(/(\\d{1,2})\\s*(?:hours?|h)\\s*(\\d{1,2})?\\s*(?:minutes?|m)?/g)];
+  if (/\btime\b/.test(q)) {
+    const times = [...q.matchAll(/(\d{1,2})\s*(?:hours?|h)\s*(\d{1,2})?\s*(?:minutes?|m)?/g)];
     if (times.length >= 2) {
       params.set("h1", times[0][1]);
       params.set("m1", times[0][2] ?? "0");
       params.set("h2", times[1][1]);
       params.set("m2", times[1][2] ?? "0");
-      params.set("operation", /\\bsubtract|minus|difference\\b/.test(q) ? "subtract" : "add");
+      params.set("operation", /\bsubtract|minus|difference\b/.test(q) ? "subtract" : "add");
       return link("time-calculator");
     }
   }
 
-  if (/\\bhours?\\b/.test(q)) {
-    const times = [...q.matchAll(/(\\d{1,2}):([0-5]\\d)/g)];
+  if (/\bhours?\b/.test(q)) {
+    const times = [...q.matchAll(/(\d{1,2}):([0-5]\d)/g)];
     if (times.length >= 2) {
       params.set("startTime", `${times[0][1].padStart(2, "0")}:${times[0][2]}`);
       params.set("endTime", `${times[1][1].padStart(2, "0")}:${times[1][2]}`);
@@ -198,16 +198,16 @@ function smartTarget(query: string) {
     }
   }
 
-  if (/\\barea\\b/.test(q) && values.length >= 1) {
-    const shape = /\\bcircle\\b/.test(q) ? "circle" : /\\btriangle\\b/.test(q) ? "triangle" : "rectangle";
+  if (/\barea\b/.test(q) && values.length >= 1) {
+    const shape = /\bcircle\b/.test(q) ? "circle" : /\btriangle\b/.test(q) ? "triangle" : "rectangle";
     params.set("shape", shape);
     params.set("a", String(values[0]));
     if (shape !== "circle") params.set("b", String(values[1] ?? 0));
     return link("area-calculator");
   }
 
-  if (/\\bvolume\\b/.test(q) && values.length >= 1) {
-    const shape = /\\bcylinder\\b/.test(q) ? "cylinder" : /\\bsphere\\b/.test(q) ? "sphere" : "cuboid";
+  if (/\bvolume\b/.test(q) && values.length >= 1) {
+    const shape = /\bcylinder\b/.test(q) ? "cylinder" : /\bsphere\b/.test(q) ? "sphere" : "cuboid";
     params.set("shape", shape);
     params.set("a", String(values[0]));
     if (values[1] !== undefined) params.set("b", String(values[1]));
@@ -215,21 +215,21 @@ function smartTarget(query: string) {
     return link("volume-calculator");
   }
 
-  if (/\\bspeed\\b/.test(q) && values.length >= 2) {
+  if (/\bspeed\b/.test(q) && values.length >= 2) {
     params.set("distance", String(values[0]));
     params.set("time", String(values[1]));
     return link("speed-calculator");
   }
 
-  if (/\\bfuel\\b|\\bmileage\\b/.test(q) && values.length >= 3) {
+  if (/\bfuel\b|\bmileage\b/.test(q) && values.length >= 3) {
     params.set("distance", String(values[0]));
     params.set("mileage", String(values[1]));
     params.set("fuelPrice", String(values[2]));
     return link("fuel-cost-calculator");
   }
 
-  if (/\\btemperature\\b|\\bconvert\\b.*\\b(c|f|k)\\b/.test(q)) {
-    const match = q.match(/([0-9]*\\.?[0-9]+)\\s*(?:degrees?\\s*)?(c|f|k)\\s*(?:to|in)\\s*(c|f|k)/);
+  if (/\btemperature\b|\bconvert\b.*\b(c|f|k)\b/.test(q)) {
+    const match = q.match(/([0-9]*\.?[0-9]+)\s*(?:degrees?\s*)?(c|f|k)\s*(?:to|in)\s*(c|f|k)/);
     if (match) {
       params.set("value", match[1]);
       params.set("from", match[2].toUpperCase());
@@ -238,8 +238,8 @@ function smartTarget(query: string) {
     }
   }
 
-  if (/\\bconvert\\b/.test(q) && /\\b(mm|cm|m|km|in|ft|yd|mi)\\b/.test(q) && values[0] !== undefined) {
-    const match = q.match(/(?:convert\\s+)?[0-9]*\\.?[0-9]+\\s*(mm|cm|m|km|in|ft|yd|mi)\\s+(?:to|in)\\s+(mm|cm|m|km|in|ft|yd|mi)/);
+  if (/\bconvert\b/.test(q) && /\b(mm|cm|m|km|in|ft|yd|mi)\b/.test(q) && values[0] !== undefined) {
+    const match = q.match(/(?:convert\s+)?[0-9]*\.?[0-9]+\s*(mm|cm|m|km|in|ft|yd|mi)\s+(?:to|in)\s+(mm|cm|m|km|in|ft|yd|mi)/);
     if (match) {
       params.set("value", String(values[0]));
       params.set("from", match[1]);
@@ -248,8 +248,8 @@ function smartTarget(query: string) {
     }
   }
 
-  if (/\\bconvert\\b/.test(q) && /\\b(g|kg|lb|oz)\\b/.test(q) && values[0] !== undefined) {
-    const match = q.match(/(?:convert\\s+)?[0-9]*\\.?[0-9]+\\s*(g|kg|lb|oz)\\s+(?:to|in)\\s+(g|kg|lb|oz)/);
+  if (/\bconvert\b/.test(q) && /\b(g|kg|lb|oz)\b/.test(q) && values[0] !== undefined) {
+    const match = q.match(/(?:convert\s+)?[0-9]*\.?[0-9]+\s*(g|kg|lb|oz)\s+(?:to|in)\s+(g|kg|lb|oz)/);
     if (match) {
       params.set("value", String(values[0]));
       params.set("from", match[1]);
@@ -258,8 +258,8 @@ function smartTarget(query: string) {
     }
   }
 
-  if (/\\bage\\b/.test(q)) {
-    const dateMatch = q.match(/(\\d{4}-\\d{2}-\\d{2}|\\d{1,2}[\\/-]\\d{1,2}[\\/-]\\d{4})/);
+  if (/\bage\b/.test(q)) {
+    const dateMatch = q.match(/(\d{4}-\d{2}-\d{2}|\d{1,2}[\/-]\d{1,2}[\/-]\d{4})/);
     if (dateMatch) {
       const date = parseDate(dateMatch[1]);
       if (date) {
@@ -269,8 +269,8 @@ function smartTarget(query: string) {
     }
   }
 
-  if (/\\bdate\\s+diff|\\bdate\\s+difference/.test(q)) {
-    const dates = [...q.matchAll(/(\\d{4}-\\d{2}-\\d{2}|\\d{1,2}[\\/-]\\d{1,2}[\\/-]\\d{4})/g)];
+  if (/\bdate\s+diff|\bdate\s+difference/.test(q)) {
+    const dates = [...q.matchAll(/(\d{4}-\d{2}-\d{2}|\d{1,2}[\/-]\d{1,2}[\/-]\d{4})/g)];
     if (dates.length >= 2) {
       const firstDate = parseDate(dates[0][1]);
       const secondDate = parseDate(dates[1][1]);
