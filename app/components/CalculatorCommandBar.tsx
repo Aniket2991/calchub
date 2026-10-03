@@ -116,9 +116,7 @@ export default function CalculatorCommandBar() {
           calculator.description,
           calculator.category,
           calculator.slug.replaceAll("-", " "),
-        ]
-          .join(" ")
-          .toLowerCase();
+        ].join(" ").toLowerCase();
 
         const exactName = calculator.name.toLowerCase() === q;
         const startsName = calculator.name.toLowerCase().startsWith(q);
@@ -182,6 +180,8 @@ export default function CalculatorCommandBar() {
 
   const first = results[0];
   const activeCalculator = results[activeIndex] ?? first;
+  const listboxId = "calchub-calculator-results";
+  const activeOptionId = activeCalculator ? `calchub-result-${activeCalculator.slug}` : undefined;
 
   return (
     <div className="commandBarWrap">
@@ -191,6 +191,11 @@ export default function CalculatorCommandBar() {
         <input
           ref={inputRef}
           aria-label="Find a calculator"
+          aria-autocomplete="list"
+          aria-controls={open ? listboxId : undefined}
+          aria-expanded={open}
+          aria-activedescendant={open ? activeOptionId : undefined}
+          role="combobox"
           placeholder="Try: EMI 5 lakh 9% 5 years…"
           value={query}
           onFocus={() => setOpen(true)}
@@ -214,21 +219,23 @@ export default function CalculatorCommandBar() {
             if (event.key === "Enter") {
               event.preventDefault();
               const selected = results[activeIndex] ?? first;
-              if (selected) { rememberSearch(query); window.location.href = smartTarget(query) ?? `/calculator/${selected.slug}`; }
+              if (selected) {
+                rememberSearch(query);
+                window.location.href = smartTarget(query) ?? `/calculator/${selected.slug}`;
+              }
             }
           }}
         />
-
-        <kbd>Ctrl K</kbd>
+        <kbd aria-hidden="true">Ctrl K</kbd>
       </div>
 
       {open && (
-        <div className="commandResults">
+        <div className="commandResults" id={listboxId} role="listbox" aria-label="Calculator results">
           {!query.trim() && recentSearches.length > 0 && (
             <div className="commandRecent">
               <div className="commandRecentHead">
                 <span>Recent searches</span>
-                <button type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => {
+                <button type="button" aria-label="Clear recent searches" onMouseDown={(event) => event.preventDefault()} onClick={() => {
                   setRecentSearches([]);
                   try { window.localStorage.removeItem("calchub-searches"); } catch {}
                 }}>Clear</button>
@@ -239,18 +246,21 @@ export default function CalculatorCommandBar() {
                   setOpen(true);
                   inputRef.current?.focus();
                 }}>
-                  <span>↗</span>{search}
+                  <span aria-hidden="true">↗</span>{search}
                 </button>
               ))}
             </div>
           )}
+
           {results.length > 0 ? (
             results.map((calculator, index) => (
               <Link
                 key={calculator.slug}
+                id={`calchub-result-${calculator.slug}`}
+                role="option"
+                aria-selected={index === activeIndex}
                 href={calculator.slug === activeCalculator?.slug ? (smartTarget(query) ?? `/calculator/${calculator.slug}`) : `/calculator/${calculator.slug}`}
                 className={index === activeIndex ? "commandResult commandResultActive" : "commandResult"}
-                aria-current={calculator.slug === activeCalculator?.slug ? "true" : undefined}
                 onMouseEnter={() => setActiveIndex(index)}
                 onClick={() => {
                   rememberSearch(query);
@@ -258,21 +268,21 @@ export default function CalculatorCommandBar() {
                   setQuery("");
                 }}
               >
-                <span className="commandResultIcon">{calculator.icon}</span>
+                <span className="commandResultIcon" aria-hidden="true">{calculator.icon}</span>
                 <span className="commandResultText">
                   <strong>{calculator.name}</strong>
                   <small>{calculator.category} · {calculator.description}</small>
                 </span>
-                <span className="commandArrow">↵</span>
+                <span className="commandArrow" aria-hidden="true">↵</span>
               </Link>
             ))
           ) : (
-            <div className="commandEmpty">
+            <div className="commandEmpty" role="status">
               No calculator found. Try EMI, GST, BMI, loan or percentage.
             </div>
           )}
 
-          <div className="commandFooter">
+          <div className="commandFooter" aria-hidden="true">
             <span>↑ ↓ Navigate · Enter Open</span>
             <span>Esc Close</span>
           </div>
