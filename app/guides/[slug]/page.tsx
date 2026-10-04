@@ -390,6 +390,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
     description: guide.description,
     mainEntityOfPage: "https://calchub-blond.vercel.app/guides/" + slug,
     publisher: { "@type": "Organization", name: "CalcHub" },
+    dateModified: "2026-10-04",
   };
 
   return (
@@ -402,6 +403,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
         <div className="eyebrow">CALCHUB / GUIDE</div>
         <h1>{guide.title}</h1>
         <p className="lead">{guide.description}</p>
+        <p className="muted">Updated October 4, 2026 · For general informational use</p>
 
         {guide.sections.map((section) => (
           <section key={section.heading}>
