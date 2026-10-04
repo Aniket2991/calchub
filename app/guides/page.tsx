@@ -37,6 +37,36 @@ const guides = [
     description:
       "See how loan amount, interest rate and tenure affect repayment and total interest.",
   },
+  {
+    slug: "discount-calculator-guide",
+    title: "Discount Calculator Guide",
+    description:
+      "Learn how to calculate discounts, savings and final sale prices.",
+  },
+  {
+    slug: "simple-interest-guide",
+    title: "Simple Interest Guide",
+    description:
+      "Understand simple interest, the formula and how to interpret the result.",
+  },
+  {
+    slug: "compound-interest-guide",
+    title: "Compound Interest Guide",
+    description:
+      "Learn how compounding frequency, rate and time affect growth.",
+  },
+  {
+    slug: "age-calculator-guide",
+    title: "Age Calculator Guide",
+    description:
+      "Learn how age is calculated from a date of birth and the current date.",
+  },
+  {
+    slug: "average-calculator-guide",
+    title: "Average Calculator Guide",
+    description:
+      "Learn how to calculate an arithmetic average and avoid common input mistakes.",
+  },
 ];
 
 export default function GuidesPage() {
