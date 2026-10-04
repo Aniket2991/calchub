@@ -1147,6 +1147,96 @@ case "fuel-cost-calculator": {
       description: "Learn how to calculate an arithmetic average and check your inputs.",
       href: "/guides/average-calculator-guide",
     },
+    "sip-calculator": {
+      title: "SIP Calculator Guide",
+      description: "Learn how monthly investments, expected returns and time affect an estimate.",
+      href: "/guides/sip-calculator-guide",
+    },
+    "date-difference": {
+      title: "Date Difference Guide",
+      description: "Learn how to calculate the days between two dates.",
+      href: "/guides/date-difference-guide",
+    },
+    "length-converter": {
+      title: "Length Converter Guide",
+      description: "Learn how to convert common metric and imperial length units.",
+      href: "/guides/length-converter-guide",
+    },
+    "weight-converter": {
+      title: "Weight Converter Guide",
+      description: "Learn how to convert kilograms, grams, pounds and ounces.",
+      href: "/guides/weight-converter-guide",
+    },
+    "temperature-converter": {
+      title: "Temperature Converter Guide",
+      description: "Learn how Celsius, Fahrenheit and Kelvin conversions work.",
+      href: "/guides/temperature-converter-guide",
+    },
+    "salary-calculator": {
+      title: "Salary Calculator Guide",
+      description: "Understand estimated salary deductions and take-home pay.",
+      href: "/guides/salary-calculator-guide",
+    },
+    "income-tax-calculator": {
+      title: "Income Tax Calculator Guide",
+      description: "Learn how income tax estimates work and why tax-year rules matter.",
+      href: "/guides/income-tax-calculator-guide",
+    },
+    "profit-loss-calculator": {
+      title: "Profit & Loss Guide",
+      description: "Learn how to calculate profit, loss and the corresponding percentage.",
+      href: "/guides/profit-loss-calculator-guide",
+    },
+    "percentage-change-calculator": {
+      title: "Percentage Change Guide",
+      description: "Learn how to calculate percentage increases and decreases.",
+      href: "/guides/percentage-change-guide",
+    },
+    "ratio-calculator": {
+      title: "Ratio Calculator Guide",
+      description: "Learn how to simplify ratios and compare relationships.",
+      href: "/guides/ratio-calculator-guide",
+    },
+    "fraction-calculator": {
+      title: "Fraction Calculator Guide",
+      description: "Learn how to add, subtract, multiply and divide fractions.",
+      href: "/guides/fraction-calculator-guide",
+    },
+    "time-calculator": {
+      title: "Time Calculator Guide",
+      description: "Learn how to add and subtract hours and minutes correctly.",
+      href: "/guides/time-calculator-guide",
+    },
+    "hours-calculator": {
+      title: "Hours Calculator Guide",
+      description: "Learn how to calculate elapsed hours between two times.",
+      href: "/guides/hours-calculator-guide",
+    },
+    "age-difference-calculator": {
+      title: "Age Difference Guide",
+      description: "Learn how to calculate the difference between two dates of birth.",
+      href: "/guides/age-difference-guide",
+    },
+    "area-calculator": {
+      title: "Area Calculator Guide",
+      description: "Learn how to calculate the area of common geometric shapes.",
+      href: "/guides/area-calculator-guide",
+    },
+    "volume-calculator": {
+      title: "Volume Calculator Guide",
+      description: "Learn how to calculate the volume of common 3D shapes.",
+      href: "/guides/volume-calculator-guide",
+    },
+    "speed-calculator": {
+      title: "Speed Calculator Guide",
+      description: "Learn how speed, distance and travel time are related.",
+      href: "/guides/speed-calculator-guide",
+    },
+    "fuel-cost-calculator": {
+      title: "Fuel Cost Guide",
+      description: "Learn how to estimate fuel cost from distance, mileage and fuel price.",
+      href: "/guides/fuel-cost-guide",
+    },
   }[currentCalculator.slug];
 
   const common = () => {
