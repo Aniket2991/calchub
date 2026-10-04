@@ -54,6 +54,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: SITE_URL + "/guides/loan-calculator-guide",
       lastModified: new Date(),
     },
+    {
+      url: SITE_URL + "/guides/discount-calculator-guide",
+      lastModified: new Date(),
+    },
+    {
+      url: SITE_URL + "/guides/simple-interest-guide",
+      lastModified: new Date(),
+    },
+    {
+      url: SITE_URL + "/guides/compound-interest-guide",
+      lastModified: new Date(),
+    },
+    {
+      url: SITE_URL + "/guides/age-calculator-guide",
+      lastModified: new Date(),
+    },
+    {
+      url: SITE_URL + "/guides/average-calculator-guide",
+      lastModified: new Date(),
+    },
     ...categories.map((category) => ({
       url: SITE_URL + "/category/" + categorySlug(category),
       lastModified: new Date(),
