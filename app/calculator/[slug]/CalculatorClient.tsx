@@ -1122,6 +1122,31 @@ case "fuel-cost-calculator": {
       description: "See how loan amount, interest rate and tenure affect repayment and total interest.",
       href: "/guides/loan-calculator-guide",
     },
+    "discount-calculator": {
+      title: "Discount Calculator Guide",
+      description: "Learn how discounts affect savings and the final sale price.",
+      href: "/guides/discount-calculator-guide",
+    },
+    "simple-interest": {
+      title: "Simple Interest Guide",
+      description: "Understand the simple interest formula and how principal, rate and time affect the result.",
+      href: "/guides/simple-interest-guide",
+    },
+    "compound-interest": {
+      title: "Compound Interest Guide",
+      description: "Learn how compounding frequency, rate and time affect growth.",
+      href: "/guides/compound-interest-guide",
+    },
+    "age-calculator": {
+      title: "Age Calculator Guide",
+      description: "Learn how age is calculated from a date of birth and the current date.",
+      href: "/guides/age-calculator-guide",
+    },
+    "average-calculator": {
+      title: "Average Calculator Guide",
+      description: "Learn how to calculate an arithmetic average and check your inputs.",
+      href: "/guides/average-calculator-guide",
+    },
   }[currentCalculator.slug];
 
   const common = () => {
