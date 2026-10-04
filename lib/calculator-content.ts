@@ -596,7 +596,7 @@ export const calculatorContent: Record<string, CalculatorContent> = {
         question: "Does a longer loan period reduce the monthly payment?",
         answer:
           "A longer repayment period can reduce the monthly payment, but it may increase the total interest paid."
-      }
+      },\n      {\n        question: "What affects a loan payment?",\n        answer:\n          "The loan amount, interest rate and repayment tenure all affect the estimated payment. Fees and other lender charges may be separate."\n      },\n      {\n        question: "Why can a longer tenure cost more?",\n        answer:\n          "A longer repayment period can reduce the scheduled payment but may increase the total interest paid over the life of the loan."\n      }
     ]
   },
 
@@ -622,7 +622,7 @@ export const calculatorContent: Record<string, CalculatorContent> = {
         question: "Why can actual salary differ from the calculator?",
         answer:
           "Actual salary can depend on income tax, provident fund, professional tax, benefits and employer-specific payroll rules."
-      }
+      },\n      {\n        question: "What is take-home salary?",\n        answer:\n          "Take-home salary is the amount estimated to remain after the deductions entered in the calculator."\n      },\n      {\n        question: "Are salary deductions the same for every employee?",\n        answer:\n          "No. Deductions can vary by employer, salary structure, location, benefits and applicable rules, so this calculator provides an estimate."\n      }
     ]
   },
 
@@ -649,7 +649,7 @@ export const calculatorContent: Record<string, CalculatorContent> = {
         question: "Can tax rules change?",
         answer:
           "Yes. Tax rates, rebates, deductions and other provisions can change between tax years. Always verify important tax calculations using current official guidance."
-      }
+      },\n      {\n        question: "Is this an official tax filing calculation?",\n        answer:\n          "No. It is an estimate based on the values and tax assumptions entered. Use official tax guidance or a qualified tax professional for filing decisions."\n      },\n      {\n        question: "Can deductions change the tax payable?",\n        answer:\n          "Yes. Eligible deductions, exemptions, special-rate income and other applicable rules can change the final tax liability."\n      }
     ]
   },
 
@@ -675,7 +675,7 @@ export const calculatorContent: Record<string, CalculatorContent> = {
         question: "How is loss calculated?",
         answer:
           "Loss is calculated by subtracting the selling price from the cost price when the selling price is lower."
-      }
+      },\n      {\n        question: "How is profit percentage calculated?",\n        answer:\n          "Profit percentage is generally calculated as profit divided by cost price, multiplied by 100."\n      },\n      {\n        question: "What if the selling price is lower than cost price?",\n        answer:\n          "The transaction represents a loss, and the loss percentage is calculated relative to the cost price."\n      }
     ]
   },
 
@@ -701,7 +701,7 @@ export const calculatorContent: Record<string, CalculatorContent> = {
         question: "What does a negative percentage change mean?",
         answer:
           "A negative percentage change means the new value is lower than the original value."
-      }
+      },\n      {\n        question: "What value is used as the base?",\n        answer:\n          "Percentage change normally uses the original value as the base: (new value − original value) ÷ original value × 100."\n      },\n      {\n        question: "Can percentage change be negative?",\n        answer:\n          "Yes. A negative result indicates that the new value is lower than the original value."\n      }
     ]
   },
 
@@ -727,7 +727,7 @@ export const calculatorContent: Record<string, CalculatorContent> = {
         question: "What is an equivalent ratio?",
         answer:
           "An equivalent ratio represents the same relationship using different numbers."
-      }
+      },\n      {\n        question: "How do I simplify a ratio?",\n        answer:\n          "Divide all parts of the ratio by their greatest common divisor when the values are whole numbers."\n      },\n      {\n        question: "Can ratios contain decimals?",\n        answer:\n          "Ratios can represent decimal quantities, although converting them to a common scale may make comparison and simplification easier."\n      }
     ]
   },
 
@@ -753,7 +753,7 @@ export const calculatorContent: Record<string, CalculatorContent> = {
         question: "Can you divide by a fraction?",
         answer:
           "Yes. Division by a fraction is performed by multiplying by its reciprocal, provided the divisor is not zero."
-      }
+      },\n      {\n        question: "How are fractions added?",\n        answer:\n          "Fractions are added by using a common denominator, adding the corresponding numerators, and then simplifying the result."\n      },\n      {\n        question: "Can the calculator simplify a fraction?",\n        answer:\n          "Yes. The result can be represented in simplified form where the calculation supports it."\n      }
     ]
   },
 
@@ -779,7 +779,7 @@ export const calculatorContent: Record<string, CalculatorContent> = {
         question: "Can minutes exceed 59?",
         answer:
           "The calculator uses hours and minutes as separate time units, so standard minute values should normally be between 0 and 59."
-      }
+      },\n      {\n        question: "Can I add hours and minutes?",\n        answer:\n          "Yes. Enter the time values and the calculator combines the hours and minutes while handling minute carry-over."\n      },\n      {\n        question: "Why does 60 minutes become an hour?",\n        answer:\n          "Time uses a base-60 relationship, so every 60 minutes equals one hour."\n      }
     ]
   },
 
@@ -805,7 +805,7 @@ export const calculatorContent: Record<string, CalculatorContent> = {
         question: "Can it be used for work hours?",
         answer:
           "Yes. It can help estimate the duration between a work start time and end time."
-      }
+      },\n      {\n        question: "What does elapsed time mean?",\n        answer:\n          "Elapsed time is the duration between a starting time and an ending time."\n      },\n      {\n        question: "Can the calculator handle overnight periods?",\n        answer:\n          "Use the correct start and end times and check the result carefully when the period crosses midnight."\n      }
     ]
   },
 
@@ -831,7 +831,7 @@ export const calculatorContent: Record<string, CalculatorContent> = {
         question: "Does the calculator account for different month lengths?",
         answer:
           "Yes. The calculation uses calendar dates rather than assuming every month has the same number of days."
-      }
+      },\n      {\n        question: "What does age difference mean?",\n        answer:\n          "It is the calendar-based difference between two dates of birth or other selected dates."\n      },\n      {\n        question: "Can two people have an age difference of less than one year?",\n        answer:\n          "Yes. If their dates of birth are less than a year apart, the calculator can show the corresponding months and days."\n      }
     ]
   },
 
@@ -857,7 +857,7 @@ export const calculatorContent: Record<string, CalculatorContent> = {
         question: "How is the area of a circle calculated?",
         answer:
           "Multiply π by the square of the radius."
-      }
+      },\n      {\n        question: "What is area measured in?",\n        answer:\n          "Area is expressed in square units, such as square metres, square feet or square centimetres, depending on the dimensions entered."\n      },\n      {\n        question: "Does area depend on the shape?",\n        answer:\n          "Yes. Different shapes use different area formulas, so the required dimensions depend on the selected shape."\n      }
     ]
   },
 
@@ -883,7 +883,7 @@ export const calculatorContent: Record<string, CalculatorContent> = {
         question: "How is the volume of a sphere calculated?",
         answer:
           "Use the formula 4/3 × π × radius³."
-      }
+      },\n      {\n        question: "What is volume measured in?",\n        answer:\n          "Volume is expressed in cubic units, such as cubic metres, cubic centimetres or litres where applicable."\n      },\n      {\n        question: "Does volume depend on the shape?",\n        answer:\n          "Yes. The required dimensions and formula depend on whether the object is a box, cylinder or another supported shape."\n      }
     ]
   },
 
@@ -909,7 +909,7 @@ export const calculatorContent: Record<string, CalculatorContent> = {
         question: "Is this the same as instantaneous speed?",
         answer:
           "No. The calculator estimates average speed over the distance and time entered."
-      }
+      },\n      {\n        question: "What is the basic speed formula?",\n        answer:\n          "Speed is calculated as distance divided by time."\n      },\n      {\n        question: "Can I calculate distance from speed and time?",\n        answer:\n          "Yes. When speed and time are known, distance can be estimated by multiplying speed by time."\n      }
     ]
   },
 
@@ -936,7 +936,7 @@ export const calculatorContent: Record<string, CalculatorContent> = {
         question: "Why can actual fuel cost be different?",
         answer:
           "Actual fuel consumption can vary because of traffic, speed, driving conditions, vehicle condition and changes in fuel price."
-      }
+      },\n      {\n        question: "How is fuel cost estimated?",\n        answer:\n          "Estimated fuel cost is based on distance, vehicle mileage or efficiency, and the fuel price entered."\n      },\n      {\n        question: "Does actual fuel cost vary?",\n        answer:\n          "Yes. Traffic, driving style, road conditions, vehicle load and fuel-price changes can make actual costs different from the estimate."\n      }
     ]
   },
 
