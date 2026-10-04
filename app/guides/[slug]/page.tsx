@@ -372,6 +372,17 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
     .map((relatedSlug) => calculators.find((item) => item.slug === relatedSlug))
     .filter(Boolean);
 
+  const guideByCalculator = Object.fromEntries(
+    Object.entries(guides).map(([guideSlug, guide]) => [
+      guide.calculator.replace("/calculator/", ""),
+      guideSlug,
+    ])
+  ) as Record<string, string>;
+
+  const relatedGuideSlugs = (relatedSlugs[slug] ?? [])
+    .map((calculatorSlug) => guideByCalculator[calculatorSlug])
+    .filter((guideSlug): guideSlug is string => Boolean(guideSlug) && guideSlug !== slug);
+
   const schema = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -426,6 +437,31 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
           ))}
         </div>
       </section>
+
+      {relatedGuideSlugs.length > 0 && (
+        <section className="relatedGuides" aria-labelledby="more-guides-title">
+          <div className="sectionHead">
+            <div>
+              <div className="eyebrow">CALCHUB / LEARN</div>
+              <h2 id="more-guides-title">More calculator guides</h2>
+              <p className="lead">Explore related topics before choosing your next calculation.</p>
+            </div>
+          </div>
+          <div className="grid">
+            {relatedGuideSlugs.map((guideSlug) => {
+              const relatedGuide = guides[guideSlug];
+              return (
+                <Link className="card cardMainLink" href={"/guides/" + guideSlug} key={guideSlug}>
+                  <div className="icon">?</div>
+                  <h3>{relatedGuide.title}</h3>
+                  <p>{relatedGuide.description}</p>
+                  <span className="textLink">Read guide →</span>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
     </main>
