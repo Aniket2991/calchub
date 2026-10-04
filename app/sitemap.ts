@@ -74,6 +74,78 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: SITE_URL + "/guides/average-calculator-guide",
       lastModified: new Date(),
     },
+    {
+      url: SITE_URL + "/guides/sip-calculator-guide",
+      lastModified: new Date(),
+    },
+    {
+      url: SITE_URL + "/guides/date-difference-guide",
+      lastModified: new Date(),
+    },
+    {
+      url: SITE_URL + "/guides/length-converter-guide",
+      lastModified: new Date(),
+    },
+    {
+      url: SITE_URL + "/guides/weight-converter-guide",
+      lastModified: new Date(),
+    },
+    {
+      url: SITE_URL + "/guides/temperature-converter-guide",
+      lastModified: new Date(),
+    },
+    {
+      url: SITE_URL + "/guides/salary-calculator-guide",
+      lastModified: new Date(),
+    },
+    {
+      url: SITE_URL + "/guides/income-tax-calculator-guide",
+      lastModified: new Date(),
+    },
+    {
+      url: SITE_URL + "/guides/profit-loss-calculator-guide",
+      lastModified: new Date(),
+    },
+    {
+      url: SITE_URL + "/guides/percentage-change-guide",
+      lastModified: new Date(),
+    },
+    {
+      url: SITE_URL + "/guides/ratio-calculator-guide",
+      lastModified: new Date(),
+    },
+    {
+      url: SITE_URL + "/guides/fraction-calculator-guide",
+      lastModified: new Date(),
+    },
+    {
+      url: SITE_URL + "/guides/time-calculator-guide",
+      lastModified: new Date(),
+    },
+    {
+      url: SITE_URL + "/guides/hours-calculator-guide",
+      lastModified: new Date(),
+    },
+    {
+      url: SITE_URL + "/guides/age-difference-guide",
+      lastModified: new Date(),
+    },
+    {
+      url: SITE_URL + "/guides/area-calculator-guide",
+      lastModified: new Date(),
+    },
+    {
+      url: SITE_URL + "/guides/volume-calculator-guide",
+      lastModified: new Date(),
+    },
+    {
+      url: SITE_URL + "/guides/speed-calculator-guide",
+      lastModified: new Date(),
+    },
+    {
+      url: SITE_URL + "/guides/fuel-cost-guide",
+      lastModified: new Date(),
+    },
     ...categories.map((category) => ({
       url: SITE_URL + "/category/" + categorySlug(category),
       lastModified: new Date(),
