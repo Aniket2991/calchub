@@ -466,6 +466,45 @@ export default function CalculatorClient({ slug }: { slug: string }) {
         let out=to==="C"?c:to==="F"?c*9/5+32:c+273.15;
         r=out.toLocaleString("en-IN",{maximumFractionDigits:4})+" °"+to; break;
       }
+      case "fd-calculator": {
+  const principal=num(v.principal), annual=num(v.rate), years=num(v.years);
+  if(principal<=0 || annual<0 || years<=0){r="Enter valid principal, rate and tenure.";break;}
+  const amount=principal*Math.pow(1+annual/100/4,4*years);
+  const interest=amount-principal;
+  r=money(amount);
+  rr=[["Principal",money(principal)],["Interest earned",money(interest)],["Maturity amount",money(amount)]];
+  break;
+}
+case "ppf-calculator": {
+  const deposit=num(v.deposit), years=Math.round(num(v.years)), rate=num(v.rate);
+  if(deposit<=0 || years<=0 || rate<0){r="Enter valid yearly deposit, rate and tenure.";break;}
+  let balance=0;
+  for(let y=0;y<years;y++){balance=(balance+deposit)*(1+rate/100);}
+  const invested=deposit*years;
+  r=money(balance);
+  rr=[["Total deposits",money(invested)],["Estimated interest",money(balance-invested)],["Maturity value",money(balance)]];
+  break;
+}
+case "home-loan-emi-calculator":
+case "personal-loan-emi-calculator":
+case "car-loan-emi-calculator": {
+  const P=num(v.p), annual=num(v.rate), n=num(v.months);
+  if(P<=0 || annual<0 || n<=0){r="Enter a valid loan amount, rate and tenure.";break;}
+  const mr=annual/12/100;
+  const emi=mr===0?P/n:(P*mr*Math.pow(1+mr,n))/(Math.pow(1+mr,n)-1);
+  const total=emi*n;
+  r=money(emi);
+  rr=[["Loan amount",money(P)],["Total interest",money(total-P)],["Total repayment",money(total)]];
+  break;
+}
+
+      case "fd-calculator": return <>{field("Deposit amount","principal")} {field("Annual interest rate (%)","rate")} {field("Tenure (years)","years")}</>;
+      case "ppf-calculator": return <>{field("Yearly deposit","deposit")} {field("Interest rate (%)","rate")} {field("Tenure (years)","years")}</>;
+      case "home-loan-emi-calculator":
+      case "personal-loan-emi-calculator":
+      case "car-loan-emi-calculator":
+        return <>{field("Loan amount","p")} {field("Annual interest rate (%)","rate")} {field("Loan tenure (months)","months")}</>;
+
       case "salary-calculator": {
   const gross = num(v.gross);
   const deductions = num(v.deductions);
