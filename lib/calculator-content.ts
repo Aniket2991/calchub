@@ -55,6 +55,44 @@ export const calculatorContent: Record<string, CalculatorContent> = {
     ]
   },
 
+  "sip-calculator": {
+    intro:
+      "The SIP Calculator estimates the potential future value of regular monthly investments using the amount invested, expected annual return and investment period. It is an estimate, not a guaranteed return.",
+    formula:
+      "For a simplified monthly SIP estimate, the calculator applies the entered expected annual return to regular monthly contributions over the selected period.",
+    example:
+      "For example, entering a monthly investment of ₹5,000, an expected annual return of 12% and a 10-year period gives an estimated future value based on those assumptions.",
+    tips: [
+      "Enter the amount you plan to invest regularly.",
+      "Use an expected annual return as an assumption, not a guaranteed rate.",
+      "Choose the investment period carefully because time can materially affect the estimated result.",
+      "Compare the estimated invested amount with the estimated growth.",
+      "Actual mutual fund returns can be higher or lower than the assumption, and market-linked investments carry risk."
+    ],
+    faqs: [
+      {
+        question: "What does a SIP calculator estimate?",
+        answer:
+          "It estimates the potential future value of regular investments using the monthly investment, assumed return and investment period entered."
+      },
+      {
+        question: "Are SIP calculator returns guaranteed?",
+        answer:
+          "No. SIP investments in market-linked products do not guarantee the return assumed in a calculator."
+      },
+      {
+        question: "Does investing for longer always increase the result?",
+        answer:
+          "A longer period can increase the potential future value when the same investment and assumed return are maintained, but actual returns are uncertain."
+      },
+      {
+        question: "Does the calculator account for market volatility?",
+        answer:
+          "No. It uses the return assumption you enter and does not predict future market movements."
+      }
+    ]
+  },
+
   "discount-calculator": {
     intro:
       "The Discount Calculator helps you find the discount amount, final sale price and estimated savings when a percentage discount is applied to an original price.",
@@ -93,6 +131,44 @@ export const calculatorContent: Record<string, CalculatorContent> = {
         question: "Does the calculator include taxes or delivery charges?",
         answer:
           "No. The calculator works with the amount you enter. Additional taxes, delivery charges or fees may need to be considered separately."
+      }
+    ]
+  },
+
+  "gst-calculator": {
+    intro:
+      "The GST Calculator helps estimate GST amount, taxable value and total price when a GST rate is applied. It can be used for quick GST-inclusive or GST-exclusive calculations.",
+    formula:
+      "GST = Taxable Value × GST Rate ÷ 100. GST-inclusive total = Taxable Value + GST.",
+    example:
+      "For example, if the taxable value is ₹10,000 and the GST rate is 18%, the GST amount is ₹1,800 and the GST-inclusive total is ₹11,800.",
+    tips: [
+      "Enter the correct taxable amount before applying GST.",
+      "Select the GST rate that applies to the transaction.",
+      "Check whether the price you have is GST-inclusive or GST-exclusive before calculating.",
+      "For invoices, consider the applicable CGST, SGST or IGST treatment where relevant.",
+      "Use the calculator as an estimate and verify the applicable tax treatment for the transaction."
+    ],
+    faqs: [
+      {
+        question: "What is GST?",
+        answer:
+          "GST is a goods and services tax applied to eligible supplies according to the applicable tax rules and rate."
+      },
+      {
+        question: "How is GST calculated on a taxable amount?",
+        answer:
+          "Multiply the taxable amount by the GST rate and divide by 100 to estimate the GST amount."
+      },
+      {
+        question: "How do I remove GST from an inclusive price?",
+        answer:
+          "For a GST-inclusive price, the taxable value is calculated by dividing the inclusive amount by 1 plus the GST rate expressed as a decimal."
+      },
+      {
+        question: "Does the calculator decide the correct GST rate?",
+        answer:
+          "No. You must use the rate applicable to the goods or services and transaction. Tax rules can depend on the specific circumstances."
       }
     ]
   },
