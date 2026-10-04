@@ -67,6 +67,96 @@ const guides = [
     description:
       "Learn how to calculate an arithmetic average and avoid common input mistakes.",
   },
+  {
+    slug: "sip-calculator-guide",
+    title: "SIP Calculator Guide",
+    description: "Learn how monthly investments, expected returns and time can affect an estimated SIP value.",
+  },
+  {
+    slug: "date-difference-guide",
+    title: "Date Difference Guide",
+    description: "Learn how to calculate the number of days between two dates and understand date-counting conventions.",
+  },
+  {
+    slug: "length-converter-guide",
+    title: "Length Converter Guide",
+    description: "Learn how to convert metric and imperial length units accurately.",
+  },
+  {
+    slug: "weight-converter-guide",
+    title: "Weight Converter Guide",
+    description: "Learn how to convert kilograms, grams, pounds and ounces.",
+  },
+  {
+    slug: "temperature-converter-guide",
+    title: "Temperature Converter Guide",
+    description: "Learn how Celsius, Fahrenheit and Kelvin conversions work.",
+  },
+  {
+    slug: "salary-calculator-guide",
+    title: "Salary Calculator Guide",
+    description: "Understand estimated salary deductions and take-home pay.",
+  },
+  {
+    slug: "income-tax-calculator-guide",
+    title: "Income Tax Calculator Guide",
+    description: "Learn how an income tax estimate is calculated and why tax-year rules matter.",
+  },
+  {
+    slug: "profit-loss-calculator-guide",
+    title: "Profit Loss Calculator Guide",
+    description: "Learn how to calculate profit, loss and the corresponding percentage.",
+  },
+  {
+    slug: "percentage-change-guide",
+    title: "Percentage Change Guide",
+    description: "Learn how to calculate percentage increases and decreases between two values.",
+  },
+  {
+    slug: "ratio-calculator-guide",
+    title: "Ratio Calculator Guide",
+    description: "Learn how to simplify ratios and compare equivalent relationships.",
+  },
+  {
+    slug: "fraction-calculator-guide",
+    title: "Fraction Calculator Guide",
+    description: "Learn how to add, subtract, multiply and divide fractions.",
+  },
+  {
+    slug: "time-calculator-guide",
+    title: "Time Calculator Guide",
+    description: "Learn how to add and subtract hours and minutes correctly.",
+  },
+  {
+    slug: "hours-calculator-guide",
+    title: "Hours Calculator Guide",
+    description: "Learn how to calculate elapsed hours between two times.",
+  },
+  {
+    slug: "age-difference-guide",
+    title: "Age Difference Calculator Guide",
+    description: "Learn how to calculate the difference between two dates of birth.",
+  },
+  {
+    slug: "area-calculator-guide",
+    title: "Area Calculator Guide",
+    description: "Learn how to calculate the area of common geometric shapes.",
+  },
+  {
+    slug: "volume-calculator-guide",
+    title: "Volume Calculator Guide",
+    description: "Learn how to calculate the volume of common three-dimensional shapes.",
+  },
+  {
+    slug: "speed-calculator-guide",
+    title: "Speed Calculator Guide",
+    description: "Learn how speed, distance and travel time are related.",
+  },
+  {
+    slug: "fuel-cost-guide",
+    title: "Fuel Cost Calculator Guide",
+    description: "Learn how to estimate fuel cost from distance, mileage and fuel price.",
+  },
 ];
 
 export default function GuidesPage() {
