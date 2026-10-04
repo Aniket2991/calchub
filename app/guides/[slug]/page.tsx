@@ -46,6 +46,56 @@ const guides: Record<string, {
       { heading: "Use the result carefully", body: "BMI can be less informative for some people, including highly muscular individuals and certain groups where different reference ranges may be appropriate. Use the result as general information, not as a medical diagnosis." },
     ],
   },
+  "discount-calculator-guide": {
+    title: "Discount Calculator Guide",
+    description: "Learn how discounts affect the amount you pay and how to calculate your savings.",
+    calculator: "/calculator/discount-calculator",
+    sections: [
+      { heading: "How a discount works", body: "A percentage discount reduces an original price. The discount amount is found by multiplying the original price by the discount percentage and dividing by 100." },
+      { heading: "Finding the final sale price", body: "After finding the discount amount, subtract it from the original price. For example, a ₹2,000 item with a 20% discount has ₹400 in savings and an estimated sale price of ₹1,600." },
+      { heading: "Check the final amount", body: "Use the calculator to compare the original price, discount percentage, savings and final price. Taxes, delivery charges and other fees may need to be considered separately." },
+    ],
+  },
+  "simple-interest-guide": {
+    title: "Simple Interest Guide",
+    description: "Understand the simple interest formula and how principal, rate and time affect the result.",
+    calculator: "/calculator/simple-interest",
+    sections: [
+      { heading: "What is simple interest?", body: "Simple interest is calculated on the original principal rather than adding previously earned interest to the principal for later periods." },
+      { heading: "The formula", body: "The standard formula is Simple Interest = Principal × Rate × Time ÷ 100 when the rate is a percentage and time is measured in years. The total amount is the principal plus the interest." },
+      { heading: "When using the result", body: "Check that the financial product actually uses simple interest and that the rate and time period match its terms. Fees and other charges may not be included." },
+    ],
+  },
+  "compound-interest-guide": {
+    title: "Compound Interest Guide",
+    description: "Learn how compounding frequency, interest rate and time affect an estimated accumulated amount.",
+    calculator: "/calculator/compound-interest",
+    sections: [
+      { heading: "What is compound interest?", body: "Compound interest is calculated on the principal and previously accumulated interest, so the balance can grow faster as interest is added over time." },
+      { heading: "Why frequency matters", body: "The compounding frequency describes how often interest is added during a year. With the same nominal rate and time period, changing the frequency can change the estimated final amount." },
+      { heading: "Compare scenarios", body: "Try different rates, periods and compounding frequencies to understand how the assumptions affect the estimate. Actual products can use different calculation conventions and fees." },
+    ],
+  },
+  "age-calculator-guide": {
+    title: "Age Calculator Guide",
+    description: "Learn how an age calculator uses a date of birth and the current date to estimate age.",
+    calculator: "/calculator/age-calculator",
+    sections: [
+      { heading: "How age is calculated", body: "An age calculation compares the date of birth with the current date and determines the completed years, with remaining months and days where applicable." },
+      { heading: "Enter the correct date", body: "Select the person's actual date of birth carefully. A one-day difference can affect the months and days shown in the result." },
+      { heading: "For official purposes", body: "Use the calculator as a convenience tool. For legal, government or other official purposes, rely on the date recorded in the relevant official documents." },
+    ],
+  },
+  "average-calculator-guide": {
+    title: "Average Calculator Guide",
+    description: "Learn how the arithmetic average is calculated and how unusual values can affect it.",
+    calculator: "/calculator/average-calculator",
+    sections: [
+      { heading: "What is an average?", body: "The arithmetic average, or mean, is calculated by adding all values and dividing the sum by the number of values." },
+      { heading: "Example", body: "For 10, 20, 30 and 40, the sum is 100 and there are four values, so the average is 25." },
+      { heading: "Check your inputs", body: "Separate values with commas and make sure every intended value is included. Very large or small values can have a strong effect on the arithmetic mean." },
+    ],
+  },
   "loan-calculator-guide": {
     title: "Loan Calculator Guide",
     description: "Understand how loan amount, interest rate and tenure influence monthly repayment and total interest.",
@@ -92,6 +142,11 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
     "percentage-calculator-guide": ["percentage-calculator", "percentage-change-calculator", "discount-calculator"],
     "bmi-calculator-guide": ["bmi-calculator", "age-calculator", "percentage-calculator"],
     "loan-calculator-guide": ["loan-calculator", "emi-calculator", "compound-interest"],
+    "discount-calculator-guide": ["discount-calculator", "percentage-calculator", "gst-calculator"],
+    "simple-interest-guide": ["simple-interest", "compound-interest", "loan-calculator"],
+    "compound-interest-guide": ["compound-interest", "simple-interest", "sip-calculator"],
+    "age-calculator-guide": ["age-calculator", "age-difference-calculator", "date-difference"],
+    "average-calculator-guide": ["average-calculator", "percentage-calculator", "percentage-change-calculator"],
   };
 
   const relatedCalculators = (relatedSlugs[slug] ?? [])
