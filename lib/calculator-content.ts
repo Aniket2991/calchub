@@ -863,4 +863,55 @@ export const calculatorContent: Record<string, CalculatorContent> = {
       }
     ]
   },
+
+  "fd-calculator": {
+    intro: "Use this FD Calculator to estimate the maturity amount and interest earned on a fixed deposit using the deposit, annual interest rate and tenure.",
+    formula: "For quarterly compounding, maturity = principal × (1 + annual rate ÷ 4)^(4 × years). Actual bank FD returns can vary by product, tenure and compounding rules.",
+    example: "Enter your deposit amount, expected annual FD rate and tenure to estimate the maturity value and total interest.",
+    tips: ["Compare the maturity value with the total amount invested.", "Check the bank's actual FD rate and compounding frequency before investing.", "Senior-citizen rates and premature-withdrawal rules may differ by bank."],
+    faqs: [
+      { question: "What does an FD calculator show?", answer: "It estimates the maturity value and interest earned on a fixed deposit based on the values entered." },
+      { question: "Is the FD result guaranteed?", answer: "No. The result is an estimate. Check the bank's current rate, compounding method, taxes and product terms." }
+    ]
+  },
+  "ppf-calculator": {
+    intro: "Estimate the potential maturity value of a Public Provident Fund investment using yearly deposits, an assumed interest rate and investment period.",
+    formula: "This calculator applies the entered annual rate to the balance after each yearly deposit. PPF rules, interest rates and deposit limits are subject to government notifications.",
+    example: "Enter your planned yearly deposit, assumed interest rate and number of years to estimate total deposits, interest and maturity value.",
+    tips: ["Use the current official PPF interest rate when making an estimate.", "PPF has government-defined rules for tenure and deposits.", "Treat the result as an estimate and verify current rules before investing."],
+    faqs: [
+      { question: "Is the PPF interest rate fixed forever?", answer: "No. The PPF interest rate is notified by the government and can change." },
+      { question: "Does this calculator replace official PPF information?", answer: "No. It is an estimation tool. Check official government or bank information for current rules." }
+    ]
+  },
+  "home-loan-emi-calculator": {
+    intro: "Calculate estimated monthly EMI, total interest and total repayment for a home loan using the loan amount, annual interest rate and tenure.",
+    formula: "EMI = P × r × (1 + r)^n ÷ ((1 + r)^n − 1), where P is principal, r is the monthly rate and n is the number of monthly payments.",
+    example: "Enter the home-loan amount, annual interest rate and tenure to see the estimated monthly EMI and total repayment.",
+    tips: ["Compare total interest, not only the monthly EMI.", "A longer tenure can lower EMI but increase total interest.", "Actual home-loan costs can include processing fees, insurance and other charges."],
+    faqs: [
+      { question: "Can I use this for a home loan?", answer: "Yes. Enter the principal, annual interest rate and tenure in months." },
+      { question: "Does the result include processing fees?", answer: "No. The calculator estimates principal and interest repayment only." }
+    ]
+  },
+  "personal-loan-emi-calculator": {
+    intro: "Estimate the monthly EMI, total interest and total repayment for a personal loan.",
+    formula: "The calculator uses the standard reducing-balance EMI formula based on principal, monthly interest rate and number of payments.",
+    example: "Enter the personal-loan amount, annual rate and repayment tenure to estimate your monthly instalment.",
+    tips: ["Compare APR or total borrowing cost where available, not just the advertised rate.", "Check processing fees and other lender charges.", "Avoid choosing a longer tenure only because the EMI looks smaller."],
+    faqs: [
+      { question: "What does a personal-loan EMI include?", answer: "The calculated EMI represents principal and interest under the assumptions entered. Fees and other charges are not included." },
+      { question: "Can I compare different loan rates?", answer: "Yes. Run the calculator with different rates and tenures to compare estimated repayment costs." }
+    ]
+  },
+  "car-loan-emi-calculator": {
+    intro: "Estimate your monthly car-loan EMI, total interest and total repayment from the financed amount, annual interest rate and tenure.",
+    formula: "The calculator uses the standard reducing-balance EMI formula. The financed amount should reflect the amount actually borrowed rather than the vehicle's full on-road price.",
+    example: "Enter the financed car-loan amount, annual interest rate and tenure to estimate your monthly EMI.",
+    tips: ["Include your down payment when determining the actual financed amount.", "Compare total repayment across loan offers.", "Remember that insurance, registration and other ownership costs are separate from EMI."],
+    faqs: [
+      { question: "Should I enter the car's full price?", answer: "No. Enter the amount you actually plan to finance through the loan." },
+      { question: "Does this include the down payment?", answer: "No. A down payment reduces the amount borrowed and therefore should be deducted before entering the financed amount." }
+    ]
+  },
 };
