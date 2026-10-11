@@ -288,15 +288,31 @@ export default function Home() {
             <div className="featureGrid">
               <Link className="feature" href="/guides/emi-calculator-guide">
                 <strong>EMI Calculator Guide</strong>
-                <span>Understand EMI, tenure, interest and total repayment.</span>
+                <span>Compare monthly payments, loan tenures and total interest.</span>
               </Link>
               <Link className="feature" href="/guides/gst-calculator-guide">
                 <strong>GST Calculator Guide</strong>
-                <span>Learn GST-inclusive and GST-exclusive calculations.</span>
+                <span>Calculate tax-inclusive and tax-exclusive amounts.</span>
               </Link>
-              <Link className="feature" href="/guides/percentage-calculator-guide">
-                <strong>Percentage Calculator Guide</strong>
-                <span>Use percentages for change, discounts and comparisons.</span>
+              <Link className="feature" href="/guides/sip-calculator-guide">
+                <strong>SIP Calculator Guide</strong>
+                <span>Understand investment projections and return assumptions.</span>
+              </Link>
+              <Link className="feature" href="/guides/loan-calculator-guide">
+                <strong>Loan Calculator Guide</strong>
+                <span>Compare borrowing scenarios and estimated repayment.</span>
+              </Link>
+              <Link className="feature" href="/guides/income-tax-calculator-guide">
+                <strong>Income Tax Calculator Guide</strong>
+                <span>Understand tax estimates and current-year assumptions.</span>
+              </Link>
+              <Link className="feature" href="/guides/salary-calculator-guide">
+                <strong>Salary Calculator Guide</strong>
+                <span>Estimate take-home pay and understand deductions.</span>
+              </Link>
+              <Link className="feature" href="/guides/compound-interest-guide">
+                <strong>Compound Interest Guide</strong>
+                <span>Compare compounding, time and interest-rate assumptions.</span>
               </Link>
             </div>
           </div>
