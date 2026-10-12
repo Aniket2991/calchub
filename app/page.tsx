@@ -134,10 +134,6 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="container">
-          <div className="ad">ADVERTISEMENT</div>
-        </div>
-
         <MyCalculators />
         <RecentCalculators />
         <CalculationHistory />
