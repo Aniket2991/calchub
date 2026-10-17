@@ -55,6 +55,45 @@ export const calculatorContent: Record<string, CalculatorContent> = {
     ]
   },
 
+  "loan-calculator": {
+    intro:
+      "The Loan Calculator estimates the regular monthly payment, total repayment and total interest for a fixed-rate loan using the amount borrowed, annual interest rate and repayment period.",
+    formula:
+      "Monthly payment = P × r × (1 + r)^n ÷ ((1 + r)^n − 1), where P is the loan principal, r is the monthly interest rate as a decimal and n is the number of monthly payments. At 0% interest, payment = P ÷ n.",
+    example:
+      "For example, a ₹5,00,000 loan at 9% annual interest over 60 months has an estimated monthly payment of about ₹10,379. Total repayment is about ₹6,22,741, including about ₹1,22,741 in interest. Actual lender figures may vary because of fees, rounding and loan terms.",
+    tips: [
+      "Enter the principal amount you intend to borrow.",
+      "Enter the annual interest rate as a percentage, such as 9.",
+      "Enter the repayment period in months; 5 years is 60 months.",
+      "Compare both monthly payment and total interest when comparing loans.",
+      "A longer repayment period may lower each payment but increase total interest.",
+      "This estimate assumes a fixed rate and regular monthly payments and does not include lender fees or insurance."
+    ],
+    faqs: [
+      {
+        question: "What does the Loan Calculator show?",
+        answer:
+          "It estimates the monthly payment, total amount repaid and total interest from the principal, annual interest rate and repayment period entered."
+      },
+      {
+        question: "Is the Loan Calculator result guaranteed?",
+        answer:
+          "No. It is a mathematical estimate. A lender's actual schedule may include processing fees, insurance, rate changes, payment timing and rounding."
+      },
+      {
+        question: "What happens if the interest rate is 0%?",
+        answer:
+          "With no interest, the principal is divided evenly across the number of monthly payments."
+      },
+      {
+        question: "Does a longer tenure always cost less?",
+        answer:
+          "A longer tenure can reduce the monthly payment, but it generally increases total interest when the interest rate and principal remain the same."
+      }
+    ]
+  },
+
   "sip-calculator": {
     intro:
       "The SIP Calculator estimates the potential future value of regular monthly investments using the amount invested, expected annual return and investment period. It is an estimate, not a guaranteed return.",
