@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import CalculatorClient from "./CalculatorClient";
 import { calculators, getCalculator } from "../../../lib/calculators";
 import { calculatorContent } from "../../../lib/calculator-content";
@@ -90,7 +91,7 @@ export default async function CalculatorPage({ params }: Props) {
   const calculator = getCalculator(slug);
 
   if (!calculator) {
-    return <CalculatorClient slug={slug} />;
+    notFound();
   }
 
   const calculatorUrl = `${SITE_URL}/calculator/${calculator.slug}`;
