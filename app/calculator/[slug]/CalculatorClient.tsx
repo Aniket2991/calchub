@@ -610,11 +610,14 @@ case "income-tax-calculator": {
   }
 
   // Marginal relief under the new regime for income just above ₹12 lakh.
+  // Apply the cap before cess so tax INCLUDING 4% cess does not exceed
+  // the income above ₹12 lakh (assuming no surcharge applies).
   if (regime === "new" && income > 1200000) {
     const excessIncome = income - 1200000;
+    const maximumTaxBeforeCess = excessIncome / 1.04;
 
-    if (tax > excessIncome) {
-      tax = excessIncome;
+    if (tax > maximumTaxBeforeCess) {
+      tax = maximumTaxBeforeCess;
     }
   }
 
@@ -627,6 +630,7 @@ case "income-tax-calculator": {
     ["Tax before cess", money(tax)],
     ["Health & education cess", money(cess)],
     ["Estimated total tax", money(totalTax)],
+    ["Important note", "Estimate only. Surcharge, special-rate income and individual deductions/exemptions are not included."],
   ];
 
   break;
