@@ -630,7 +630,7 @@ case "income-tax-calculator": {
     ["Tax before cess", money(tax)],
     ["Health & education cess", money(cess)],
     ["Estimated total tax", money(totalTax)],
-    ["Important note", "Estimate only. Surcharge, special-rate income and individual deductions/exemptions are not included."],
+    ["Important note", "Estimate only. Old-regime slabs assume an individual under age 60. Age-specific slabs, surcharge, special-rate income, and individual deductions/exemptions are not included."],
   ];
 
   break;
