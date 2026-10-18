@@ -16,6 +16,8 @@ const guides: Record<string, {
       { heading: "Example: ₹5 lakh at 9% for 5 years", body: "For illustration, a ₹5,00,000 loan at 9% annual interest over 60 months gives an estimated EMI of about ₹10,379. The estimated total repayment is about ₹6.23 lakh, with roughly ₹1.23 lakh of interest." },
       { heading: "How tenure changes the cost", body: "A longer tenure can reduce the monthly EMI, but it usually increases the total interest paid. Compare both EMI and total repayment before choosing a tenure." },
       { heading: "Common mistakes", body: "Check that the rate is annual, tenure is entered in the expected unit, and any processing fees, insurance or other charges are considered separately. A calculator result is not a lender quote." },
+      { heading: "Worked comparison: same loan, different tenure", body: "Consider a ₹5,00,000 loan at 9% per year. With a 5-year tenure, the estimated EMI is about ₹10,379 and total interest is about ₹1.23 lakh. With a longer tenure, the monthly payment usually falls, but you make payments for more months and total interest generally rises. Compare both monthly affordability and total repayment before deciding." },
+      { heading: "How to check an EMI estimate", body: "First confirm the annual rate, number of monthly instalments and whether the rate is fixed or floating. Then compare the result with the lender's repayment schedule. Differences may come from fees, insurance, rate resets, payment dates or rounding. The calculator estimates the standard repayment formula; it is not a loan offer." },
       { heading: "Before you borrow", body: "Use the calculator to compare scenarios rather than treating one result as a recommendation. Check the lender's actual rate, fees, repayment schedule and terms before accepting a loan." },
     ],
   },
@@ -29,6 +31,8 @@ const guides: Record<string, {
       { heading: "Removing GST", body: "If a displayed price already includes GST, subtracting 18% directly is not the correct reverse calculation. At 18%, an inclusive price is divided by 1.18 to estimate the taxable base." },
       { heading: "Example: reverse GST", body: "If the GST-inclusive price is ₹11,800 at 18%, the estimated base amount is ₹10,000 and the GST component is ₹1,800." },
       { heading: "Important limitation", body: "CalcHub performs the mathematical add/remove calculation. It does not decide the legally applicable GST rate, classification, exemptions, input-tax-credit treatment or filing obligation." },
+      { heading: "Worked example for a shop price", body: "Suppose a product's taxable value is ₹2,500 and the applicable rate for that transaction is 12%. The estimated GST is ₹300 and the total is ₹2,800. If ₹2,800 is already the tax-inclusive price, dividing by 1.12 gives a taxable value of ₹2,500. These examples illustrate the arithmetic only; they do not establish which GST rate applies to a product." },
+      { heading: "Invoice checks", body: "Before using a result on an invoice, verify the item classification, current rate, place-of-supply treatment and whether CGST plus SGST or IGST applies. Check rounding and line-item rules required by your invoicing process. The calculator does not prepare or validate a tax return." },
       { heading: "Check the result before invoicing", body: "For business invoices, verify the applicable rate and tax treatment against current official GST guidance or a qualified tax professional. The calculator is a maths tool, not tax advice." },
     ],
   },
@@ -115,6 +119,8 @@ const guides: Record<string, {
       { heading: "Example projection", body: "If you invest ₹5,000 every month for 10 years, your total contribution is ₹6,00,000. The projected final value depends on the assumed return and is not guaranteed." },
       { heading: "Why projections can differ from reality", body: "Market returns do not arrive at a fixed rate every month. Actual performance, fees, taxes, contribution timing and market volatility can make real results different from a calculator projection." },
       { heading: "Compare scenarios", body: "Try conservative, moderate and higher return assumptions while keeping the contribution and time period constant. This makes it easier to see how sensitive the projection is to the return assumption." },
+      { heading: "Worked scenario: separate contributions from growth", body: "A monthly contribution of ₹5,000 for 10 years means you contribute ₹6,00,000 in total (₹5,000 × 120 months). Any projected amount above ₹6,00,000 is an illustration of assumed growth, not guaranteed profit. To compare assumptions fairly, keep the monthly contribution and duration unchanged and vary only the assumed return." },
+      { heading: "Why the timing assumption matters", body: "A monthly investment calculator must make an assumption about when each contribution is invested and how the periodic rate is derived from the annual rate. The result can differ from projections that assume beginning-of-month contributions, daily returns, changing returns or different fee treatment. Treat the displayed value as a simplified model." },
       { heading: "Important investment limitation", body: "The calculator is an educational projection tool. It does not recommend a fund, guarantee a return or account for every product-specific charge or tax rule. Review current product information before investing." },
     ],
   },
@@ -181,6 +187,8 @@ const guides: Record<string, {
       { heading: "Example: income just above ₹12 lakh", body: "For an example around ₹12.10 lakh under the new regime, the estimate can be affected by marginal-relief logic. This is why simply applying a tax slab to every rupee above a threshold can produce a misleading result." },
       { heading: "Why the final tax bill can differ", body: "Your actual liability can depend on deductions, exemptions, special-rate income, surcharge, cess, rebates, capital gains and other rules that may not be represented by a simple calculator input." },
       { heading: "Use current-year rules", body: "Tax rules and thresholds can change. Treat the result as an estimate and verify the applicable assessment-year rules using official Income Tax Department information before filing." },
+      { heading: "A practical tax-estimate checklist", body: "Before interpreting an estimate, confirm the financial year and assessment-year rules, selected regime, taxable income rather than simply gross receipts, eligible deductions or exemptions, and whether any income is taxed at special rates. Check that the calculator models the relevant rebate, surcharge and cess treatment for your situation." },
+      { heading: "Why a single income figure is not always enough", body: "Two people with the same total income can have different tax outcomes because the source and character of income, deductions, special-rate income and eligibility rules may differ. A simplified calculator cannot infer facts that are not entered. Do not use an estimate alone to decide what to report on a return." },
       { heading: "Before filing", body: "Use the calculator as a planning and checking aid, not as a substitute for a return-preparation system or professional tax advice. Keep supporting documents for the figures you report." },
     ],
   },
@@ -390,7 +398,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
     description: guide.description,
     mainEntityOfPage: "https://calchub-blond.vercel.app/guides/" + slug,
     publisher: { "@type": "Organization", name: "CalcHub" },
-    dateModified: "2026-10-04",
+    dateModified: "2026-10-18",
   };
 
   return (
@@ -403,7 +411,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
         <div className="eyebrow">CALCHUB / GUIDE</div>
         <h1>{guide.title}</h1>
         <p className="lead">{guide.description}</p>
-        <p className="muted">Updated October 4, 2026 · For general informational use</p>
+        <p className="muted">Updated October 18, 2026 · For general informational use</p>
 
         {guide.sections.map((section) => (
           <section key={section.heading}>
