@@ -31,7 +31,7 @@ export default function About() {
       <ul>
         <li><Link href="/category/finance">Finance calculators</Link> for loan estimates, interest, SIP projections, salary estimates and tax calculations.</li>
         <li><Link href="/category/math">Math calculators</Link> for percentages, averages, ratios, fractions, area and volume.</li>
-        <li><Link href="/category/date-and-time">Date and time calculators</Link> for age, date differences and elapsed time.</li>
+        <li><Link href="/category/date-time">Date and time calculators</Link> for age, date differences and elapsed time.</li>
         <li><Link href="/category/conversion">Conversion calculators</Link> for length, weight, temperature and everyday quantities.</li>
         <li><Link href="/category/health">Health calculators</Link> for general calculations such as body mass index.</li>
       </ul>
